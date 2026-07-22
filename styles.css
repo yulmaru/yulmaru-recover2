@@ -3403,3 +3403,409 @@ select:focus {
 .blog-post-section {
   order: 1000;
 }
+/* Make the top consultation CTA text visible on the white button. */
+.site-header .main-nav a.nav-cta,
+.site-header a.nav-cta,
+.main-nav .nav-cta {
+  background: #ffffff;
+  color: #2458d9 !important;
+  font-weight: 900;
+}
+
+.site-header .main-nav a.nav-cta:hover,
+.site-header .main-nav a.nav-cta:focus-visible,
+.site-header a.nav-cta:hover,
+.site-header a.nav-cta:focus-visible {
+  color: #1f46c6 !important;
+}
+/* Place the situation selector directly under the hero and restyle job icons. */
+.hero.active-page {
+  row-gap: 0;
+}
+
+.home-content-feed {
+  padding-top: 0;
+}
+
+.job-selector-section {
+  border-top: 0;
+  padding-top: 8px;
+}
+
+.job-chip-row {
+  align-items: center;
+  grid-auto-columns: 82px;
+  padding-top: 0;
+}
+
+.job-inline-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 82px;
+  min-height: 84px;
+  color: #4c38c4;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1.25;
+  text-align: center;
+  word-break: keep-all;
+}
+
+.job-chip span {
+  width: 40px;
+  height: 34px;
+  border: 1px solid rgba(23, 35, 59, 0.16);
+  border-radius: 12px;
+  background: #f7f9ff;
+  color: #182033;
+  filter: grayscale(1) saturate(0);
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.salary-chip span {
+  font-size: 28px;
+}
+
+.job-chip.is-selected span {
+  background: rgba(255, 255, 255, 0.94);
+  color: #182033;
+  filter: grayscale(1) saturate(0);
+}
+
+@media (max-width: 720px) {
+  .job-inline-label {
+    width: 74px;
+    min-height: 78px;
+    font-size: 12px;
+  }
+
+  .job-chip span {
+    width: 36px;
+    height: 32px;
+    border-radius: 11px;
+    font-size: 22px;
+  }
+
+  .salary-chip span {
+    font-size: 26px;
+  }
+}
+
+/* Final simplified situation selector. */
+.job-selector-section {
+  border: 0 !important;
+  padding: 6px 0 10px !important;
+  margin: 0 !important;
+  gap: 8px;
+  background: transparent;
+}
+
+.job-inline-label,
+.job-selector-head {
+  display: none !important;
+}
+
+.job-chip-slider {
+  max-width: min(1180px, calc(100vw - 48px));
+  margin: 0 auto;
+}
+
+.job-chip-slider::after {
+  background: linear-gradient(90deg, rgba(242, 246, 255, 0), #f2f6ff 72%);
+  border-radius: 0;
+}
+
+.job-chip-row {
+  grid-auto-columns: clamp(86px, 7.5vw, 104px) !important;
+  gap: 8px !important;
+  padding: 0 54px 6px 0 !important;
+  align-items: stretch !important;
+}
+
+.job-chip {
+  width: 100% !important;
+  min-height: 58px !important;
+  border-radius: 10px !important;
+  padding: 7px 8px !important;
+  gap: 5px !important;
+  background: rgba(255, 255, 255, 0.86) !important;
+  border-color: rgba(65, 111, 215, 0.18) !important;
+  box-shadow: 0 8px 20px rgba(31, 104, 216, 0.05) !important;
+}
+
+.job-chip span {
+  width: 30px !important;
+  height: 24px !important;
+  border-radius: 7px !important;
+  border: 1px solid rgba(14, 24, 43, 0.16) !important;
+  background: rgba(255, 255, 255, 0.88) !important;
+  color: #101827 !important;
+  filter: none !important;
+  font-size: 15px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+}
+
+.salary-chip span {
+  font-size: 15px !important;
+}
+
+.job-chip.is-selected {
+  background: linear-gradient(135deg, #7036d6 0%, #1f68d8 100%) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.38) !important;
+}
+
+.job-chip.is-selected span {
+  background: rgba(255, 255, 255, 0.94) !important;
+  color: #101827 !important;
+}
+
+.job-chip-next {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 10px !important;
+  right: 6px !important;
+}
+
+.channel-board-section.feed-section {
+  border-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+.home-content-feed {
+  gap: 18px !important;
+}
+
+@media (max-width: 720px) {
+  .job-chip-slider {
+    max-width: calc(100vw - 24px);
+  }
+
+  .job-chip-row {
+    grid-auto-columns: 82px !important;
+    padding-right: 48px !important;
+  }
+
+  .job-chip {
+    min-height: 56px !important;
+    font-size: 11px !important;
+  }
+
+  .job-chip span {
+    width: 28px !important;
+    height: 23px !important;
+    font-size: 14px !important;
+  }
+}
+/* Unified layer beneath the hero. */
+.hero.active-page {
+  row-gap: 0 !important;
+}
+
+.home-content-feed {
+  width: min(1420px, calc(100vw - 32px));
+  max-width: 100%;
+  margin: 0 auto 34px !important;
+  padding: clamp(12px, 1.8vw, 20px) !important;
+  gap: 14px !important;
+  border: 1px solid rgba(142, 169, 255, 0.22);
+  border-top: 0;
+  border-radius: 0 0 12px 12px;
+  background:
+    radial-gradient(circle at 17% 0%, rgba(112, 54, 214, 0.32), transparent 34%),
+    radial-gradient(circle at 78% 2%, rgba(25, 179, 225, 0.20), transparent 30%),
+    linear-gradient(135deg, #101423 0%, #171a31 48%, #0d1328 100%);
+  box-shadow: 0 26px 80px rgba(13, 18, 41, 0.22);
+}
+
+.home-content-feed .feed-section {
+  border-top: 0 !important;
+  padding-top: 10px !important;
+}
+
+.home-content-feed .job-selector-section,
+.home-content-feed .channel-board-section.feed-section {
+  border-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+.home-content-feed .job-selector-section {
+  padding: 4px 0 8px !important;
+}
+
+.home-content-feed .job-chip-slider {
+  max-width: 100% !important;
+  margin: 0 !important;
+}
+
+.home-content-feed .job-chip-slider::after {
+  background: linear-gradient(90deg, rgba(16, 20, 35, 0), rgba(16, 20, 35, 0.98) 74%) !important;
+}
+
+.home-content-feed .job-chip {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  color: rgba(255, 255, 255, 0.92) !important;
+  box-shadow: none !important;
+}
+
+.home-content-feed .job-chip span {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  color: #ffffff !important;
+}
+
+.home-content-feed .job-chip:hover,
+.home-content-feed .job-chip:focus-visible {
+  border-color: rgba(137, 167, 255, 0.52) !important;
+  background: rgba(255, 255, 255, 0.13) !important;
+}
+
+.home-content-feed .job-chip.is-selected {
+  background: linear-gradient(135deg, #7036d6 0%, #1f68d8 100%) !important;
+  border-color: rgba(255, 255, 255, 0.38) !important;
+  color: #ffffff !important;
+}
+
+.home-content-feed .job-chip.is-selected span {
+  background: rgba(255, 255, 255, 0.95) !important;
+  color: #101827 !important;
+}
+
+.home-content-feed .job-chip-next,
+.home-content-feed .featured-recommend-next {
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.28) !important;
+}
+
+.home-content-feed .channel-board-panel,
+.home-content-feed .featured-recommend-panel {
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+    rgba(13, 17, 31, 0.74) !important;
+  box-shadow: none !important;
+}
+
+.home-content-feed .channel-topic-list,
+.home-content-feed .channel-post-card,
+.home-content-feed .featured-recommend-card {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.home-content-feed .feed-heading h2,
+.home-content-feed .featured-recommend-head h2 {
+  color: #ffffff !important;
+}
+
+.home-content-feed .feed-heading a,
+.home-content-feed .featured-recommend-head a,
+.home-content-feed .feed-kicker {
+  color: #a9c9ff !important;
+}
+
+.home-content-feed .video-empty {
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+
+@media (max-width: 720px) {
+  .home-content-feed {
+    width: calc(100vw - 16px);
+    padding: 10px !important;
+    border-radius: 0 0 10px 10px;
+  }
+}
+/* Fix right-side overflow inside the unified layer. */
+.home-content-feed,
+.home-content-feed * {
+  box-sizing: border-box;
+}
+
+.home-content-feed {
+  position: relative;
+  overflow: hidden !important;
+  isolation: isolate;
+}
+
+.home-content-feed > section,
+.home-content-feed .job-selector-section,
+.home-content-feed .channel-board-section,
+.home-content-feed .featured-recommend-section,
+.home-content-feed .youtube-section,
+.home-content-feed .channel-board-panel,
+.home-content-feed .featured-recommend-panel,
+.home-content-feed .dynamic-video-feed,
+.home-content-feed .video-feed {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+
+.home-content-feed .job-chip-slider {
+  position: relative;
+  overflow: hidden !important;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.home-content-feed .job-chip-slider::after {
+  display: none !important;
+}
+
+.home-content-feed .job-chip-row {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  overflow-x: auto !important;
+  padding: 8px 50px 8px 8px !important;
+}
+
+.home-content-feed .job-chip-next {
+  right: 8px !important;
+  background: linear-gradient(135deg, #7036d6 0%, #1f68d8 100%) !important;
+  border-color: rgba(255, 255, 255, 0.28) !important;
+}
+
+.home-content-feed .channel-board-panel {
+  overflow: hidden !important;
+}
+
+.home-content-feed .channel-post-grid,
+.home-content-feed .featured-recommend-row {
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+
+.home-content-feed .channel-post-card,
+.home-content-feed .featured-recommend-card,
+.home-content-feed .video-card {
+  min-width: 0 !important;
+}
+
+.home-content-feed .featured-recommend-panel {
+  overflow: hidden !important;
+}
+
+.home-content-feed .featured-recommend-row {
+  padding-right: 48px !important;
+}
+
+@media (max-width: 1120px) {
+  .home-content-feed .channel-board-panel {
+    grid-template-columns: 1fr !important;
+  }
+
+  .home-content-feed .channel-post-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-content-feed .channel-post-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
