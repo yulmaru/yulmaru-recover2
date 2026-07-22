@@ -3,20 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>회생의 전설 | 부산 회생 익명 문의</title>
+    <title>부산개인회생 | 부산 회생 익명 문의</title>
     <meta
       name="description"
       content="부산 개인회생, 개인파산 정보를 확인하고 로그인 없이 익명 문의를 남길 수 있는 회생의 전설입니다."
     />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="shortcut icon" type="image/png" href="assets/favicon.png" />
+    <link rel="apple-touch-icon" href="assets/favicon.png" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="#home" aria-label="회생의 전설 홈">
-        <span class="brand-mark">회</span>
+      <a class="brand" href="#home" aria-label="부산개인회생 홈">
+        <span class="brand-mark"><img src="assets/yulmaru-logo.png" alt="율마루 로고" /></span>
         <span>
-          <strong>회생의 전설</strong>
-          <small>부산 회생 익명 문의</small>
+          <strong>부산개인회생</strong>
+          <small>법무법인 율마루</small>
         </span>
       </a>
       <button class="menu-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false">
@@ -37,23 +40,12 @@
 
     <main>
       <section id="home" class="hero section page-section">
-        <section class="hero-slider" aria-label="회생의 전설 상단 이미지">
+        <section class="hero-slider hero-static" aria-label="부산개인회생 상단 이미지">
           <div class="hero-slide active" aria-hidden="false">
-            <img src="assets/hero-lawyer-final-subject-flipped-optimized.jpg" alt="임재현 변호사 소개 이미지" />
-          </div>
-          <div class="hero-slide" aria-hidden="true">
-            <img src="assets/hero-lawyer-profile.png" alt="임재현 변호사 프로필 이미지" />
-          </div>
-          <div class="hero-slide" aria-hidden="true">
-            <img src="assets/hero-lawyer-profile-current.png" alt="임재현 변호사 상담 이미지" />
-          </div>
-          <div class="hero-slider-dots" aria-hidden="true">
-            <span class="active"></span>
-            <span></span>
-            <span></span>
+            <img src="assets/hero-face-sample.png" alt="임재현 변호사 부산개인회생 대표 이미지" />
           </div>
         </section>
-        <div class="home-inquiry-layer">
+        <div class="home-inquiry-layer collapsed">
           <section class="recent-inquiries" aria-labelledby="recent-title">
             <section class="chat-card embedded-chat" aria-labelledby="chat-title">
               <div class="chat-head">
@@ -89,309 +81,169 @@
               </form>
             </section>
           </section>
-          <button class="remote-fab" type="button" id="remoteFab" aria-label="익명 문의 리모콘 열기" onclick="window.openRemoteInquiry && window.openRemoteInquiry()">
-            문의
-          </button>
         </div>
 
         <section class="home-content-feed" aria-labelledby="youtube-long-title">
-          <div class="lawyer-brand-profile" aria-labelledby="lawyer-brand-title">
-            <div class="lawyer-brand-photo">
-              <img src="assets/lim-jae-hyun-profile.jpg" alt="임재현 변호사 프로필 사진" />
-              <span>회생의 전설</span>
+          <section class="job-selector-section" aria-label="&#xC0C1;&#xD669;&#xBCC4; &#xC9C1;&#xC5C5;&#xAD70; &#xC120;&#xD0DD;">
+            <div class="job-selector-head">
+              <span>&#xC0C1;&#xD669;&#xBCC4; &#xC120;&#xD0DD;</span>
+              <strong>&#xD574;&#xB2F9;&#xD558;&#xB294; &#xD56D;&#xBAA9;&#xC744; &#xACE8;&#xB77C;&#xBCF4;&#xC138;&#xC694;</strong>
             </div>
-            <div class="lawyer-brand-copy">
-              <p class="lawyer-brand-kicker">부산개인회생 상담</p>
-              <h2 id="lawyer-brand-title">임재현 변호사</h2>
-              <div class="lawyer-brand-meta">
-                <span>법무법인 율마루 대표변호사</span>
-                <span>부산회생법원 파산관재인</span>
-                <span>대한변호사협회 도산 전문변호사</span>
+            <div class="job-chip-slider" data-job-slider>
+              <div class="job-chip-row" role="list" aria-label="&#xC9C1;&#xC5C5;&#xAD70; &#xBC0F; &#xC0C1;&#xD669; &#xC120;&#xD0DD; &#xBC84;&#xD2BC;">
+                <button class="job-chip video-filter-chip" data-video-key="salary" data-video-category="personal" type="button" aria-pressed="false"><span aria-hidden="true">&#x1F4BC;</span>&#xAE09;&#xC5EC;&#xC18C;&#xB4DD;&#xC790;</button>
+                <button class="job-chip video-filter-chip" data-video-key="self-employed" data-video-category="corporate" type="button" aria-pressed="false"><span aria-hidden="true">&#x1F3EA;</span>&#xC790;&#xC601;&#xC5C5;&#xC790;</button>
+                <button class="job-chip video-filter-chip" data-video-key="freelancer" data-video-category="personal" type="button" aria-pressed="false"><span aria-hidden="true">&#x1F58B;</span>&#xD504;&#xB9AC;&#xB79C;&#xC11C;</button>
+                <button class="job-chip video-filter-chip" data-video-key="recent-loan" data-video-category="personal" type="button" aria-pressed="false"><span aria-hidden="true">&#x1F4B3;</span>&#xCD5C;&#xADFC;&#xB300;&#xCD9C;</button>
+                <button class="job-chip video-filter-chip" data-video-key="tax" data-video-category="personal" type="button" aria-pressed="false"><span aria-hidden="true">&#x1F9FE;</span>&#xC138;&#xAE08; &#xCCB4;&#xB0A9;</button>
+                <button class="job-chip video-filter-chip" data-video-key="collection" data-video-category="personal" type="button" aria-pressed="false"><span aria-hidden="true">&#x1F4DE;</span>&#xC555;&#xB958;&middot;&#xCD94;&#xC2EC;</button>
+                <button class="job-chip video-filter-chip" data-video-key="investment" data-video-category="personal" type="button" aria-pressed="false"><span aria-hidden="true">&#x1F4C8;</span>&#xC8FC;&#xC2DD;&middot;&#xCF54;&#xC778;&middot;&#xB3C4;&#xBC15;</button>
+                <button class="job-chip video-filter-chip" data-video-key="real-estate" data-video-category="bankruptcy" type="button" aria-pressed="false"><span aria-hidden="true">&#x1F3E0;</span>&#xBD80;&#xB3D9;&#xC0B0;</button>
+                <button class="job-chip video-filter-chip" data-video-key="car" data-video-category="personal" type="button" aria-pressed="false"><span aria-hidden="true">&#x1F697;</span>&#xC790;&#xB3D9;&#xCC28;</button>
+                <button class="job-chip video-filter-chip" data-video-key="family" data-video-category="personal" type="button" aria-pressed="false"><span aria-hidden="true">&#x1F46A;</span>&#xBC30;&#xC6B0;&#xC790;&middot;&#xAC00;&#xC871;</button>
+                <button class="job-chip video-filter-chip" data-video-key="unemployed" data-video-category="bankruptcy" type="button" aria-pressed="false"><span aria-hidden="true">&#x1F4CD;</span>&#xBB34;&#xC9C1;&#xC790;</button>
+                <button class="job-chip video-filter-chip" data-video-key="senior" data-video-category="bankruptcy" type="button" aria-pressed="false"><span aria-hidden="true">&#x1F9D3;</span>&#xACE0;&#xB839;&#xC790;</button>
+                <button class="job-chip video-filter-chip" data-video-key="illness" data-video-category="bankruptcy" type="button" aria-pressed="false"><span aria-hidden="true">&#x2695;</span>&#xC9C8;&#xBCD1;&middot;&#xC7A5;&#xC560;</button>
+                <button class="job-chip video-filter-chip" data-video-key="basic-aid" data-video-category="bankruptcy" type="button" aria-pressed="false"><span aria-hidden="true">&#x1F91D;</span>&#xAE30;&#xCD08;&#xC0DD;&#xD65C;<br />&#xC218;&#xAE09;&#xC790;</button>
+                <button class="job-chip video-filter-chip" data-video-key="no-income-business" data-video-category="corporate" type="button" aria-pressed="false"><span aria-hidden="true">&#x1F3EC;</span>&#xC18C;&#xB4DD; &#xC5C6;&#xB294; &#xC790;&#xC601;&#xC5C5;&#xC790;</button>
+                <button class="job-chip video-filter-chip" data-video-key="discharge-denial" data-video-category="bankruptcy" type="button" aria-pressed="false"><span aria-hidden="true">&#x26A0;</span>&#xBA74;&#xCC45;&#xBD88;&#xD5C8;&#xAC00;</button>
+                <button class="job-chip video-filter-chip" data-video-key="fraud-debt" data-video-category="bankruptcy" type="button" aria-pressed="false"><span aria-hidden="true">&#x1F6E1;</span>&#xC0AC;&#xAE30;&#xCC44;&#xBB34;&middot;&#xC190;&#xD574;&#xBC30;&#xC0C1;</button>
+                <button class="job-chip video-filter-chip" data-video-key="asset-transfer" data-video-category="personal" type="button" aria-pressed="false"><span aria-hidden="true">&#x1F4E6;</span>&#xC7AC;&#xC0B0; &#xCC98;&#xBD84;</button>
+                <button class="job-chip video-filter-chip" data-video-key="sole-proprietor" data-video-category="corporate" type="button" aria-pressed="false"><span aria-hidden="true">&#x1F4CA;</span>&#xAC1C;&#xC778;&#xC0AC;&#xC5C5;&#xC790;</button>
+                <button class="job-chip video-filter-chip" data-video-key="professional" data-video-category="corporate" type="button" aria-pressed="false"><span aria-hidden="true">&#x1F393;</span>&#xC804;&#xBB38;&#xC9C1;</button>
+                <button class="job-chip video-filter-chip" data-video-key="high-income" data-video-category="personal" type="button" aria-pressed="false"><span aria-hidden="true">&#x1F4B0;</span>&#xACE0;&#xC18C;&#xB4DD;&#xC790;</button>
+                <button class="job-chip video-filter-chip" data-video-key="real-estate-heavy" data-video-category="bankruptcy" type="button" aria-pressed="false"><span aria-hidden="true">&#x1F3D8;</span>&#xBD80;&#xB3D9;&#xC0B0; &#xACFC;&#xB2E4;&#xCC44;&#xBB34;</button>
+                <button class="job-chip video-filter-chip" data-video-key="clinic" data-video-category="corporate" type="button" aria-pressed="false"><span aria-hidden="true">&#x1F3E5;</span>&#xBCD1;&#xC6D0;&middot;&#xC758;&#xC6D0; &#xC6B4;&#xC601;&#xC790;</button>
+                <button class="job-chip video-filter-chip" data-video-key="academy-restaurant" data-video-category="corporate" type="button" aria-pressed="false"><span aria-hidden="true">&#x1F37D;</span>&#xC57D;&#xAD6D;&middot;&#xD559;&#xC6D0;&middot;&#xC74C;&#xC2DD;&#xC810; &#xC6B4;&#xC601;&#xC790;</button>
+                <button class="job-chip video-filter-chip" data-video-key="guarantee" data-video-category="personal" type="button" aria-pressed="false"><span aria-hidden="true">&#x270D;</span>&#xBCF4;&#xC99D;&#xCC44;&#xBB34;</button>
+                <button class="job-chip video-filter-chip" data-video-key="business-failure" data-video-category="corporate" type="button" aria-pressed="false"><span aria-hidden="true">&#x1F4C9;</span>&#xC0AC;&#xC5C5; &#xC2E4;&#xD328;</button>
               </div>
-              <p class="lawyer-brand-text">
-                채무와 독촉으로 막막한 상황을 먼저 정리하고, 개인회생 가능성부터 보정 대응까지
-                필요한 순서대로 안내합니다.
-              </p>
-              <div class="lawyer-brand-actions">
-                <a href="#anonymous">익명 문의하기</a>
-                <a href="#personal">개인회생 알아보기</a>
-              </div>
+              <button class="job-chip-next" type="button" aria-label="&#xC0C1;&#xD669;&#xBCC4; &#xC120;&#xD0DD; &#xC624;&#xB978;&#xCABD;&#xC73C;&#xB85C; &#xBCF4;&#xAE30;" data-job-next>&rsaquo;</button>
             </div>
-          </div>
-          <div class="feed-section threads-section">
-            <div class="feed-heading">
-              <h2>운영 채널</h2>
-            </div>
-            <div class="threads-layout">
-              <aside class="social-profile-grid" aria-label="외부 채널 프로필">
-                <a class="threads-profile-card" href="https://www.threads.com/@k__law_firm?hl=ko" target="_blank" rel="noopener noreferrer">
-                  <div>
-                    <strong>K로펌 🔥 림K</strong>
-                    <p>k__law_firm</p>
-                  </div>
-                  <div class="threads-avatar">K</div>
-                  <span>팔로우</span>
-                </a>
-                <a class="threads-profile-card" href="https://www.instagram.com/yulmaru119/" target="_blank" rel="noopener noreferrer">
-                  <div>
-                    <strong>인스타</strong>
-                    <p>@yulmaru119</p>
-                  </div>
-                  <div class="threads-avatar insta">IN</div>
-                  <span>팔로우</span>
-                </a>
-                <a class="threads-profile-card" href="https://www.tiktok.com/@yulmaru119" target="_blank" rel="noopener noreferrer">
-                  <div>
-                    <strong>틱톡</strong>
-                    <p>@yulmaru119</p>
-                  </div>
-                  <div class="threads-avatar tiktok">TT</div>
-                  <span>보기</span>
-                </a>
-                <a class="threads-profile-card" href="https://www.lawtalk.co.kr/directory/profile/8472-%EC%9E%84%EC%9E%AC%ED%98%84?source=total_n&amp;position=0&amp;sc=normal&amp;scq=%EC%9E%84%EC%9E%AC%ED%98%84%EB%B3%80%ED%98%B8%EC%82%AC&amp;referrer_group=none" target="_blank" rel="noopener noreferrer">
-                  <div>
-                    <strong>로톡</strong>
-                    <p>임재현 변호사</p>
-                  </div>
-                  <div class="threads-avatar lawtalk">LT</div>
-                  <span>상담</span>
-                </a>
-                <a class="threads-profile-card" href="https://www.youtube.com/@legend_of_revival/videos" target="_blank" rel="noopener noreferrer">
-                  <div>
-                    <strong>유튜브</strong>
-                    <p>@legend_of_revival</p>
-                  </div>
-                  <div class="threads-avatar youtube">YT</div>
-                  <span>구독</span>
-                </a>
-                <a class="threads-profile-card" href="https://blog.naver.com/yulma_821" target="_blank" rel="noopener noreferrer">
-                  <div>
-                    <strong>네이버 블로그</strong>
-                    <p>yulma_821</p>
-                  </div>
-                  <div class="threads-avatar naver-blog">B</div>
-                  <span>보기</span>
-                </a>
-                <a class="threads-profile-card" href="https://pf.kakao.com/_xoxgqxan" target="_blank" rel="noopener noreferrer">
-                  <div>
-                    <strong>카톡</strong>
-                    <p>채널 상담</p>
-                  </div>
-                  <div class="threads-avatar kakao">K</div>
-                  <span>채팅</span>
-                </a>
-              </aside>
-            </div>
-          </div>
-          <div class="feed-section">
-            <div class="feed-heading">
-              <h2 id="youtube-long-title">부산개인회생 영상</h2>
-              <a href="https://www.youtube.com/@legend_of_revival?sub_confirmation=1" target="_blank" rel="noopener noreferrer">채널 보기</a>
-            </div>
-            <div class="video-feed long-form-feed">
-              <article class="youtube-card">
-                <div class="thumb">개인회생 신청 전 확인할 것</div>
-                <h3>개인회생 신청 전 이것만 먼저 확인하세요</h3>
-                <p>조회 174 · 1일 전</p>
-              </article>
-              <article class="youtube-card">
-                <div class="thumb">부정적 영향 3가지</div>
-                <h3>개인회생에서 부정적인 영향을 주는 3가지 유형</h3>
-                <p>조회 353 · 2주 전</p>
-              </article>
-              <article class="youtube-card">
-                <div class="thumb">법인회생 절차 완벽 정리</div>
-                <h3>법인회생 절차를 신청부터 종결까지 정리</h3>
-                <p>조회 1.6천 · 2주 전</p>
-              </article>
-              <article class="youtube-card">
-                <div class="thumb">월 변제금 관리</div>
-                <h3>개인회생 월 변제금, 이렇게 관리하세요</h3>
-                <p>조회 486 · 3주 전</p>
-              </article>
-            </div>
-          </div>
+          </section>
 
-          <div class="feed-section">
+          <section class="channel-board-section feed-section" aria-labelledby="channel-board-title">
+            <div class="channel-board-panel">
+              <aside class="channel-topic-list" aria-label="운영 채널 바로가기">
+                <div class="channel-topic-head">
+                  <span>운영 채널</span>
+                  <h2 id="channel-board-title">임재현 변호사 운영 채널</h2>
+                  <p>부산개인회생과 회생·파산 정보를 채널별 콘텐츠로 확인하세요.</p>
+                </div>
+                <a class="channel-topic-pill" href="https://www.youtube.com/@legend_of_revival/videos" target="_blank" rel="noopener noreferrer"><span>YT</span><strong>유튜브</strong><em>영상 보기</em></a>
+                <a class="channel-topic-pill" href="https://www.instagram.com/yulmaru119/" target="_blank" rel="noopener noreferrer"><span>IN</span><strong>인스타그램</strong><em>소식 보기</em></a>
+                <a class="channel-topic-pill" href="https://www.threads.com/@k__law_firm?hl=ko" target="_blank" rel="noopener noreferrer"><span>TH</span><strong>Threads</strong><em>글 모음</em></a>
+                <a class="channel-topic-pill" href="https://blog.naver.com/yulma_821" target="_blank" rel="noopener noreferrer"><span>NB</span><strong>네이버 블로그</strong><em>포스팅 보기</em></a>
+                <a class="channel-topic-pill" href="https://pf.kakao.com/_xoxgqxan" target="_blank" rel="noopener noreferrer"><span>KA</span><strong>카카오톡</strong><em>상담 연결</em></a>
+                <a class="channel-topic-more" href="#board">더 많은 채널 보기</a>
+              </aside>
+
+              <div class="channel-post-grid" aria-label="부산개인회생 주요 콘텐츠">
+                <a class="channel-post-card is-large" href="https://www.youtube.com/@legend_of_revival/videos" target="_blank" rel="noopener noreferrer">
+                  <div class="channel-post-media media-lawyer"><span>부산개인회생</span></div>
+                  <div class="channel-post-body">
+                    <small>회생 정보 · 요건 정리</small>
+                    <h3>개인회생 신청 전, 먼저 확인해야 할 5가지</h3>
+                    <p>소득과 재산, 최근 대출, 압류 여부를 기준으로 상담 전 필요한 내용을 정리합니다.</p>
+                    <div class="channel-post-actions"><span>영상 모음</span><span>댓글 상담</span></div>
+                  </div>
+                </a>
+                <a class="channel-post-card" href="#bankruptcy">
+                  <div class="channel-post-media tone-bankruptcy"><span>개인파산</span></div>
+                  <div class="channel-post-body">
+                    <small>파산 정보 · 요건 검토</small>
+                    <h3>기초생활 수급자라면 파산 검토가 필요한 경우</h3>
+                    <div class="channel-post-actions"><span>조회</span><span>문의</span></div>
+                  </div>
+                </a>
+                <a class="channel-post-card" href="#busan">
+                  <div class="channel-post-media tone-business"><span>자영업자</span></div>
+                  <div class="channel-post-body">
+                    <small>운영 채무 · 정리</small>
+                    <h3>사업자 채무와 세금 체납을 함께 보는 방법</h3>
+                    <div class="channel-post-actions"><span>조회</span><span>문의</span></div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </section>
+
+          <section class="featured-recommend-section feed-section" aria-labelledby="featured-recommend-title">
+            <div class="featured-recommend-panel">
+              <div class="featured-recommend-head">
+                <div>
+                  <span class="featured-recommend-icon">▷</span>
+                  <h2 id="featured-recommend-title">추천 동영상</h2>
+                </div>
+                <a href="https://www.youtube.com/@legend_of_revival/videos" target="_blank" rel="noopener noreferrer">전체 보기</a>
+              </div>
+              <div class="featured-recommend-row" aria-label="추천 동영상 목록">
+                <a class="featured-recommend-card" href="https://www.youtube.com/@legend_of_revival/videos" target="_blank" rel="noopener noreferrer"><div class="featured-recommend-thumb tone-violet"><span>▶</span></div><strong>개인회생 신청 전 확인할 것</strong><p>소득, 재산, 최근 대출을 먼저 정리합니다.</p></a>
+                <a class="featured-recommend-card" href="https://www.youtube.com/@legend_of_revival/videos" target="_blank" rel="noopener noreferrer"><div class="featured-recommend-thumb tone-cyan"><span>▶</span></div><strong>월 변제금이 부담될 때</strong><p>변제금 산정 기준과 조정 가능성을 확인합니다.</p></a>
+                <a class="featured-recommend-card" href="https://www.youtube.com/@legend_of_revival/videos" target="_blank" rel="noopener noreferrer"><div class="featured-recommend-thumb tone-navy"><span>▶</span></div><strong>압류·독촉 대응 순서</strong><p>연락이 계속 오는 상황에서 먼저 챙길 내용을 봅니다.</p></a>
+                <a class="featured-recommend-card" href="https://www.youtube.com/@legend_of_revival/videos" target="_blank" rel="noopener noreferrer"><div class="featured-recommend-thumb tone-purple"><span>▶</span></div><strong>개인파산 검토가 필요한 경우</strong><p>소득이 부족하거나 상환 여력이 낮을 때 검토합니다.</p></a>
+                <a class="featured-recommend-card" href="https://www.youtube.com/@legend_of_revival/videos" target="_blank" rel="noopener noreferrer"><div class="featured-recommend-thumb tone-cyan"><span>▶</span></div><strong>자영업자 채무 정리</strong><p>사업 매출, 세금, 보증채무를 함께 검토합니다.</p></a>
+                <a class="featured-recommend-card" href="https://www.youtube.com/@legend_of_revival/videos" target="_blank" rel="noopener noreferrer"><div class="featured-recommend-thumb tone-violet"><span>▶</span></div><strong>채무조정과 개인회생 차이</strong><p>내 상황에 맞는 절차를 고르는 기준을 확인합니다.</p></a>
+              </div>
+              <button class="featured-recommend-next" type="button" aria-label="추천 동영상 오른쪽으로 보기" data-featured-next>›</button>
+            </div>
+          </section>
+
+          <section class="youtube-section feed-section" data-video-section="long" aria-labelledby="youtube-long-title">
             <div class="feed-heading">
-              <h2>부산개인회생 짧은 영상</h2>
+              <div>
+                <span class="feed-kicker">상황별 선택 하위 콘텐츠</span>
+                <h2 id="youtube-long-title">부산개인회생 롱폼 영상</h2>
+              </div>
+              <a href="https://www.youtube.com/@legend_of_revival/videos" target="_blank" rel="noopener noreferrer">롱폼 보기</a>
+            </div>
+            <div id="longFormFeed" class="video-feed long-form-feed dynamic-video-feed" aria-live="polite"></div>
+          </section>
+
+          <section class="youtube-section feed-section" data-video-section="shorts" aria-labelledby="youtube-shorts-title">
+            <div class="feed-heading">
+              <div>
+                <span class="feed-kicker">짧게 보는 핵심</span>
+                <h2 id="youtube-shorts-title">부산개인회생 숏폼 영상</h2>
+              </div>
               <a href="https://www.youtube.com/@legend_of_revival/shorts" target="_blank" rel="noopener noreferrer">Shorts 보기</a>
             </div>
-            <div class="video-feed short-form-feed">
-              <article class="youtube-card short-card">
-                <div class="thumb">개인회생 부정 영향</div>
-                <h3>개인회생에서 부정적인 영향 주는 유형</h3>
-              </article>
-              <article class="youtube-card short-card">
-                <div class="thumb">법인회생 절차</div>
-                <h3>핵심만 정리하는 법인회생 절차</h3>
-              </article>
-              <article class="youtube-card short-card">
-                <div class="thumb">회생계획안</div>
-                <h3>회생계획안이 인가될 수 있는 조건</h3>
-              </article>
-              <article class="youtube-card short-card">
-                <div class="thumb">조세채권</div>
-                <h3>조세채권이 있을 때 회생 절차 포인트</h3>
-              </article>
-            </div>
-          </div>
+            <div id="shortFormFeed" class="video-feed short-form-feed dynamic-video-feed" aria-live="polite"></div>
+          </section>
 
-          <div class="feed-section">
+
+          <section class="success-preview" aria-labelledby="success-preview-title">
             <div class="feed-heading">
-              <h2>부산개인회생 포스팅</h2>
-              <a href="#board">게시판 바로가기</a>
+              <h2 id="success-preview-title">부산개인회생 성공사례</h2>
+              <a href="#cases">사례 보기</a>
             </div>
-            <div class="post-feed">
-              <article>
-                <span>회생 블로그</span>
-                <h3>부산 개인회생 신청 전 확인해야 할 조건</h3>
-                <p>소득, 재산, 채무 금액을 기준으로 기본 검토 포인트를 정리합니다.</p>
-              </article>
-              <article>
-                <span>회생 정보</span>
-                <h3>개인회생과 개인파산은 어떻게 다를까</h3>
-                <p>두 절차의 차이를 처음 보는 사람도 이해하기 쉽게 설명합니다.</p>
-              </article>
-              <article>
-                <span>사례 정리</span>
-                <h3>독촉과 압류가 시작됐을 때 먼저 확인할 것</h3>
-                <p>진행 중인 절차와 신청 시급성을 판단하는 기준을 다룹니다.</p>
-              </article>
+            <div class="success-list">
+              <article><span>급여소득자</span><strong>압류 전 신청 가능성을 먼저 검토한 사례</strong><p>소득과 채무 규모를 기준으로 변제 가능성을 정리했습니다.</p></article>
+              <article><span>자영업자</span><strong>사업 매출 변동이 큰 상황에서 상담한 사례</strong><p>매출 자료와 세금 체납 여부를 함께 확인했습니다.</p></article>
+              <article><span>최근대출</span><strong>최근 대출이 있는 경우 설명 자료를 준비한 사례</strong><p>대출 사용처와 거래 내역을 중심으로 검토했습니다.</p></article>
             </div>
-            <div class="success-preview">
-              <div class="feed-heading">
-                <h2>부산개인회생 성공사례</h2>
-                <a href="#cases">전체 보기</a>
-              </div>
-              <div class="success-list">
-                <article>
-                  <span>개인회생</span>
-                  <strong>급여소득자 카드채무 조정 사례</strong>
-                  <p>정기 소득과 생활비를 기준으로 변제 가능성을 검토한 사례입니다.</p>
-                </article>
-                <article>
-                  <span>압류 대응</span>
-                  <strong>독촉과 압류 전 상담 진행 사례</strong>
-                  <p>연체 초기 단계에서 신청 가능성과 대응 순서를 정리한 사례입니다.</p>
-                </article>
-                <article>
-                  <span>자영업자</span>
-                  <strong>사업소득 변동이 있는 회생 상담 사례</strong>
-                  <p>매출 변동과 필요 지출을 함께 확인해 방향을 잡은 사례입니다.</p>
-                </article>
-              </div>
+          </section>
+
+          <section class="home-board-preview" aria-labelledby="home-board-title">
+            <div class="feed-heading">
+              <h2 id="home-board-title">문의게시판</h2>
+              <a href="#board">게시판 보기</a>
             </div>
-            <div class="home-board-preview">
-              <div class="feed-heading">
-                <h2>문의 게시판</h2>
-                <a href="#board">전체 보기</a>
-              </div>
-              <div id="homeBoardList" class="home-board-list"></div>
+            <div id="homeBoardList" class="home-board-list" aria-live="polite"></div>
+          </section>
+          <section class="feed-section blog-post-section" aria-labelledby="blog-post-title">
+            <div class="feed-heading">
+              <h2 id="blog-post-title">부산개인회생 포스팅</h2>
+              <a href="https://blog.naver.com/yulma_821" target="_blank" rel="noopener noreferrer">게시판 바로가기</a>
             </div>
-          </div>
+            <div id="blogPostFeed" class="blog-post-feed" aria-live="polite"></div>
+            <div class="blog-post-footer">
+              <button id="blogLoadMore" type="button">포스팅 더 보기</button>
+              <span id="blogPostCount"></span>
+            </div>
+          </section>
         </section>
       </section>
-
-      <section id="anonymous" class="section split-section page-section">
-        <div>
-          <p class="eyebrow">익명 문의</p>
-          <h2>채팅처럼 편하게 쓰지만, 실제로는 게시판 문의글입니다.</h2>
-          <p>
-            회생 문제는 주변에 말하기 어렵고, 처음부터 상담 신청을 남기는 것도 부담스러울 수
-            있습니다. 익명 문의는 이런 부담을 줄이기 위한 기능입니다. 방문자는 말하듯 상황을
-            남기고, 시스템은 그 내용을 문의 게시글로 저장합니다.
-          </p>
-          <div class="detail-block">
-            <h3>작성하면 이렇게 처리됩니다.</h3>
-            <ul class="plain-list">
-              <li>문의 내용은 게시판 글로 등록됩니다.</li>
-              <li>기본값은 비밀글이며, 작성자와 관리자만 확인할 수 있습니다.</li>
-              <li>닉네임과 비밀번호로 나중에 본인 글을 다시 확인합니다.</li>
-              <li>관리자가 답변하면 답변대기 상태가 답변완료로 바뀝니다.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="feature-grid">
-          <article>
-            <span>01</span>
-            <h3>무엇을 적으면 좋나요?</h3>
-            <p>채무 종류, 대략적인 금액, 소득 여부, 연체나 압류 여부를 적으면 답변이 쉬워집니다.</p>
-          </article>
-          <article>
-            <span>02</span>
-            <h3>실명이어야 하나요?</h3>
-            <p>아닙니다. 닉네임으로 작성할 수 있고, 연락처 입력도 필수가 아닙니다.</p>
-          </article>
-          <article>
-            <span>03</span>
-            <h3>어떤 내용은 피해야 하나요?</h3>
-            <p>주민등록번호, 계좌번호, 정확한 직장명, 가족 연락처 같은 민감정보는 남기지 마세요.</p>
-          </article>
-          <article>
-            <span>04</span>
-            <h3>답변은 어디서 보나요?</h3>
-            <p>게시판의 최근 익명 문의 또는 본인이 작성한 글에서 비밀번호 확인 후 볼 수 있습니다.</p>
-          </article>
-        </div>
-      </section>
-
-      <section id="personal" class="section info-band page-section">
-        <p class="eyebrow">개인회생</p>
-        <h2>갚을 수 있는 만큼 갚고, 남은 채무의 면책을 검토받는 절차</h2>
-        <p class="lead-text">
-          개인회생은 빚을 무조건 없애주는 제도가 아닙니다. 일정한 소득이 있는 사람이 법원에
-          변제계획을 제출하고, 정해진 기간 동안 변제한 뒤 남은 채무에 대한 면책을 검토받는
-          절차입니다.
-        </p>
-        <div class="info-columns">
-          <div>
-            <h3>신청 검토 대상</h3>
-            <p>
-              급여소득자, 자영업자, 프리랜서처럼 반복적인 소득이 있는 경우 검토할 수 있습니다.
-              소득이 불규칙하더라도 입금 내역이나 매출 자료로 설명할 수 있는지가 중요합니다.
-            </p>
-          </div>
-          <div>
-            <h3>주요 판단 요소</h3>
-            <p>
-              채무 금액, 재산, 월 소득, 생계비, 부양가족, 최근 대출, 변제 가능 금액을 함께
-              봅니다. 같은 채무 금액이어도 재산과 소득에 따라 결과가 달라질 수 있습니다.
-            </p>
-          </div>
-          <div>
-            <h3>기대할 수 있는 효과</h3>
-            <p>
-              절차가 진행되면 독촉이나 압류 문제에 대한 대응 방향을 잡을 수 있고, 매달 감당 가능한
-              변제계획으로 생활을 다시 정리하는 데 도움을 받을 수 있습니다.
-            </p>
-          </div>
-        </div>
-        <div class="detail-grid">
-          <article>
-            <h3>절차 흐름</h3>
-            <ol class="plain-list ordered">
-              <li>채무, 소득, 재산 상황 정리</li>
-              <li>신청서와 변제계획안 준비</li>
-              <li>법원 접수 후 보정권고 대응</li>
-              <li>개시결정과 채권자 이의 절차</li>
-              <li>인가 후 변제 수행</li>
-              <li>변제 완료 후 면책 검토</li>
-            </ol>
-          </article>
-          <article>
-            <h3>준비하면 좋은 자료</h3>
-            <ul class="plain-list">
-              <li>채권자 목록과 대략적인 채무 금액</li>
-              <li>급여명세서, 통장 입금 내역, 사업 매출 자료</li>
-              <li>부동산, 자동차, 보험 등 재산 관련 자료</li>
-              <li>최근 대출과 카드 사용 내역</li>
-              <li>압류, 독촉, 소송 관련 서류</li>
-            </ul>
-          </article>
-        </div>
-      </section>
-
       <section id="bankruptcy" class="section content-stack page-section">
         <p class="eyebrow">개인파산</p>
         <h2>변제 능력이 부족한 경우 검토하는 별도 절차</h2>
@@ -566,7 +418,7 @@
 
     <footer class="site-footer">
       <div>
-        <strong>회생의 전설</strong>
+        <strong>부산개인회생</strong>
         <p>본 페이지의 정보는 일반 안내이며, 사건별 결과는 달라질 수 있습니다.</p>
       </div>
       <div class="footer-links">
@@ -575,6 +427,10 @@
       </div>
     </footer>
 
+    <script>
+      window.YOUTUBE_API_KEY = "";
+    </script>
+    <script src="assets/naver-blog-posts.js"></script>
     <script src="script.js"></script>
   </body>
 </html>

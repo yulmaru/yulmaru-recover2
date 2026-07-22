@@ -63,12 +63,27 @@ const chatLog = document.querySelector("#chatLog");
 const questionList = document.querySelector("#questionList");
 const homeBoardList = document.querySelector("#homeBoardList");
 const postList = document.querySelector("#postList");
+const blogPostFeed = document.querySelector("#blogPostFeed");
+const blogLoadMore = document.querySelector("#blogLoadMore");
+const blogPostCount = document.querySelector("#blogPostCount");
 const contactForm = document.querySelector("#contactForm");
 const remoteLayer = document.querySelector(".home-inquiry-layer");
 const remoteHideButton = document.querySelector("#remoteHideButton");
 const remoteFab = document.querySelector("#remoteFab");
 const pages = Array.from(document.querySelectorAll(".page-section"));
 const pageLinks = Array.from(document.querySelectorAll('a[href^="#"]'));
+const BLOG_POST_BATCH_SIZE = 24;
+let visibleBlogPostCount = BLOG_POST_BATCH_SIZE;
+
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "\"": "&quot;",
+    "'": "&#039;",
+  })[char]);
+}
 
 function saveQuestions() {
   localStorage.setItem("legendQuestions", JSON.stringify(state.questions));
@@ -226,6 +241,44 @@ function renderQuestions() {
   }
 }
 
+function renderBlogPosts() {
+  if (!blogPostFeed) return;
+  const posts = Array.isArray(window.NAVER_BLOG_POSTS) ? window.NAVER_BLOG_POSTS : [];
+
+  if (!posts.length) {
+    blogPostFeed.innerHTML = `<article><span>네이버 블로그</span><h3>등록된 포스팅이 없습니다.</h3><p>블로그 글을 불러오면 이 영역에 표시됩니다.</p></article>`;
+    if (blogLoadMore) blogLoadMore.hidden = true;
+    if (blogPostCount) blogPostCount.textContent = "";
+    return;
+  }
+
+  const visiblePosts = posts.slice(0, visibleBlogPostCount);
+  blogPostFeed.innerHTML = visiblePosts
+    .map(
+      (post) => `
+        <a class="blog-post-card" href="${escapeHtml(post.link)}" target="_blank" rel="noopener noreferrer">
+          <div class="blog-post-top">
+            <span class="blog-post-category">${escapeHtml(post.category)}</span>
+            <time>${escapeHtml(post.date)}</time>
+          </div>
+          <h3>${escapeHtml(post.title)}</h3>
+          <p>${escapeHtml(post.summary)}</p>
+          <strong>원문 보기</strong>
+        </a>
+      `
+    )
+    .join("");
+
+  if (blogPostCount) {
+    blogPostCount.textContent = `${visiblePosts.length} / ${posts.length}개 표시`;
+  }
+  if (blogLoadMore) {
+    const hasMore = visiblePosts.length < posts.length;
+    blogLoadMore.hidden = !hasMore;
+    blogLoadMore.textContent = hasMore ? `포스팅 ${Math.min(BLOG_POST_BATCH_SIZE, posts.length - visiblePosts.length)}개 더 보기` : "전체 포스팅 표시 완료";
+  }
+}
+
 function renderPosts() {
   const posts = boardPosts[state.activeBoard];
   postList.innerHTML = posts
@@ -290,6 +343,13 @@ quickQuestionForm.addEventListener("submit", (event) => {
   quickQuestionForm.elements.secret.checked = true;
 });
 
+if (blogLoadMore) {
+  blogLoadMore.addEventListener("click", () => {
+    visibleBlogPostCount += BLOG_POST_BATCH_SIZE;
+    renderBlogPosts();
+  });
+}
+
 document.querySelectorAll(".tab").forEach((tab) => {
   tab.addEventListener("click", () => {
     document.querySelectorAll(".tab").forEach((button) => button.classList.remove("active"));
@@ -327,6 +387,233 @@ if (remoteFab) {
   remoteFab.addEventListener("click", openRemoteInquiry);
 }
 
+
+const youtubeVideos = {
+  long: [
+    { title: "개인파산 요건 및 특징 4가지 | 개인회생과 비교, 모르고 신청하면 면책 못 받습니다", category: "bankruptcy", views: "153", published: "4시간 전", url: "https://www.youtube.com/watch?v=20riPnESScQ" },
+    { title: "개인회생 변제금 상승시키는 청산가치? | 청산가치 산입되는 6가지 경우", category: "personal", views: "205", published: "8일 전", url: "https://www.youtube.com/watch?v=6BeheKhvj8g" },
+    { title: "개인워크아웃 신청 전 반드시 보세요 | 개인회생과 비교한 진짜 차이 4가지", category: "personal", views: "1.2천", published: "2주 전", url: "https://www.youtube.com/watch?v=W783G_GkNZk" },
+    { title: "2026년 새출발기금 채무조정 제도 완전 정리 | 소상공인이라면 반드시 확인하세요", category: "personal", views: "877", published: "3주 전", url: "https://www.youtube.com/watch?v=7k2Fp9l-BzY" },
+    { title: "개인회생 신청 전 신복위 먼저 가야 한다? | 채무조정 전치주의 시행되면 생기는 일", category: "personal", views: "", published: "최근", url: "https://www.youtube.com/watch?v=fV26reFSuBI" },
+    { title: "개인회생 신청 전 이것 하면 청산가치 올라갑니다 | 월 변제금 높아지는 5가지 행위", category: "personal", views: "", published: "최근", url: "https://www.youtube.com/watch?v=weBF5DKQbHA" },
+    { title: "개인회생에서 부정적 영향을 주는 3가지 유형", category: "personal", views: "", published: "최근", url: "https://www.youtube.com/watch?v=KQ2F3Ca2_pM" },
+    { title: "법인회생 잘못 밟으면 중간에 폐지됩니다 신청부터 종결까지 12단계 완전 정복", category: "corporate", views: "1.6천", published: "2주 전", url: "https://www.youtube.com/watch?v=zQxxeckZUzY" },
+    { title: "개인회생 월 변제금 이것 모르면 폐지됩니다 | 신청부터 완료까지 단계별 주의사항", category: "personal", views: "", published: "최근", url: "https://www.youtube.com/watch?v=oOs1fblidN4" },
+    { title: "2026년 개인회생 비용 전격 공개 | 개인회생 신청 99,000원?", category: "personal", views: "", published: "최근", url: "https://www.youtube.com/watch?v=hOqu6UliiJY" },
+    { title: "개인회생 단점 4가지 | 신청 전 반드시 알아야 할 것들", category: "personal", views: "9.5천", published: "2개월 전", url: "https://www.youtube.com/watch?v=10EIMUOTxo4" },
+    { title: "개인회생 할 때 체납세금 5,000만 원 탕감 가능!", category: "personal", views: "", published: "최근", url: "https://www.youtube.com/watch?v=MFbX_CLfvHs" },
+    { title: "개인회생 변제계획 1년간 성실히 이행하면?! 신용 회복됩니다!", category: "personal", views: "", published: "최근", url: "https://www.youtube.com/watch?v=_JD3UKCNVWs" },
+    { title: "개인회생·개인파산 전, 이 7가지 하면 기각·면책불허가 된다고?!", category: "bankruptcy", views: "", published: "최근", url: "https://www.youtube.com/watch?v=yFz902TGvlQ" },
+    { title: "개인파산 해도 없어지지 않는 채무 8가지 | 면책 전 반드시 확인하세요", category: "bankruptcy", views: "5.7천", published: "3개월 전", url: "https://www.youtube.com/watch?v=fU1zDYoeWTw" },
+    { title: "개인회생 신청 전 반드시 확인해야 할 5가지 | 모르고 신청하면 손해입니다", category: "personal", views: "901", published: "1개월 전", url: "https://www.youtube.com/watch?v=NHT3-yf9ips" },
+    { title: "개인회생 하면, 연대보증인도 빚 갚아야 하나요?", category: "personal", views: "", published: "최근", url: "https://www.youtube.com/watch?v=_ZPTnApC3_4" },
+    { title: "2026년 추가 생계비 인정 기준 변경 총정리ㅣ개인회생 신청 전 꼭 확인하세요!", category: "personal", views: "", published: "최근", url: "https://www.youtube.com/watch?v=OnBIvi1ZeI0" },
+    { title: "2026년부터 변경된 추가생계비 기준(주거비 편)", category: "personal", views: "", published: "최근", url: "https://www.youtube.com/watch?v=7SDLxEjBu1A" },
+    { title: "법인파산 절차 어떻게 진행될까?ㅣ부산회생법원 기준 9단계 총정리", category: "corporate", views: "2.3천", published: "3개월 전", url: "https://www.youtube.com/watch?v=vNz969x9ag4" },
+    { title: "개인회생하면 집 뺏길까? 변호사가 알려드립니다!", category: "personal", views: "", published: "최근", url: "https://www.youtube.com/watch?v=6hZgTdwdTzU" },
+    { title: "통장 압류 막는 법? 2026년 확 바뀌는 회생 뉴스 3가지", category: "personal", views: "", published: "최근", url: "https://www.youtube.com/watch?v=SU3iZxKAebk" },
+    { title: "[총정리] 신속채무조정 vs 워크아웃 vs 개인회생, 나에게 딱 맞는 제도는?", category: "personal", views: "506", published: "5개월 전", url: "https://www.youtube.com/watch?v=Z79HHb5DLrU" },
+    { title: "개인회생 중 월급이 압류됐다면? (2026년 개정판)", category: "personal", views: "189", published: "6개월 전", url: "https://www.youtube.com/watch?v=8mdAtFL66r0" },
+  ],  shorts: [
+    { title: "개인회생 변제금 상승 이유", category: "personal", views: "474", published: "최근", url: "https://www.youtube.com/shorts/EhEhwJDPALU" },
+    { title: "가족 몰래 개인회생 가능한가요?", category: "personal", views: "497", published: "최근", url: "https://www.youtube.com/shorts/dIAHQJ0rMQc" },
+    { title: "주식·코인 투자 손실도 산정되나요?", category: "personal", views: "1.5천", published: "최근", url: "https://www.youtube.com/shorts/SY7Kh8kxCYQ" },
+    { title: "개인회생 배우자 재산, 청산가치에 들어갈까?", category: "personal", views: "311", published: "최근", url: "https://www.youtube.com/shorts/6DskwJIO-n0" },
+    { title: "개인워크아웃 신청 전 확인", category: "personal", views: "263", published: "최근", url: "https://www.youtube.com/shorts/MK20JcZQzKA" },
+    { title: "법인회생 절차 핵심만 정리", category: "corporate", views: "302", published: "최근", url: "https://www.youtube.com/shorts/XmKNcXo1lgw" },
+    { title: "개인파산 전 알아야 할 면책 포인트", category: "bankruptcy", views: "481", published: "최근", url: "https://www.youtube.com/shorts/P9WVKVER1wM" },
+  ],};
+
+const videoState = {
+  selectedFilters: [],
+};
+
+function formatViewCount(value) {
+  const number = Number(value || 0);
+  if (!number) return "조회수 확인 중";
+  if (number >= 10000) return `${(number / 10000).toFixed(number >= 100000 ? 0 : 1)}만`;
+  if (number >= 1000) return `${(number / 1000).toFixed(number >= 10000 ? 0 : 1)}천`;
+  return String(number);
+}
+
+function formatRelativeTime(value) {
+  const date = value ? new Date(value) : null;
+  if (!date || Number.isNaN(date.getTime())) return "업로드일 확인 중";
+  const diff = Date.now() - date.getTime();
+  const minute = 60 * 1000;
+  const hour = 60 * minute;
+  const day = 24 * hour;
+  const month = 30 * day;
+  const year = 365 * day;
+  if (diff < hour) return `${Math.max(1, Math.floor(diff / minute))}분 전`;
+  if (diff < day) return `${Math.floor(diff / hour)}시간 전`;
+  if (diff < month) return `${Math.floor(diff / day)}일 전`;
+  if (diff < year) return `${Math.floor(diff / month)}개월 전`;
+  return `${Math.floor(diff / year)}년 전`;
+}
+
+function getVideoItems(type) {
+  const selected = videoState.selectedFilters;
+  const items = youtubeVideos[type] || [];
+  if (!selected.length) return items;
+
+  return items.filter((item) => {
+    const tags = getVideoTags(item);
+    return selected.some((filter) => tags.includes(filter.key) || item.category === filter.category);
+  });
+}
+
+
+function getVideoTags(item) {
+  if (Array.isArray(item.tags) && item.tags.length) return item.tags;
+  const title = item.title || "";
+  const tags = new Set();
+
+  if (/급여|월급|직장|소득/.test(title)) tags.add("salary");
+  if (/자영업|사업자|사업장|매출/.test(title)) tags.add("self-employed");
+  if (/프리랜서/.test(title)) tags.add("freelancer");
+  if (/최근대출|대출|새출발/.test(title)) tags.add("recent-loan");
+  if (/세금|조세|생계비/.test(title)) tags.add("tax");
+  if (/압류|추심|독촉|연체|계좌/.test(title)) tags.add("collection");
+  if (/주식|코인|도박|사행/.test(title)) tags.add("investment");
+  if (/부동산|집|재산/.test(title)) tags.add("real-estate");
+  if (/자동차|차량/.test(title)) tags.add("car");
+  if (/배우자|가족|부양/.test(title)) tags.add("family");
+  if (/무직|소득 없/.test(title)) tags.add("unemployed");
+  if (/고령|노령/.test(title)) tags.add("senior");
+  if (/질병|장애|병원/.test(title)) tags.add("illness");
+  if (/기초생활|수급자/.test(title)) tags.add("basic-aid");
+  if (/면책불허|면책|파산|관재/.test(title)) tags.add("discharge-denial");
+  if (/사기|손해배상/.test(title)) tags.add("fraud-debt");
+  if (/처분|청산가치|재산/.test(title)) tags.add("asset-transfer");
+  if (/개인사업자|사업자/.test(title)) tags.add("sole-proprietor");
+  if (/전문직|의사|약사|변호사/.test(title)) tags.add("professional");
+  if (/고소득/.test(title)) tags.add("high-income");
+  if (/부동산.*과다|과다채무/.test(title)) tags.add("real-estate-heavy");
+  if (/병원|의원/.test(title)) tags.add("clinic");
+  if (/약국|학원|음식점/.test(title)) tags.add("academy-restaurant");
+  if (/보증/.test(title)) tags.add("guarantee");
+  if (/법인|기업|폐업|회생절차/.test(title)) tags.add("business-failure");
+
+  if (!tags.size) {
+    if (item.category === "corporate") tags.add("business-failure");
+    if (item.category === "bankruptcy") tags.add("discharge-denial");
+    if (item.category === "personal") tags.add("salary");
+  }
+  return Array.from(tags);
+}
+function getCategoryLabel(category) {
+  return {
+    personal: "01 개인회생",
+    bankruptcy: "02 개인파산",
+    corporate: "03 법인회생·법인파산",
+  }[category] || "상황별";
+}
+
+function getYouTubeVideoId(url) {
+  const match = String(url || "").match(/(?:watch\?v=|youtu\.be\/|shorts\/)([\w-]{11})/);
+  return match ? match[1] : "";
+}
+function renderVideoFeed(type) {
+  const container = document.querySelector(type === "long" ? "#longFormFeed" : "#shortFormFeed");
+  if (!container) return;
+  const items = getVideoItems(type);
+  if (!items.length) {
+    container.innerHTML = `<p class="video-empty">선택한 상황에 맞는 영상이 없습니다. 다른 상황을 선택해보세요.</p>`;
+    return;
+  }
+  container.innerHTML = items
+    .map((item) => {
+      const videoId = getYouTubeVideoId(item.url);
+      const thumbnail = item.thumbnail || (videoId ? `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg` : "");
+      const fallbackThumbnail = videoId ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg` : "";
+      const fallbackAttr = thumbnail && fallbackThumbnail && thumbnail !== fallbackThumbnail
+        ? ` onerror="this.onerror=null;this.src='${fallbackThumbnail}'"`
+        : "";
+      const thumbnailImage = thumbnail
+        ? `<img class="video-thumb-image" src="${escapeHtml(thumbnail)}" alt="${escapeHtml(item.title)} 썸네일" loading="lazy"${fallbackAttr}>`
+        : "";
+      const metaText = `${item.views ? `조회 ${item.views} · ` : ""}${item.published}`;
+
+      return `
+        <a class="youtube-card ${type === "shorts" ? "short-card" : ""}" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" data-category="${escapeHtml(item.category)}">
+          <div class="thumb">${thumbnailImage}</div>
+          <h3>${escapeHtml(item.title)}</h3>
+          <p>${escapeHtml(metaText)}</p>
+        </a>
+      `;
+    })
+    .join("");
+}
+
+function renderVideos() {
+  renderVideoFeed("long");
+  renderVideoFeed("shorts");
+}
+
+async function hydrateYouTubeVideosFromApi() {
+  const apiKey = window.YOUTUBE_API_KEY;
+  if (!apiKey) return;
+  try {
+    const channelResponse = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forHandle=legend_of_revival&key=${apiKey}`);
+    const channelData = await channelResponse.json();
+    const uploads = channelData.items?.[0]?.contentDetails?.relatedPlaylists?.uploads;
+    if (!uploads) return;
+
+    const playlistItems = [];
+    let pageToken = "";
+    do {
+      const tokenParam = pageToken ? `&pageToken=${pageToken}` : "";
+      const playlistResponse = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${uploads}&maxResults=50${tokenParam}&key=${apiKey}`);
+      const playlistData = await playlistResponse.json();
+      playlistItems.push(...(playlistData.items || []));
+      pageToken = playlistData.nextPageToken || "";
+    } while (pageToken);
+
+    const ids = playlistItems.map((item) => item.snippet?.resourceId?.videoId).filter(Boolean);
+    if (!ids.length) return;
+
+    const videoItems = [];
+    for (let index = 0; index < ids.length; index += 50) {
+      const chunk = ids.slice(index, index + 50);
+      const videoResponse = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,contentDetails&id=${chunk.join(",")}&key=${apiKey}`);
+      const videoData = await videoResponse.json();
+      videoItems.push(...(videoData.items || []));
+    }
+
+    const apiItems = videoItems.map((item) => {
+      const title = item.snippet.title;
+      const seconds = parseYouTubeDuration(item.contentDetails?.duration || "PT0S");
+      return {
+        title,
+        category: inferVideoCategory(title),
+        views: formatViewCount(item.statistics?.viewCount),
+        published: formatRelativeTime(item.snippet.publishedAt),
+        thumbnail: item.snippet.thumbnails?.medium?.url || item.snippet.thumbnails?.high?.url,
+        url: `https://www.youtube.com/watch?v=${item.id}`,
+        isShort: seconds > 0 && seconds <= 65,
+      };
+    });
+
+    youtubeVideos.long = apiItems.filter((item) => !item.isShort);
+    youtubeVideos.shorts = apiItems.filter((item) => item.isShort);
+    renderVideos();
+  } catch (error) {
+    console.warn("YouTube API data could not be loaded.", error);
+  }
+}
+
+function parseYouTubeDuration(value) {
+  const match = value.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+  if (!match) return 0;
+  return Number(match[1] || 0) * 3600 + Number(match[2] || 0) * 60 + Number(match[3] || 0);
+}
+
+function inferVideoCategory(title) {
+  if (/법인|기업|사업자|폐업/.test(title)) return "corporate";
+  if (/파산|면책|관재/.test(title)) return "bankruptcy";
+  return "personal";
+}
 function normalizeSocialProfiles() {
   const grid = document.querySelector(".social-profile-grid");
   if (!grid) return;
@@ -400,6 +687,7 @@ function normalizeSocialProfiles() {
 }
 
 normalizeSocialProfiles();
+renderBlogPosts();
 renderPosts();
 renderQuestions();
 showPage(location.hash.replace("#", "") || "home", false);
@@ -408,29 +696,174 @@ window.addEventListener("popstate", () => {
   showPage(location.hash.replace("#", "") || "home", false);
 });
 
-function initHeroSlider() {
-  const slider = document.querySelector(".hero-slider");
-  if (!slider) return;
 
-  const slides = Array.from(slider.querySelectorAll(".hero-slide"));
-  const dots = Array.from(slider.querySelectorAll(".hero-slider-dots span"));
-  if (slides.length <= 1) return;
+function handleVideoFilterSelection(chip) {
+  if (!chip) return;
+  const chips = Array.from(document.querySelectorAll(".video-filter-chip"));
+  const key = chip.dataset.videoKey;
+  const category = chip.dataset.videoCategory;
+  const isSelected = videoState.selectedFilters.some((item) => item.key === key);
 
-  let current = 0;
+  videoState.selectedFilters = isSelected ? [] : [{ key, category }];
 
-  function showSlide(next) {
-    slides[current].classList.remove("active");
-    slides[current].setAttribute("aria-hidden", "true");
-    if (dots[current]) dots[current].classList.remove("active");
-
-    current = next % slides.length;
-
-    slides[current].classList.add("active");
-    slides[current].setAttribute("aria-hidden", "false");
-    if (dots[current]) dots[current].classList.add("active");
-  }
-
-  setInterval(() => showSlide(current + 1), 4200);
+  chips.forEach((item) => {
+    const selected = videoState.selectedFilters.some((filter) => filter.key === item.dataset.videoKey);
+    item.classList.toggle("is-selected", selected);
+    item.setAttribute("aria-pressed", selected ? "true" : "false");
+  });
+  renderVideos();
 }
 
-initHeroSlider();
+function enableDragScroll(selector) {
+  document.querySelectorAll(selector).forEach((scroller) => {
+    let isDown = false;
+    let startX = 0;
+    let lastX = 0;
+    let lastTime = 0;
+    let velocity = 0;
+    let moved = false;
+    let startTarget = null;
+    let momentumFrame = 0;
+    const isSituationScroller = scroller.classList.contains("job-chip-row");
+
+    const stopMomentum = () => {
+      if (momentumFrame) cancelAnimationFrame(momentumFrame);
+      momentumFrame = 0;
+    };
+
+    const glide = () => {
+      if (Math.abs(velocity) < 0.12) {
+        momentumFrame = 0;
+        return;
+      }
+      scroller.scrollLeft -= velocity;
+      velocity *= 0.92;
+      momentumFrame = requestAnimationFrame(glide);
+    };
+
+    scroller.addEventListener("pointerdown", (event) => {
+      if (event.button !== undefined && event.button !== 0) return;
+      stopMomentum();
+      isDown = true;
+      moved = false;
+      startTarget = event.target;
+      startX = event.clientX;
+      lastX = event.clientX;
+      lastTime = performance.now();
+      velocity = 0;
+      scroller.classList.add("is-dragging");
+      scroller.setPointerCapture?.(event.pointerId);
+    });
+
+    scroller.addEventListener("pointermove", (event) => {
+      if (!isDown) return;
+      const now = performance.now();
+      const deltaX = event.clientX - lastX;
+      const totalWalk = event.clientX - startX;
+      const elapsed = Math.max(now - lastTime, 16);
+
+      if (Math.abs(totalWalk) > 5) {
+        moved = true;
+        event.preventDefault();
+      }
+
+      scroller.scrollLeft -= deltaX;
+      velocity = (deltaX / elapsed) * 16;
+      lastX = event.clientX;
+      lastTime = now;
+    });
+
+    ["pointerup", "pointercancel", "pointerleave"].forEach((eventName) => {
+      scroller.addEventListener(eventName, (event) => {
+        if (!isDown) return;
+        isDown = false;
+        scroller.classList.remove("is-dragging");
+        scroller.releasePointerCapture?.(event.pointerId);
+
+        if (eventName === "pointerup" && isSituationScroller && !moved) {
+          const chip = startTarget?.closest?.(".video-filter-chip");
+          handleVideoFilterSelection(chip);
+          return;
+        }
+
+        if (moved) glide();
+      });
+    });
+
+    scroller.addEventListener("click", (event) => {
+      if (!moved) return;
+      event.preventDefault();
+      event.stopPropagation();
+    }, true);
+  });
+}
+function initJobChipSliderControls() {
+  document.querySelectorAll("[data-job-slider]").forEach((slider) => {
+    const scroller = slider.querySelector(".job-chip-row");
+    const nextButton = slider.querySelector("[data-job-next]");
+    if (!scroller || !nextButton) return;
+
+    const update = () => {
+      const maxScroll = scroller.scrollWidth - scroller.clientWidth;
+      const canScroll = maxScroll > 4;
+      const atEnd = scroller.scrollLeft >= maxScroll - 3;
+      slider.classList.toggle("is-scroll-locked", !canScroll);
+      slider.classList.toggle("is-at-end", canScroll && atEnd);
+      nextButton.disabled = !canScroll || atEnd;
+    };
+
+    nextButton.addEventListener("click", () => {
+      const maxScroll = scroller.scrollWidth - scroller.clientWidth;
+      const distance = Math.max(scroller.clientWidth * 0.82, 300);
+      scroller.scrollTo({
+        left: Math.min(scroller.scrollLeft + distance, maxScroll),
+        behavior: "smooth"
+      });
+    });
+
+    scroller.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    requestAnimationFrame(update);
+  });
+}
+function initFeaturedRecommendControls() {
+  const panel = document.querySelector(".featured-recommend-panel");
+  const scroller = panel?.querySelector(".featured-recommend-row");
+  const nextButton = panel?.querySelector("[data-featured-next]");
+  if (!panel || !scroller || !nextButton) return;
+
+  const update = () => {
+    const maxScroll = scroller.scrollWidth - scroller.clientWidth;
+    const canScroll = maxScroll > 4;
+    const atEnd = scroller.scrollLeft >= maxScroll - 3;
+    nextButton.disabled = !canScroll || atEnd;
+  };
+
+  nextButton.addEventListener("click", () => {
+    const maxScroll = scroller.scrollWidth - scroller.clientWidth;
+    const distance = Math.max(scroller.clientWidth * 0.78, 260);
+    scroller.scrollTo({
+      left: Math.min(scroller.scrollLeft + distance, maxScroll),
+      behavior: "smooth"
+    });
+  });
+
+  scroller.addEventListener("scroll", update, { passive: true });
+  window.addEventListener("resize", update);
+  requestAnimationFrame(update);
+}
+function initJobChips() {
+  document.querySelectorAll(".video-filter-chip").forEach((chip) => {
+    chip.setAttribute("aria-pressed", "false");
+  });
+}
+
+renderVideos();
+hydrateYouTubeVideosFromApi();
+initJobChips();
+initJobChipSliderControls();
+initFeaturedRecommendControls();
+enableDragScroll(".job-chip-row");
+enableDragScroll(".short-form-feed.dynamic-video-feed");
+enableDragScroll(".long-form-feed.dynamic-video-feed");
+enableDragScroll(".featured-recommend-row");
