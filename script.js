@@ -520,7 +520,7 @@ function renderFeaturedRecommendVideos() {
 
   const items = getVideoItems("long").slice(0, 12);
   if (!items.length) {
-    row.innerHTML = `<p class="video-empty">표시할 부산개인회생 롱폼 영상이 없습니다.</p>`;
+    row.innerHTML = `<p class="video-empty">표시할 추천 동영상이 없습니다.</p>`;
     return;
   }
 
@@ -535,13 +535,17 @@ function renderFeaturedRecommendVideos() {
       const thumbnailImage = thumbnail
         ? `<img src="${escapeHtml(thumbnail)}" alt="${escapeHtml(item.title)} 썸네일" loading="lazy"${fallbackAttr}>`
         : "";
-      const metaText = `${item.views ? `조회 ${item.views} · ` : ""}${item.published}`;
+      const sourceText = `회생의 전설 · ${item.published}`;
+      const viewText = item.views ? `조회 ${item.views}` : "";
 
       return `
         <a class="featured-recommend-card" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" data-category="${escapeHtml(item.category)}">
           <div class="featured-recommend-thumb">${thumbnailImage}<span>▶</span></div>
-          <strong>${escapeHtml(item.title)}</strong>
-          <p>${escapeHtml(metaText)}</p>
+          <div class="featured-recommend-copy">
+            <span class="featured-recommend-source">${escapeHtml(sourceText)}</span>
+            <strong>${escapeHtml(item.title)}</strong>
+            ${viewText ? `<p>${escapeHtml(viewText)}</p>` : ""}
+          </div>
         </a>
       `;
     })
@@ -549,42 +553,8 @@ function renderFeaturedRecommendVideos() {
 
   row.dispatchEvent(new Event("scroll"));
 }
-function renderVideoFeed(type) {
-  const container = document.querySelector(type === "long" ? "#longFormFeed" : "#shortFormFeed");
-  if (!container) return;
-  const items = getVideoItems(type);
-  if (!items.length) {
-    container.innerHTML = `<p class="video-empty">선택한 상황에 맞는 영상이 없습니다. 다른 상황을 선택해보세요.</p>`;
-    return;
-  }
-  container.innerHTML = items
-    .map((item) => {
-      const videoId = getYouTubeVideoId(item.url);
-      const thumbnail = item.thumbnail || (videoId ? `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg` : "");
-      const fallbackThumbnail = videoId ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg` : "";
-      const fallbackAttr = thumbnail && fallbackThumbnail && thumbnail !== fallbackThumbnail
-        ? ` onerror="this.onerror=null;this.src='${fallbackThumbnail}'"`
-        : "";
-      const thumbnailImage = thumbnail
-        ? `<img class="video-thumb-image" src="${escapeHtml(thumbnail)}" alt="${escapeHtml(item.title)} 썸네일" loading="lazy"${fallbackAttr}>`
-        : "";
-      const metaText = `${item.views ? `조회 ${item.views} · ` : ""}${item.published}`;
-
-      return `
-        <a class="youtube-card ${type === "shorts" ? "short-card" : ""}" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" data-category="${escapeHtml(item.category)}">
-          <div class="thumb">${thumbnailImage}</div>
-          <h3>${escapeHtml(item.title)}</h3>
-          <p>${escapeHtml(metaText)}</p>
-        </a>
-      `;
-    })
-    .join("");
-}
-
 function renderVideos() {
   renderFeaturedRecommendVideos();
-  renderVideoFeed("long");
-  renderVideoFeed("shorts");
 }
 
 async function hydrateYouTubeVideosFromApi() {
@@ -865,25 +835,33 @@ function initJobChipSliderControls() {
 function initFeaturedRecommendControls() {
   const panel = document.querySelector(".featured-recommend-panel");
   const scroller = panel?.querySelector(".featured-recommend-row");
+  const prevButton = panel?.querySelector("[data-featured-prev]");
   const nextButton = panel?.querySelector("[data-featured-next]");
-  if (!panel || !scroller || !nextButton) return;
+  if (!panel || !scroller || !prevButton || !nextButton) return;
+
+  const getMaxScroll = () => Math.max(0, scroller.scrollWidth - scroller.clientWidth);
 
   const update = () => {
-    const maxScroll = scroller.scrollWidth - scroller.clientWidth;
+    const maxScroll = getMaxScroll();
     const canScroll = maxScroll > 4;
+    const atStart = scroller.scrollLeft <= 3;
     const atEnd = scroller.scrollLeft >= maxScroll - 3;
+    panel.classList.toggle("is-featured-scrollable", canScroll);
+    prevButton.disabled = !canScroll || atStart;
     nextButton.disabled = !canScroll || atEnd;
   };
 
-  nextButton.addEventListener("click", () => {
-    const maxScroll = scroller.scrollWidth - scroller.clientWidth;
+  const move = (direction) => {
+    const maxScroll = getMaxScroll();
     const distance = Math.max(scroller.clientWidth * 0.78, 260);
     scroller.scrollTo({
-      left: Math.min(scroller.scrollLeft + distance, maxScroll),
+      left: Math.min(Math.max(scroller.scrollLeft + direction * distance, 0), maxScroll),
       behavior: "smooth"
     });
-  });
+  };
 
+  prevButton.addEventListener("click", () => move(-1));
+  nextButton.addEventListener("click", () => move(1));
   scroller.addEventListener("scroll", update, { passive: true });
   window.addEventListener("resize", update);
   requestAnimationFrame(update);
@@ -900,6 +878,4 @@ initJobChips();
 initJobChipSliderControls();
 initFeaturedRecommendControls();
 enableDragScroll(".job-chip-row");
-enableDragScroll(".short-form-feed.dynamic-video-feed");
-enableDragScroll(".long-form-feed.dynamic-video-feed");
 enableDragScroll(".featured-recommend-row");
