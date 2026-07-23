@@ -514,6 +514,41 @@ function getYouTubeVideoId(url) {
   const match = String(url || "").match(/(?:watch\?v=|youtu\.be\/|shorts\/)([\w-]{11})/);
   return match ? match[1] : "";
 }
+function renderFeaturedRecommendVideos() {
+  const row = document.querySelector("[data-featured-video-row]");
+  if (!row) return;
+
+  const items = getVideoItems("long").slice(0, 12);
+  if (!items.length) {
+    row.innerHTML = `<p class="video-empty">표시할 부산개인회생 롱폼 영상이 없습니다.</p>`;
+    return;
+  }
+
+  row.innerHTML = items
+    .map((item) => {
+      const videoId = getYouTubeVideoId(item.url);
+      const thumbnail = item.thumbnail || (videoId ? `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg` : "");
+      const fallbackThumbnail = videoId ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg` : "";
+      const fallbackAttr = thumbnail && fallbackThumbnail && thumbnail !== fallbackThumbnail
+        ? ` onerror="this.onerror=null;this.src='${fallbackThumbnail}'"`
+        : "";
+      const thumbnailImage = thumbnail
+        ? `<img src="${escapeHtml(thumbnail)}" alt="${escapeHtml(item.title)} 썸네일" loading="lazy"${fallbackAttr}>`
+        : "";
+      const metaText = `${item.views ? `조회 ${item.views} · ` : ""}${item.published}`;
+
+      return `
+        <a class="featured-recommend-card" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" data-category="${escapeHtml(item.category)}">
+          <div class="featured-recommend-thumb">${thumbnailImage}<span>▶</span></div>
+          <strong>${escapeHtml(item.title)}</strong>
+          <p>${escapeHtml(metaText)}</p>
+        </a>
+      `;
+    })
+    .join("");
+
+  row.dispatchEvent(new Event("scroll"));
+}
 function renderVideoFeed(type) {
   const container = document.querySelector(type === "long" ? "#longFormFeed" : "#shortFormFeed");
   if (!container) return;
@@ -547,6 +582,7 @@ function renderVideoFeed(type) {
 }
 
 function renderVideos() {
+  renderFeaturedRecommendVideos();
   renderVideoFeed("long");
   renderVideoFeed("shorts");
 }
