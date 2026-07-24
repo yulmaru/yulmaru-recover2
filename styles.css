@@ -2235,6 +2235,274 @@ select:focus {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+/* Integrated lawyer profile views inside index.html. */
+.lawyer-detail-page {
+  --profile-layer: #10172b;
+  --profile-layer-soft: #161f36;
+  --profile-line: rgba(158, 181, 255, 0.22);
+  --profile-muted: #aebbd9;
+  min-height: calc(100vh - 64px);
+  background:
+    radial-gradient(circle at 12% 10%, rgba(135, 56, 214, 0.16), transparent 30%),
+    radial-gradient(circle at 92% 18%, rgba(21, 157, 218, 0.14), transparent 28%),
+    #080d1d;
+  color: #f7f9ff;
+  padding: 24px 16px 32px;
+}
+
+.lawyer-detail-shell {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+}
+
+.lawyer-detail-back {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(158, 181, 255, 0.24);
+  border-radius: 999px;
+  background: rgba(16, 23, 43, 0.82);
+  color: #dbe7ff;
+  padding: 7px 13px;
+  font-size: 12px;
+  font-weight: 850;
+  text-decoration: none;
+}
+
+.lawyer-detail-back:hover,
+.lawyer-detail-back:focus-visible {
+  border-color: rgba(117, 185, 255, 0.62);
+  background: rgba(34, 48, 85, 0.94);
+  outline: none;
+}
+
+.lawyer-detail-page .profile-hero {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.88fr) minmax(0, 1.12fr);
+  overflow: hidden;
+  border: 1px solid var(--profile-line);
+  border-radius: 16px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.04), transparent),
+    var(--profile-layer);
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.34);
+}
+
+.lawyer-detail-page .profile-photo {
+  position: relative;
+  min-height: 540px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #7f35cf, #1d8bd8);
+}
+
+.lawyer-detail-page .profile-photo > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.lawyer-detail-page .profile-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(6, 10, 24, 0.56), transparent 40%);
+  pointer-events: none;
+}
+
+.lawyer-detail-page .profile-photo-copy {
+  position: absolute;
+  right: 24px;
+  bottom: 22px;
+  left: 24px;
+  z-index: 2;
+}
+
+.lawyer-detail-page .profile-photo-copy small {
+  display: block;
+  margin-bottom: 5px;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lawyer-detail-page .profile-photo-copy h1 {
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(28px, 4vw, 46px);
+  line-height: 1.06;
+}
+
+.lawyer-detail-page .profile-photo-copy h1 span {
+  font-size: 0.58em;
+  font-weight: 650;
+}
+
+.lawyer-detail-page .profile-content {
+  display: grid;
+  align-content: start;
+  gap: 20px;
+  padding: clamp(26px, 4vw, 46px);
+}
+
+.lawyer-detail-page .profile-intro {
+  margin: 0;
+  color: #dce6ff;
+  font-size: clamp(16px, 1.6vw, 21px);
+  font-weight: 800;
+  line-height: 1.55;
+}
+
+.lawyer-detail-page .profile-description {
+  margin: -8px 0 0;
+  color: var(--profile-muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.lawyer-detail-page .profile-section {
+  border-top: 1px solid var(--profile-line);
+  padding-top: 17px;
+}
+
+.lawyer-detail-page .profile-section h2 {
+  margin: 0 0 12px;
+  color: #c5d8ff;
+  font-size: 17px;
+}
+
+.lawyer-detail-page .profile-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lawyer-detail-page .profile-list li {
+  position: relative;
+  color: rgba(242, 246, 255, 0.88);
+  padding-left: 15px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.lawyer-detail-page .profile-list li::before {
+  content: "◆";
+  position: absolute;
+  top: 1px;
+  left: 0;
+  color: #75b9ff;
+  font-size: 7px;
+}
+
+.lawyer-detail-page .profile-practice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.lawyer-detail-page .profile-practice-grid span {
+  border: 1px solid rgba(135, 174, 255, 0.2);
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(128, 61, 218, 0.16), rgba(27, 128, 207, 0.12));
+  color: rgba(245, 248, 255, 0.9);
+  padding: 10px 11px;
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.lawyer-detail-page .profile-related {
+  margin-top: 16px;
+  border: 1px solid var(--profile-line);
+  border-radius: 16px;
+  background: var(--profile-layer);
+  padding: 18px;
+}
+
+.lawyer-detail-page .profile-related h2 {
+  margin: 0 0 12px;
+  color: #ffffff;
+  font-size: 17px;
+}
+
+.lawyer-detail-page .profile-related-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.lawyer-detail-page .profile-related-card {
+  display: grid;
+  gap: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(151, 176, 255, 0.2);
+  border-radius: 11px;
+  background: var(--profile-layer-soft);
+  color: #f7f9ff;
+  padding: 7px;
+  text-decoration: none;
+}
+
+.lawyer-detail-page .profile-related-card:hover,
+.lawyer-detail-page .profile-related-card:focus-visible,
+.lawyer-detail-page .profile-related-card.is-current {
+  border-color: rgba(120, 181, 255, 0.62);
+  background: linear-gradient(135deg, rgba(128, 61, 218, 0.2), rgba(27, 128, 207, 0.18));
+  outline: none;
+}
+
+.lawyer-detail-page .profile-related-card img {
+  width: 100%;
+  aspect-ratio: 1.75;
+  border-radius: 8px;
+  object-fit: cover;
+  object-position: center 18%;
+}
+
+.lawyer-detail-page .profile-related-card strong {
+  font-size: 12px;
+}
+
+.lawyer-detail-page .profile-related-card span {
+  color: var(--profile-muted);
+  font-size: 10px;
+}
+
+@media (max-width: 860px) {
+  .lawyer-detail-page .profile-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .lawyer-detail-page .profile-photo {
+    min-height: min(72vw, 520px);
+  }
+
+  .lawyer-detail-page .profile-related-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .lawyer-detail-page {
+    padding: 14px 10px 24px;
+  }
+
+  .lawyer-detail-page .profile-content {
+    padding: 22px 18px;
+  }
+
+  .lawyer-detail-page .profile-practice-grid,
+  .lawyer-detail-page .profile-related-grid {
+    grid-template-columns: 1fr;
+  }
+}
 /* Restored home feed modules. */
 .job-selector-section {
   display: grid;
@@ -2758,7 +3026,17 @@ select:focus {
   border: 1px solid rgba(255, 255, 255, 0.74);
   border-radius: 6px;
   color: #d8edff;
-  font-size: 11px;
+  background: rgba(55, 122, 222, 0.18);
+}
+
+.featured-recommend-icon svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
 }
 
 .featured-recommend-head h2 {
@@ -5105,11 +5383,24 @@ select:focus {
   inset: auto 0 0 0;
   height: 62%;
   background: linear-gradient(180deg, rgba(11, 14, 25, 0), rgba(11, 14, 25, 0.92));
+  z-index: 1;
+  pointer-events: none;
+}
+
+.personal-news-image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(0.92) contrast(1.04);
 }
 
 .personal-news-thumb span {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: inline-flex;
   align-items: center;
   min-height: 28px;
@@ -5334,6 +5625,91 @@ select:focus {
 .tone-news-18 .personal-news-thumb { background-image: linear-gradient(135deg, #18376d, #0ea3c8) !important; }
 .tone-news-19 .personal-news-thumb { background-image: linear-gradient(135deg, #7b36d8, #1b557b) !important; }
 .tone-news-20 .personal-news-thumb { background-image: linear-gradient(135deg, #1f68d8, #5430b6) !important; }
+
+/* Criminal case cards: two pages of eight cards with button and drag navigation. */
+.personal-news-carousel {
+  position: relative;
+  overflow: hidden;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.case-carousel-track {
+  display: flex;
+  width: 100%;
+  transition: transform 360ms cubic-bezier(.2, .75, .2, 1);
+}
+
+.case-carousel-page {
+  flex: 0 0 100%;
+  width: 100%;
+}
+
+.case-carousel-prev,
+.case-carousel-next {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid rgba(192, 222, 255, .86);
+  border-radius: 50%;
+  background: linear-gradient(145deg, #723bdf, #188bdf);
+  box-shadow: 0 7px 18px rgba(4, 11, 37, .48);
+  color: #fff;
+  cursor: pointer;
+  font-size: 31px;
+  font-weight: 400;
+  line-height: 1;
+  transform: translateY(-50%);
+  transition: transform 180ms ease, filter 180ms ease;
+}
+
+.case-carousel-prev {
+  left: 9px;
+}
+
+.case-carousel-next {
+  right: 9px;
+}
+
+.case-carousel-prev:hover,
+.case-carousel-prev:focus-visible,
+.case-carousel-next:hover,
+.case-carousel-next:focus-visible {
+  filter: brightness(1.14);
+  outline: 2px solid rgba(182, 225, 255, .88);
+  outline-offset: 2px;
+  transform: translateY(-50%) scale(1.08);
+}
+
+.personal-news-carousel.is-dragging {
+  cursor: grabbing;
+}
+
+.personal-news-carousel.is-dragging a {
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .case-carousel-prev,
+  .case-carousel-next {
+    top: 50%;
+    width: 34px;
+    height: 34px;
+    font-size: 27px;
+  }
+
+  .case-carousel-prev {
+    left: 6px;
+  }
+
+  .case-carousel-next {
+    right: 6px;
+  }
+}
 
 /* Remove the lower large card photo and restore its text layout. */
 .home-content-feed .channel-post-card.is-large {
@@ -6055,6 +6431,13 @@ input[data-phone-input].is-phone-invalid:focus {
   overflow: hidden;
   border-radius: 8px;
   background: #151b2a;
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+.home-content-feed .channel-side-carousel.is-dragging {
+  cursor: grabbing;
+  user-select: none;
 }
 
 .home-content-feed .channel-side-track {
@@ -6187,6 +6570,25 @@ input[data-phone-input].is-phone-invalid:focus {
   .home-content-feed .channel-side-dots span {
     transition: none !important;
   }
+}
+
+/* Shared navy layer between the gradient header and dark footer. */
+body.is-navy-page,
+body.is-navy-page main {
+  background:
+    radial-gradient(circle at 14% 3%, rgba(112, 54, 214, 0.32), transparent 34%),
+    radial-gradient(circle at 86% 4%, rgba(25, 179, 225, 0.20), transparent 30%),
+    linear-gradient(135deg, #101423 0%, #171a31 48%, #0d1328 100%);
+}
+
+body.is-navy-page main {
+  min-height: calc(100vh - 74px);
+}
+
+body.is-navy-page .lawyer-detail-page,
+body.is-navy-page .directions-page,
+body.is-navy-page .criminal-case-detail {
+  background: transparent !important;
 }
 
 /* Distribute footer information across the same width as the content layer above. */
@@ -6389,66 +6791,117 @@ input[data-phone-input].is-phone-invalid:focus {
   line-height: 1;
 }
 
-.lead-consult-fab {
+.lead-consult-fab,
+.lead-phone-fab {
   position: fixed;
   right: clamp(18px, 2.4vw, 34px);
-  bottom: clamp(20px, 3vw, 34px);
   z-index: 89;
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
   width: 92px;
   height: 92px;
   overflow: hidden;
   isolation: isolate;
   border: 1px solid rgba(255, 255, 255, 0.52);
   border-radius: 50%;
-  background:
-    radial-gradient(circle at 30% 22%, rgba(255, 255, 255, 0.28), transparent 34%),
-    linear-gradient(110deg, #b138d5 0%, #7b43df 28%, #514cdb 48%, #297fe3 72%, #1db5e0 100%);
+  background: linear-gradient(110deg, #b138d5 0%, #7b43df 28%, #514cdb 48%, #297fe3 72%, #1db5e0 100%);
   background-size: 180% 180%;
   box-shadow:
     0 16px 38px rgba(30, 65, 202, 0.42),
     0 0 0 5px rgba(91, 101, 255, 0.14);
   color: #ffffff;
   cursor: pointer;
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 950;
-  line-height: 1.18;
+  line-height: 1.12;
   text-align: center;
+  text-decoration: none;
   transition: transform 160ms ease, filter 160ms ease, opacity 160ms ease;
+}
+
+.lead-consult-fab {
+  bottom: clamp(20px, 3vw, 34px);
+  animation:
+    lead-consult-gradient 5.4s ease-in-out infinite,
+    lead-consult-glow 2.8s ease-in-out infinite;
+}
+
+.lead-phone-fab {
+  bottom: calc(clamp(20px, 3vw, 34px) + 108px);
   animation:
     lead-consult-gradient 5.4s ease-in-out infinite,
     lead-consult-glow 2.8s ease-in-out infinite;
 }
 
 .lead-consult-fab::before {
-  content: "";
-  position: absolute;
-  top: -30%;
-  bottom: -30%;
-  left: -46%;
-  z-index: 1;
-  width: 34%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.34), transparent);
-  transform: translateX(-180%) rotate(18deg);
-  animation: lead-consult-shine 3.8s ease-in-out infinite;
-  pointer-events: none;
+  content: none;
+  display: none;
 }
 
-.lead-consult-fab > span {
+.lead-phone-fab::before {
+  content: none;
+  display: none;
+}
+
+.lead-consult-fab > span,
+.lead-phone-fab > span {
   position: relative;
   z-index: 2;
 }
 
+.lead-fab-icon {
+  display: grid;
+  place-items: center;
+}
+
+.lead-fab-icon-inquiry {
+  width: 31px;
+  height: 31px;
+}
+
+.lead-fab-icon-inquiry svg {
+  width: 29px;
+  height: 29px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.lead-fab-icon-phone {
+  font-family: Arial, sans-serif;
+  font-size: 31px;
+  line-height: 1;
+}
+
+.lead-fab-label {
+  font-size: 12px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
 .lead-consult-fab:hover,
-.lead-consult-fab:focus-visible {
+.lead-consult-fab:focus-visible,
+.lead-phone-fab:hover,
+.lead-phone-fab:focus-visible {
   filter: brightness(1.1);
   transform: translateY(-3px);
+  outline: none;
 }
 
 .hero-lead-section.is-open + .lead-consult-fab {
   opacity: 0;
   pointer-events: none;
+}
+
+.hero-lead-section.is-open ~ .lead-phone-fab {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px) scale(0.92);
 }
 
 @keyframes lead-consult-gradient {
@@ -6486,6 +6939,57 @@ input[data-phone-input].is-phone-invalid:focus {
   }
 }
 
+@keyframes lead-phone-float {
+  0%,
+  100% {
+    transform: translateY(0);
+    box-shadow:
+      0 16px 38px rgba(54, 57, 205, 0.38),
+      0 0 0 5px rgba(126, 64, 225, 0.14);
+  }
+  50% {
+    transform: translateY(-5px);
+    box-shadow:
+      0 22px 44px rgba(29, 151, 224, 0.48),
+      0 0 0 5px rgba(42, 150, 229, 0.12);
+  }
+}
+
+@keyframes lead-phone-ring {
+  0%,
+  72%,
+  100% {
+    transform: rotate(0deg);
+  }
+  78% {
+    transform: rotate(-12deg);
+  }
+  84% {
+    transform: rotate(11deg);
+  }
+  90% {
+    transform: rotate(-7deg);
+  }
+  96% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes lead-phone-ripple {
+  0%,
+  62% {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  70% {
+    opacity: 0.52;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.22);
+  }
+}
+
 @keyframes hero-lead-panel-in {
   from {
     opacity: 0;
@@ -6519,7 +7023,15 @@ input[data-phone-input].is-phone-invalid:focus {
     bottom: 18px;
     width: 78px;
     height: 78px;
-    font-size: 15px;
+    font-size: 13px;
+  }
+
+  .lead-phone-fab {
+    right: 16px;
+    bottom: 108px;
+    width: 78px;
+    height: 78px;
+    font-size: 13px;
   }
 }
 
@@ -6540,7 +7052,10 @@ input[data-phone-input].is-phone-invalid:focus {
   }
 
   .lead-consult-fab,
-  .lead-consult-fab::before {
+  .lead-consult-fab::before,
+  .lead-phone-fab,
+  .lead-phone-fab::before,
+  .lead-fab-icon-phone {
     animation: none;
   }
 }
@@ -6679,6 +7194,18 @@ body.is-home-view .site-header {
   white-space: nowrap;
 }
 
+/* Keep footer labels as single, readable lines even when the layout narrows. */
+.footer-brand-heading,
+.footer-brand-copy {
+  min-width: max-content;
+}
+
+.footer-brand-block strong,
+.footer-site-links-title strong {
+  white-space: nowrap;
+  word-break: keep-all;
+}
+
 /* Related-site shortcuts in the open right side of the footer. */
 .footer-quick-column {
   position: relative;
@@ -6735,6 +7262,7 @@ body.is-home-view .site-header {
 .footer-site-links {
   position: relative;
   align-self: start;
+  min-width: 166px;
   overflow: visible;
   border: 1px solid rgba(255, 255, 255, 0.34);
   border-radius: 10px;
@@ -7474,6 +8002,13 @@ body.is-home-view .site-header {
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.06),
     0 12px 26px rgba(0, 0, 0, 0.20);
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+.home-content-feed .channel-info-carousel.is-dragging {
+  cursor: grabbing;
+  user-select: none;
 }
 
 .home-content-feed .channel-info-track {
@@ -7552,6 +8087,15 @@ body.is-home-view .site-header {
   font-weight: 850;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* Keep the full row above the carousel surface so every item remains clickable. */
+.home-content-feed .channel-info-slide.is-active .channel-info-row,
+.home-content-feed .channel-info-slide.is-active .channel-lawyer-card {
+  position: relative;
+  z-index: 3;
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 .home-content-feed .channel-info-row-icon {
@@ -7665,6 +8209,392 @@ body.is-home-view .site-header {
   white-space: nowrap;
 }
 
+/* Single-document directions view */
+.directions-page {
+  min-height: calc(100vh - 74px);
+  padding: clamp(34px, 5vw, 68px) clamp(18px, 5vw, 72px) 72px;
+  background: #1f1f1f;
+  color: #ffffff;
+}
+
+.directions-page.active-page {
+  display: block;
+}
+
+.directions-shell {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+}
+
+.directions-heading {
+  margin-bottom: 24px;
+}
+
+.directions-heading .eyebrow {
+  margin: 0 0 7px;
+  color: #78c7ff;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.directions-heading h1 {
+  margin: 0;
+  font-size: clamp(30px, 4vw, 48px);
+  line-height: 1.08;
+}
+
+.directions-heading > p:last-child {
+  margin: 12px 0 0;
+  color: rgba(225, 233, 255, 0.72);
+  font-size: 14px;
+}
+
+.directions-layout {
+  display: grid;
+  grid-template-columns: minmax(210px, 280px) minmax(0, 1fr);
+  gap: 16px;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  background: #252525;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 18px 36px rgba(0, 0, 0, 0.24);
+}
+
+.directions-branch-list {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+
+.directions-branch {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  background: #303030;
+  color: #ffffff;
+  padding: 8px 11px;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.directions-branch:hover,
+.directions-branch:focus-visible {
+  border-color: rgba(108, 183, 255, 0.72);
+  background: #343434;
+  outline: none;
+  transform: translateX(2px);
+}
+
+.directions-branch.is-active {
+  border-color: rgba(143, 195, 255, 0.78);
+  background:
+    linear-gradient(100deg, rgba(177, 56, 213, 0.68), rgba(29, 181, 224, 0.62)),
+    #303030;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.directions-branch span {
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.directions-branch small {
+  overflow: hidden;
+  color: rgba(231, 238, 255, 0.78);
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.directions-map-card {
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 13px;
+  background: #252525;
+}
+
+.directions-map-frame {
+  position: relative;
+  min-height: 500px;
+  overflow: hidden;
+  background: #e9edf3;
+}
+
+.directions-map-frame iframe {
+  display: block;
+  /* Crop Naver's built-in search and edge-control panels; keep only the map. */
+  width: calc(100% + 1100px);
+  max-width: none;
+  height: 500px;
+  border: 0;
+  background: #ffffff;
+  transform: translateX(-735px);
+}
+
+.directions-map-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 16px 18px;
+  background: #252525;
+}
+
+.directions-map-info small {
+  color: #78c7ff;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.directions-map-info h2 {
+  margin: 3px 0 5px;
+  color: #ffffff;
+  font-size: 20px;
+}
+
+.directions-map-info p {
+  margin: 0;
+  color: rgba(228, 235, 255, 0.76);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.directions-map-link {
+  flex: 0 0 auto;
+  border: 1px solid rgba(136, 192, 255, 0.44);
+  border-radius: 10px;
+  background: linear-gradient(100deg, #7141dc, #168fd1);
+  color: #ffffff;
+  padding: 11px 14px;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.directions-map-link:hover,
+.directions-map-link:focus-visible {
+  filter: brightness(1.12);
+  outline: 2px solid rgba(135, 207, 255, 0.72);
+  outline-offset: 2px;
+}
+
+@media (max-width: 760px) {
+  .directions-page {
+    padding: 28px 10px 46px;
+  }
+
+  .directions-layout {
+    grid-template-columns: 1fr;
+    padding: 9px;
+  }
+
+  .directions-branch-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .directions-branch {
+    grid-template-columns: 1fr;
+    gap: 2px;
+    min-height: 54px;
+  }
+
+  .directions-map-frame,
+  .directions-map-frame iframe {
+    min-height: 420px;
+    height: 420px;
+  }
+
+  .directions-map-info {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .directions-map-link {
+    text-align: center;
+  }
+}
+
+/* Single-document criminal case post view. */
+.criminal-case-detail {
+  min-height: calc(100vh - 74px);
+  padding: clamp(30px, 5vw, 68px) clamp(18px, 5vw, 72px) 72px;
+  background: #1f1f1f;
+  color: #ffffff;
+}
+
+.criminal-case-detail.active-page {
+  display: block;
+}
+
+.criminal-case-shell {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+}
+
+.criminal-case-back {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+  background: #303030;
+  color: #ffffff;
+  padding: 0 13px;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.criminal-case-back:hover,
+.criminal-case-back:focus-visible {
+  border-color: rgba(117, 190, 255, 0.8);
+  background: #363636;
+  outline: none;
+}
+
+.criminal-case-article {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.9fr) minmax(0, 1.1fr);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  background: #252525;
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.25);
+}
+
+.criminal-case-image-wrap {
+  min-height: 570px;
+  background: #111111;
+}
+
+.criminal-case-image-wrap img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 570px;
+  object-fit: cover;
+}
+
+.criminal-case-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(26px, 4vw, 54px);
+}
+
+.criminal-case-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 14px;
+  color: rgba(231, 239, 255, 0.76);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.criminal-case-meta span:first-child {
+  border-radius: 999px;
+  background: linear-gradient(100deg, rgba(177, 56, 213, 0.78), rgba(29, 181, 224, 0.7));
+  color: #ffffff;
+  padding: 5px 9px;
+}
+
+.criminal-case-meta span:last-child {
+  align-self: center;
+}
+
+.criminal-case-copy h1 {
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(30px, 4vw, 48px);
+  letter-spacing: -0.04em;
+  line-height: 1.13;
+}
+
+.criminal-case-lead {
+  margin: 18px 0 24px;
+  color: rgba(236, 241, 255, 0.86);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.75;
+}
+
+.criminal-case-content {
+  display: grid;
+  gap: 14px;
+}
+
+.criminal-case-content section {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 14px;
+}
+
+.criminal-case-content h2 {
+  margin: 0 0 7px;
+  color: #8cd2ff;
+  font-size: 15px;
+}
+
+.criminal-case-content p {
+  margin: 0;
+  color: rgba(238, 242, 255, 0.76);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.criminal-case-contact {
+  align-self: flex-start;
+  margin-top: 26px;
+  border: 1px solid rgba(186, 218, 255, 0.68);
+  border-radius: 10px;
+  background: linear-gradient(100deg, #b138d5, #514cdb 48%, #1db5e0);
+  color: #ffffff;
+  padding: 12px 17px;
+  font-size: 13px;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.criminal-case-contact:hover,
+.criminal-case-contact:focus-visible {
+  filter: brightness(1.1);
+  outline: 2px solid rgba(135, 207, 255, 0.72);
+  outline-offset: 2px;
+}
+
+@media (max-width: 760px) {
+  .criminal-case-detail {
+    padding: 24px 10px 46px;
+  }
+
+  .criminal-case-article {
+    grid-template-columns: 1fr;
+  }
+
+  .criminal-case-image-wrap,
+  .criminal-case-image-wrap img {
+    min-height: 310px;
+    height: 310px;
+  }
+
+  .criminal-case-copy {
+    padding: 26px 18px 30px;
+  }
+
+  .criminal-case-copy h1 {
+    font-size: 31px;
+  }
+}
+
 .home-content-feed .channel-info-pagination {
   position: absolute;
   bottom: 9px;
@@ -7682,43 +8612,32 @@ body.is-home-view .site-header {
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
   transform: translateX(-50%);
   backdrop-filter: blur(8px);
-  pointer-events: auto;
   isolation: isolate;
 }
 
 .home-content-feed .channel-info-pagination button {
   position: relative;
-  display: grid;
-  flex: 0 0 18px;
-  width: 18px;
-  height: 18px;
-  place-items: center;
-  border: 0;
-  border-radius: 50%;
-  background: transparent;
-  padding: 0;
-  cursor: pointer;
-  touch-action: manipulation;
-}
-
-.home-content-feed .channel-info-pagination button::before {
-  content: "";
   display: block;
+  flex: 0 0 6px;
   width: 6px;
   height: 6px;
+  border: 0;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.42);
+  padding: 0;
+  cursor: pointer;
   transition: width 220ms ease, background 220ms ease, box-shadow 220ms ease;
 }
 
-.home-content-feed .channel-info-pagination button.is-active::before {
+.home-content-feed .channel-info-pagination button.is-active {
+  flex-basis: 14px;
   width: 14px;
   background: #77c9ff;
   box-shadow: 0 0 8px rgba(75, 153, 255, 0.70);
 }
 
 .home-content-feed .channel-info-pagination button:focus-visible {
-  outline: 2px solid #ffffff;
+  outline: 1px solid #ffffff;
   outline-offset: 3px;
 }
 
@@ -7953,4 +8872,128 @@ body.is-home-view .site-header {
     margin-top: 8px;
     transform: none;
   }
+}
+
+/* Compact the floating lead form to one horizontal row on responsive screens. */
+@media (max-width: 720px) {
+  .hero-lead-section.is-open {
+    grid-template-columns: minmax(80px, 0.85fr) minmax(0, 4.15fr);
+    gap: 6px;
+    align-items: center;
+    padding: 7px 34px 7px 8px;
+  }
+
+  .hero-lead-copy {
+    display: flex;
+    align-items: baseline;
+    flex-direction: row;
+    gap: 3px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .hero-lead-copy > span {
+    flex: 0 0 auto;
+    font-size: 8px;
+    letter-spacing: 0;
+  }
+
+  .hero-lead-copy > strong {
+    overflow: hidden;
+    font-size: 10px;
+    line-height: 1.1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .hero-lead-copy > small {
+    display: none;
+  }
+
+  .hero-lead-form {
+    display: grid;
+    grid-template-columns:
+      minmax(42px, 0.62fr)
+      minmax(66px, 1fr)
+      minmax(72px, 1.1fr)
+      minmax(48px, 0.7fr);
+    gap: 4px;
+    align-items: center;
+  }
+
+  .hero-lead-form > label:not(.hero-lead-privacy) {
+    display: block;
+  }
+
+  .hero-lead-form > label:not(.hero-lead-privacy) > span {
+    display: none;
+  }
+
+  .hero-lead-form input:not([type="checkbox"]),
+  .hero-lead-form select,
+  .hero-lead-form > button {
+    width: 100%;
+    height: 34px;
+    min-width: 0;
+    border-radius: 6px;
+    padding: 0 6px;
+    font-size: 10px;
+  }
+
+  .hero-lead-form select {
+    padding-right: 18px;
+  }
+
+  .hero-lead-privacy,
+  .hero-lead-status {
+    display: none !important;
+  }
+
+  .hero-lead-close {
+    top: 50%;
+    right: 6px;
+    width: 24px;
+    height: 24px;
+    font-size: 17px;
+    transform: translateY(-50%);
+  }
+}
+
+@media (max-width: 430px) {
+  .hero-lead-section.is-open {
+    grid-template-columns: 62px minmax(0, 1fr);
+    gap: 4px;
+    padding-left: 6px;
+  }
+
+  .hero-lead-copy > span {
+    display: none;
+  }
+
+  .hero-lead-copy > strong {
+    font-size: 9px;
+  }
+
+  .hero-lead-form {
+    grid-template-columns:
+      minmax(38px, 0.62fr)
+      minmax(58px, 1fr)
+      minmax(64px, 1.1fr)
+      minmax(44px, 0.72fr);
+    gap: 3px;
+  }
+
+  .hero-lead-form input:not([type="checkbox"]),
+  .hero-lead-form select,
+  .hero-lead-form > button {
+    padding-inline: 4px;
+    font-size: 9px;
+  }
+}
+
+/* Keep every full-page view on the same navy layer as the board. */
+body.is-navy-page .lawyer-detail-page,
+body.is-navy-page .directions-page,
+body.is-navy-page .criminal-case-detail {
+  background: transparent !important;
 }

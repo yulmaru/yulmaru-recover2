@@ -30,17 +30,16 @@
       <nav class="main-nav" aria-label="주요 메뉴">
         <a href="#home">홈</a>
         <details class="nav-lawyer-menu">
-          <summary>형사전문변호사</summary>
+          <summary data-open-lawyer-page>형사 전문변호사</summary>
           <div class="nav-lawyer-dropdown">
-            <a href="lawyer-im-jae-hyun.html">임재현 변호사</a>
-            <a href="lawyer-park-sang-jun.html">박상준 변호사</a>
-            <a href="lawyer-moon-ji-young.html">문지영 변호사</a>
-            <a href="lawyer-lee-ju-won.html">이주원 변호사</a>
+            <a href="#lawyer-im-jae-hyun">임재현 변호사</a>
+            <a href="#lawyer-park-sang-jun">박상준 변호사</a>
+            <a href="#lawyer-moon-ji-young">문지영 변호사</a>
+            <a href="#lawyer-lee-ju-won">이주원 변호사</a>
           </div>
         </details>
-        <a href="#bankruptcy">콘텐츠</a>
         <a href="#board">게시판</a>
-        <a href="#office-location" data-open-office-location>오시는 길</a>
+        <a href="#directions">오시는 길</a>
         <a class="nav-cta" href="#contact">신청 하기</a>
       </nav>
     </header>
@@ -117,8 +116,13 @@
           aria-controls="heroLeadPanel"
           aria-expanded="false"
         >
-          <span>상담<br />신청</span>
+          <span class="lead-fab-icon lead-fab-icon-inquiry" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="3" y="5.5" width="18" height="13" rx="2.5"></rect><path d="m4 7 8 6 8-6"></path></svg></span>
+          <span class="lead-fab-label">문의 하기</span>
         </button>
+        <a class="lead-phone-fab" href="tel:18006419" aria-label="송무 대표번호 1800-6419로 전화 연결">
+          <span class="lead-fab-icon lead-fab-icon-phone" aria-hidden="true">☎</span>
+          <span class="lead-fab-label">전화 연결</span>
+        </a>
         <div class="home-inquiry-layer collapsed">
           <section class="recent-inquiries" aria-labelledby="recent-title">
             <section class="chat-card embedded-chat" aria-labelledby="chat-title">
@@ -211,7 +215,7 @@
                       <strong>변호사 소개</strong>
                     </header>
                     <div class="channel-lawyer-grid">
-                      <a class="channel-lawyer-card" href="lawyer-im-jae-hyun.html" target="_blank" rel="noopener noreferrer">
+                      <a class="channel-lawyer-card" href="#lawyer-im-jae-hyun">
                         <img src="assets/lawyer-im-jae-hyun.webp" alt="임재현 변호사">
                         <span>
                           <strong>임재현 변호사</strong>
@@ -219,7 +223,7 @@
                         </span>
                         <b aria-hidden="true">+</b>
                       </a>
-                      <a class="channel-lawyer-card" href="lawyer-park-sang-jun.html" target="_blank" rel="noopener noreferrer">
+                      <a class="channel-lawyer-card" href="#lawyer-park-sang-jun">
                         <img src="assets/lawyer-park-sang-jun.webp" alt="박상준 변호사">
                         <span>
                           <strong>박상준 변호사</strong>
@@ -227,7 +231,7 @@
                         </span>
                         <b aria-hidden="true">+</b>
                       </a>
-                      <a class="channel-lawyer-card" href="lawyer-moon-ji-young.html" target="_blank" rel="noopener noreferrer">
+                      <a class="channel-lawyer-card" href="#lawyer-moon-ji-young">
                         <img src="assets/lawyer-moon-ji-young.webp" alt="문지영 변호사">
                         <span>
                           <strong>문지영 변호사</strong>
@@ -235,7 +239,7 @@
                         </span>
                         <b aria-hidden="true">+</b>
                       </a>
-                      <a class="channel-lawyer-card" href="lawyer-lee-ju-won.html" target="_blank" rel="noopener noreferrer">
+                      <a class="channel-lawyer-card" href="#lawyer-lee-ju-won">
                         <img src="assets/lawyer-lee-ju-won.webp" alt="이주원 변호사">
                         <span>
                           <strong>이주원 변호사</strong>
@@ -252,19 +256,19 @@
                       <strong>오시는 길</strong>
                     </header>
                     <div class="channel-info-list channel-location-list">
-                      <div class="channel-info-row"><strong>서울 서초점</strong><span>서초중앙로 156</span></div>
-                      <div class="channel-info-row"><strong>부산 명지점</strong><span>명지국제2로 80</span></div>
-                      <div class="channel-info-row"><strong>부산 센텀점</strong><span>센텀중앙로 97</span></div>
-                      <div class="channel-info-row"><strong>부산 서면점</strong><span>중앙대로 754</span></div>
-                      <div class="channel-info-row"><strong>경남 창원점</strong><span>창이대로689번길 4-16</span></div>
+                      <a class="channel-info-row" href="#directions" data-office-branch="seocho"><strong>서울 서초점</strong><span>서초중앙로 156</span></a>
+                      <a class="channel-info-row" href="#directions" data-office-branch="myeongji"><strong>부산 명지점</strong><span>명지국제2로 80</span></a>
+                      <a class="channel-info-row" href="#directions" data-office-branch="centum"><strong>부산 센텀점</strong><span>센텀중앙로 97</span></a>
+                      <a class="channel-info-row" href="#directions" data-office-branch="seomyeon"><strong>부산 서면점</strong><span>중앙대로 754</span></a>
+                      <a class="channel-info-row" href="#directions" data-office-branch="changwon"><strong>경남 창원점</strong><span>창이대로689번길 4-16</span></a>
                     </div>
                   </section>
                 </div>
 
-                <div class="channel-info-pagination" role="tablist" aria-label="안내 페이지 선택">
-                  <button class="is-active" type="button" role="tab" data-channel-info-dot aria-label="운영 채널 페이지" aria-controls="operating-channels" aria-selected="true"></button>
-                  <button type="button" role="tab" data-channel-info-dot aria-label="변호사 소개 페이지" aria-controls="lawyer-intro" aria-selected="false"></button>
-                  <button type="button" role="tab" data-channel-info-dot aria-label="오시는 길 페이지" aria-controls="office-location" aria-selected="false"></button>
+                <div class="channel-info-pagination" aria-label="운영 정보 레이어 선택">
+                  <button class="is-active" type="button" data-channel-info-dot aria-label="운영 채널 보기" aria-pressed="true"></button>
+                  <button type="button" data-channel-info-dot aria-label="변호사 소개 보기" aria-pressed="false"></button>
+                  <button type="button" data-channel-info-dot aria-label="오시는 길 보기" aria-pressed="false"></button>
                 </div>
               </aside>
 
@@ -370,100 +374,128 @@
                   </div>
                 </section>
               </div>
-              <div class="personal-news-grid">
+              <div class="personal-news-carousel" data-case-carousel aria-label="형사 사건 사례 목록">
+              <div class="personal-news-grid" data-case-grid>
                 <article class="personal-news-card tone-news-1">
-                  <a href="criminal-case.html?case=detention-cancel" target="_blank" rel="noopener noreferrer">
-                    <div class="personal-news-thumb"><span>구속 대응</span></div>
+                  <a href="#case-detention-cancel">
+                    <div class="personal-news-thumb">
+                      <img class="personal-news-image" src="assets/criminal-detention-response.webp" alt="한국 경찰 유치장으로 이동하는 구속 피의자의 뒷모습" />
+                      <span>구속 대응</span>
+                    </div>
                     <div class="personal-news-body">
                       <p class="personal-news-meta"><span>형사 사건 사례</span><span>최근</span></p>
                       <h3>구속취소 사건</h3>
-                      <div class="personal-news-actions"><span>사건 보기</span><span>새 창 ↗</span></div>
+                      <div class="personal-news-actions"><span>사건 보기</span><span>자세히 보기 ↗</span></div>
                     </div>
                   </a>
                 </article>
                 <article class="personal-news-card tone-news-2">
-                  <a href="criminal-case.html?case=quasi-rape-dismissal" target="_blank" rel="noopener noreferrer">
-                    <div class="personal-news-thumb"><span>성범죄</span></div>
+                  <a href="#case-quasi-rape-dismissal">
+                    <div class="personal-news-thumb">
+                      <img class="personal-news-image" src="assets/criminal-quasi-rape-dismissal.webp" alt="한국 오피스텔 내부의 사건 정황을 표현한 현장 이미지" />
+                      <span>성범죄</span>
+                    </div>
                     <div class="personal-news-body">
                       <p class="personal-news-meta"><span>형사 사건 사례</span><span>최근</span></p>
                       <h3>준강간 공소기각 사건</h3>
-                      <div class="personal-news-actions"><span>사건 보기</span><span>새 창 ↗</span></div>
+                      <div class="personal-news-actions"><span>사건 보기</span><span>자세히 보기 ↗</span></div>
                     </div>
                   </a>
                 </article>
                 <article class="personal-news-card tone-news-3">
-                  <a href="criminal-case.html?case=drunk-driving-probation" target="_blank" rel="noopener noreferrer">
-                    <div class="personal-news-thumb"><span>교통범죄</span></div>
+                  <a href="#case-drunk-driving-probation">
+                    <div class="personal-news-thumb">
+                      <img class="personal-news-image" src="assets/criminal-traffic-collision.webp" alt="한국 도심 교차로에서 충돌해 파손된 차량 두 대" />
+                      <span>교통범죄</span>
+                    </div>
                     <div class="personal-news-body">
                       <p class="personal-news-meta"><span>형사 사건 사례</span><span>2일 전</span></p>
                       <h3>음주운전 집행유예 사건</h3>
-                      <div class="personal-news-actions"><span>사건 보기</span><span>새 창 ↗</span></div>
+                      <div class="personal-news-actions"><span>사건 보기</span><span>자세히 보기 ↗</span></div>
                     </div>
                   </a>
                 </article>
                 <article class="personal-news-card tone-news-4">
-                  <a href="criminal-case.html?case=voice-phishing-no-charge" target="_blank" rel="noopener noreferrer">
-                    <div class="personal-news-thumb"><span>보이스피싱</span></div>
+                  <a href="#case-voice-phishing-no-charge">
+                    <div class="personal-news-thumb">
+                      <img class="personal-news-image" src="assets/criminal-voice-phishing.webp" alt="전화하는 보이스피싱범의 입과 은행 현금인출 장면" />
+                      <span>보이스피싱</span>
+                    </div>
                     <div class="personal-news-body">
                       <p class="personal-news-meta"><span>형사 사건 사례</span><span>3일 전</span></p>
                       <h3>보이스피싱 무혐의 사건</h3>
-                      <div class="personal-news-actions"><span>사건 보기</span><span>새 창 ↗</span></div>
+                      <div class="personal-news-actions"><span>사건 보기</span><span>자세히 보기 ↗</span></div>
                     </div>
                   </a>
                 </article>
                 <article class="personal-news-card tone-news-5">
-                  <a href="criminal-case.html?case=sexual-crime-non-transfer" target="_blank" rel="noopener noreferrer">
-                    <div class="personal-news-thumb"><span>성범죄</span></div>
+                  <a href="#case-sexual-crime-non-transfer">
+                    <div class="personal-news-thumb">
+                      <img class="personal-news-image" src="assets/criminal-sex-crime-non-referral.webp" alt="한국 오피스텔 복도의 CCTV 시점 사건 정황 이미지" />
+                      <span>성범죄</span>
+                    </div>
                     <div class="personal-news-body">
                       <p class="personal-news-meta"><span>형사 사건 사례</span><span>최근</span></p>
                       <h3>성범죄 불송치 사건</h3>
-                      <div class="personal-news-actions"><span>사건 보기</span><span>새 창 ↗</span></div>
+                      <div class="personal-news-actions"><span>사건 보기</span><span>자세히 보기 ↗</span></div>
                     </div>
                   </a>
                 </article>
                 <article class="personal-news-card tone-news-6">
-                  <a href="criminal-case.html?case=fraud-acquittal" target="_blank" rel="noopener noreferrer">
-                    <div class="personal-news-thumb"><span>재산범죄</span></div>
+                  <a href="#case-fraud-acquittal">
+                    <div class="personal-news-thumb">
+                      <img class="personal-news-image" src="assets/criminal-fraud-acquittal.webp" alt="한국 소규모 사업장에서 계약서와 송금 내역을 확인하는 거래 현장" />
+                      <span>재산범죄</span>
+                    </div>
                     <div class="personal-news-body">
                       <p class="personal-news-meta"><span>형사 사건 사례</span><span>4일 전</span></p>
                       <h3>사기 혐의 무죄 사건</h3>
-                      <div class="personal-news-actions"><span>사건 보기</span><span>새 창 ↗</span></div>
+                      <div class="personal-news-actions"><span>사건 보기</span><span>자세히 보기 ↗</span></div>
                     </div>
                   </a>
                 </article>
                 <article class="personal-news-card tone-news-7">
-                  <a href="criminal-case.html?case=assault-deferred-prosecution" target="_blank" rel="noopener noreferrer">
-                    <div class="personal-news-thumb"><span>폭력범죄</span></div>
+                  <a href="#case-assault-deferred-prosecution">
+                    <div class="personal-news-thumb">
+                      <img class="personal-news-image" src="assets/criminal-assault-deferred.webp" alt="한국 식당가 골목에 남은 폭행 사건 이후의 현장 정황" />
+                      <span>폭력범죄</span>
+                    </div>
                     <div class="personal-news-body">
                       <p class="personal-news-meta"><span>형사 사건 사례</span><span>5일 전</span></p>
                       <h3>폭행·상해 기소유예 사건</h3>
-                      <div class="personal-news-actions"><span>사건 보기</span><span>새 창 ↗</span></div>
+                      <div class="personal-news-actions"><span>사건 보기</span><span>자세히 보기 ↗</span></div>
                     </div>
                   </a>
                 </article>
                 <article class="personal-news-card tone-news-8">
-                  <a href="criminal-case.html?case=drug-probation" target="_blank" rel="noopener noreferrer">
-                    <div class="personal-news-thumb"><span>마약범죄</span></div>
+                  <a href="#case-drug-probation">
+                    <div class="personal-news-thumb">
+                      <img class="personal-news-image" src="assets/criminal-drug-probation.webp" alt="한국 원룸에서 마약 관련 증거물을 수거하는 현장" />
+                      <span>마약범죄</span>
+                    </div>
                     <div class="personal-news-body">
                       <p class="personal-news-meta"><span>형사 사건 사례</span><span>6일 전</span></p>
                       <h3>마약 투약 집행유예 사건</h3>
-                      <div class="personal-news-actions"><span>사건 보기</span><span>새 창 ↗</span></div>
+                      <div class="personal-news-actions"><span>사건 보기</span><span>자세히 보기 ↗</span></div>
                     </div>
                   </a>
                 </article>
+              </div>
+              <button class="case-carousel-prev" type="button" data-case-prev aria-label="이전 형사 사건 사례 8개 보기">&lsaquo;</button>
+              <button class="case-carousel-next" type="button" data-case-next aria-label="다음 형사 사건 사례 8개 보기">&rsaquo;</button>
               </div>
               <section class="featured-recommend-section feed-section news-video-row" aria-labelledby="featured-recommend-title">
                 <div class="featured-recommend-panel">
                   <div class="featured-recommend-head">
                     <div>
-                      <span class="featured-recommend-icon">▷</span>
-                      <h2 id="featured-recommend-title">추천 동영상</h2>
+                      <span class="featured-recommend-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="3" y="6" width="12" height="12" rx="2"></rect><path d="m15 10 5-3v10l-5-3z"></path></svg></span>
+                      <h2 id="featured-recommend-title">동영상</h2>
                     </div>
                     <a href="https://www.youtube.com/@yulmaru_g/videos" target="_blank" rel="noopener noreferrer">전체 보기</a>
                   </div>
-                  <button class="featured-recommend-nav featured-recommend-prev" type="button" aria-label="추천 동영상 왼쪽으로 보기" data-featured-prev>‹</button>
-                  <div class="featured-recommend-row" aria-label="추천 동영상 목록" data-featured-video-row></div>
-                  <button class="featured-recommend-nav featured-recommend-next" type="button" aria-label="추천 동영상 오른쪽으로 보기" data-featured-next>›</button>
+                  <button class="featured-recommend-nav featured-recommend-prev" type="button" aria-label="동영상 왼쪽으로 보기" data-featured-prev>‹</button>
+                  <div class="featured-recommend-row" aria-label="동영상 목록" data-featured-video-row></div>
+                  <button class="featured-recommend-nav featured-recommend-next" type="button" aria-label="동영상 오른쪽으로 보기" data-featured-next>›</button>
                 </div>
               </section>
             </div>
@@ -611,7 +643,8 @@
           </p>
         </div>
         <div class="tabs" role="tablist" aria-label="게시판 카테고리">
-          <button class="tab active" type="button" data-board="notice">공지사항</button>
+          <button class="tab active" type="button" data-board="all">전체</button>
+          <button class="tab" type="button" data-board="notice">공지사항</button>
           <button class="tab" type="button" data-board="blog">회생 블로그</button>
           <button class="tab" type="button" data-board="youtube">유튜브</button>
           <button class="tab" type="button" data-board="review">후기/경험 공유</button>
@@ -694,6 +727,283 @@
           <p class="form-submit-status" id="contactFormStatus" aria-live="polite"></p>
         </form>
       </section>
+
+      <section id="directions" class="page-section directions-page" aria-labelledby="directions-title">
+        <div class="directions-shell">
+          <header class="directions-heading">
+            <p class="eyebrow">법무법인 율마루</p>
+            <h1 id="directions-title">오시는 길</h1>
+            <p>방문하실 지점을 선택하면 네이버지도와 상세 주소를 확인할 수 있습니다.</p>
+          </header>
+
+          <div class="directions-layout">
+            <nav class="directions-branch-list" aria-label="법무법인 율마루 지점 선택">
+              <button class="directions-branch is-active" type="button" data-office-branch="seocho" aria-pressed="true">
+                <span>서울 서초점</span><small>서초중앙로 156</small>
+              </button>
+              <button class="directions-branch" type="button" data-office-branch="myeongji" aria-pressed="false">
+                <span>부산 명지점</span><small>명지국제2로 80</small>
+              </button>
+              <button class="directions-branch" type="button" data-office-branch="centum" aria-pressed="false">
+                <span>부산 센텀점</span><small>센텀중앙로 97</small>
+              </button>
+              <button class="directions-branch" type="button" data-office-branch="seomyeon" aria-pressed="false">
+                <span>부산 서면점</span><small>중앙대로 754</small>
+              </button>
+              <button class="directions-branch" type="button" data-office-branch="changwon" aria-pressed="false">
+                <span>경남 창원점</span><small>창이대로689번길 4-16</small>
+              </button>
+            </nav>
+
+            <article class="directions-map-card">
+              <div class="directions-map-frame">
+                <iframe
+                  id="naverMapFrame"
+                  title="법무법인 율마루 서울 서초점 네이버지도"
+                  src="https://map.naver.com/p/search/%EC%84%9C%EC%9A%B8%20%EC%84%9C%EC%B4%88%EA%B5%AC%20%EC%84%9C%EC%B4%88%EC%A4%91%EC%95%99%EB%A1%9C%20156"
+                  loading="eager"
+                  allowfullscreen
+                  referrerpolicy="no-referrer-when-downgrade"
+                ></iframe>
+              </div>
+              <div class="directions-map-info">
+                <div>
+                  <small>선택 지점</small>
+                  <h2 id="selectedOfficeName">서울 서초점</h2>
+                  <p id="selectedOfficeAddress">서울 서초구 서초중앙로 156, 2층 (블루원빌딩)</p>
+                </div>
+                <a
+                  id="naverMapLink"
+                  class="directions-map-link"
+                  href="https://map.naver.com/p/search/%EC%84%9C%EC%9A%B8%20%EC%84%9C%EC%B4%88%EA%B5%AC%20%EC%84%9C%EC%B4%88%EC%A4%91%EC%95%99%EB%A1%9C%20156"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >네이버지도에서 크게 보기 ↗</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="criminal-case-detail" class="page-section criminal-case-detail" aria-labelledby="criminal-case-title">
+        <div class="criminal-case-shell">
+          <a class="criminal-case-back" href="#home">← 홈으로 돌아가기</a>
+          <article class="criminal-case-article">
+            <div class="criminal-case-image-wrap">
+              <img id="criminalCaseImage" src="assets/criminal-detention-response.webp" alt="구속 대응 사건 현장 이미지" />
+            </div>
+            <div class="criminal-case-copy">
+              <p class="criminal-case-meta"><span id="criminalCaseCategory">구속 대응</span><span id="criminalCaseDate">형사 사건 사례 · 최근</span></p>
+              <h1 id="criminal-case-title">구속취소 사건</h1>
+              <p id="criminalCaseLead" class="criminal-case-lead"></p>
+              <div id="criminalCaseContent" class="criminal-case-content"></div>
+              <a class="criminal-case-contact" href="#contact">사건 상담 신청하기</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="lawyer-im-jae-hyun" class="page-section lawyer-detail-page" aria-labelledby="lawyer-im-title">
+        <div class="lawyer-detail-shell">
+          <a class="lawyer-detail-back" href="#home">← 홈으로</a>
+          <article class="profile-hero">
+            <div class="profile-photo">
+              <img src="assets/lawyer-im-jae-hyun.webp" alt="임재현 변호사" />
+              <div class="profile-photo-copy">
+                <small>Lim Jae Hyun</small>
+                <h1 id="lawyer-im-title">임재현 <span>대표변호사</span></h1>
+              </div>
+            </div>
+            <div class="profile-content">
+              <p class="profile-intro">사건 초기에 쟁점과 증거를 정리해 형사 절차의 방향을 세웁니다.</p>
+              <p class="profile-description">경찰·검찰 조사, 체포·구속과 영장 단계, 형사재판까지 현재 상황을 면밀히 확인하고 의뢰인에게 필요한 대응을 함께 준비합니다.</p>
+              <section class="profile-section">
+                <h2>형사 사건 대응</h2>
+                <div class="profile-practice-grid">
+                  <span>경찰·검찰 피의자 조사</span><span>고소·고발 및 피해자 조력</span>
+                  <span>체포·구속·영장 대응</span><span>형사공판 및 항소심</span>
+                </div>
+              </section>
+              <section class="profile-section">
+                <h2>학력</h2>
+                <ul class="profile-list">
+                  <li>부산국제고등학교 졸업</li><li>성균관대학교 법과대학 법학학사</li>
+                  <li>부산대학교 법학전문대학원 법학전문석사</li>
+                </ul>
+              </section>
+              <section class="profile-section">
+                <h2>주요 경력</h2>
+                <ul class="profile-list">
+                  <li>사법연수원 실무연수 수료</li><li>전 법률사무소 동률</li>
+                  <li>전 법무법인 간앤파트너스</li><li>국토교통부 항공정책실 행정처분심의위원회 심의위원</li>
+                  <li>창원중부경찰서 민원상담위원</li><li>대법원 및 부산지방법원 서부지원 국선변호사</li>
+                  <li>대한변호사협회 도산 전문변호사</li>
+                </ul>
+              </section>
+            </div>
+          </article>
+          <section class="profile-related" aria-labelledby="related-im-title">
+            <h2 id="related-im-title">법무법인 율마루 변호사</h2>
+            <div class="profile-related-grid">
+              <a class="profile-related-card is-current" href="#lawyer-im-jae-hyun"><img src="assets/lawyer-im-jae-hyun.webp" alt="" /><strong>임재현 변호사</strong><span>수사 초기·구속·영장 대응</span></a>
+              <a class="profile-related-card" href="#lawyer-park-sang-jun"><img src="assets/lawyer-park-sang-jun.webp" alt="" /><strong>박상준 변호사</strong><span>조사 대응·형사재판</span></a>
+              <a class="profile-related-card" href="#lawyer-moon-ji-young"><img src="assets/lawyer-moon-ji-young.webp" alt="" /><strong>문지영 변호사</strong><span>피해자·피의자 형사 절차</span></a>
+              <a class="profile-related-card" href="#lawyer-lee-ju-won"><img src="assets/lawyer-lee-ju-won.webp" alt="" /><strong>이주원 변호사</strong><span>쟁점·증거 분석과 대응</span></a>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="lawyer-park-sang-jun" class="page-section lawyer-detail-page" aria-labelledby="lawyer-park-title">
+        <div class="lawyer-detail-shell">
+          <a class="lawyer-detail-back" href="#home">← 홈으로</a>
+          <article class="profile-hero">
+            <div class="profile-photo">
+              <img src="assets/lawyer-park-sang-jun.webp" alt="박상준 변호사" />
+              <div class="profile-photo-copy">
+                <small>Park Sang Jun</small>
+                <h1 id="lawyer-park-title">박상준 <span>대표변호사</span></h1>
+              </div>
+            </div>
+            <div class="profile-content">
+              <p class="profile-intro">첫 진술부터 재판까지 사건의 흐름을 놓치지 않고 대응합니다.</p>
+              <p class="profile-description">수사기관의 질문과 확보된 자료를 검토해 진술 방향을 정리하고, 구속 가능성과 공판 절차를 고려한 단계별 대응 전략을 준비합니다.</p>
+              <section class="profile-section">
+                <h2>형사 사건 대응</h2>
+                <div class="profile-practice-grid">
+                  <span>경찰 조사 및 진술 준비</span><span>성범죄·폭력범죄 대응</span>
+                  <span>재산범죄·경제범죄 대응</span><span>형사재판 변론</span>
+                </div>
+              </section>
+              <section class="profile-section">
+                <h2>학력</h2>
+                <ul class="profile-list">
+                  <li>김해가야고등학교 졸업</li><li>부산교육대학교 초등교육학 학사</li>
+                  <li>부산대학교 법학전문대학원 법학전문석사</li>
+                </ul>
+              </section>
+              <section class="profile-section">
+                <h2>주요 경력</h2>
+                <ul class="profile-list">
+                  <li>서울시 초등교원임용경쟁시험 합격</li><li>전 서울전농초등학교 교사</li>
+                  <li>사법연수원 실무연수 수료</li><li>전 법무법인 간앤파트너스</li>
+                  <li>부산대학교 리걸클리닉 지도변호사</li><li>대법원 및 부산지방법원 서부지원 국선변호사</li>
+                  <li>대한변호사협회 형사법 전문변호사</li>
+                </ul>
+              </section>
+            </div>
+          </article>
+          <section class="profile-related" aria-labelledby="related-park-title">
+            <h2 id="related-park-title">법무법인 율마루 변호사</h2>
+            <div class="profile-related-grid">
+              <a class="profile-related-card" href="#lawyer-im-jae-hyun"><img src="assets/lawyer-im-jae-hyun.webp" alt="" /><strong>임재현 변호사</strong><span>수사 초기·구속·영장 대응</span></a>
+              <a class="profile-related-card is-current" href="#lawyer-park-sang-jun"><img src="assets/lawyer-park-sang-jun.webp" alt="" /><strong>박상준 변호사</strong><span>조사 대응·형사재판</span></a>
+              <a class="profile-related-card" href="#lawyer-moon-ji-young"><img src="assets/lawyer-moon-ji-young.webp" alt="" /><strong>문지영 변호사</strong><span>피해자·피의자 형사 절차</span></a>
+              <a class="profile-related-card" href="#lawyer-lee-ju-won"><img src="assets/lawyer-lee-ju-won.webp" alt="" /><strong>이주원 변호사</strong><span>쟁점·증거 분석과 대응</span></a>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="lawyer-moon-ji-young" class="page-section lawyer-detail-page" aria-labelledby="lawyer-moon-title">
+        <div class="lawyer-detail-shell">
+          <a class="lawyer-detail-back" href="#home">← 홈으로</a>
+          <article class="profile-hero">
+            <div class="profile-photo">
+              <img src="assets/lawyer-moon-ji-young.webp" alt="문지영 변호사" />
+              <div class="profile-photo-copy">
+                <small>Moon Ji Yeong</small>
+                <h1 id="lawyer-moon-title">문지영 <span>파트너변호사</span></h1>
+              </div>
+            </div>
+            <div class="profile-content">
+              <p class="profile-intro">피해자와 피의자 모두의 입장에서 형사 절차를 세심하게 살핍니다.</p>
+              <p class="profile-description">사건의 경위와 당사자의 입장을 충분히 듣고, 진술과 객관적 자료를 함께 검토해 수사 및 재판 단계에서 필요한 대응을 준비합니다.</p>
+              <section class="profile-section">
+                <h2>형사 사건 대응</h2>
+                <div class="profile-practice-grid">
+                  <span>고소·고발 및 피해자 조력</span><span>성범죄 사건 대응</span>
+                  <span>가정·학교 관련 형사 사건</span><span>형사공판 및 국선변론</span>
+                </div>
+              </section>
+              <section class="profile-section">
+                <h2>학력</h2>
+                <ul class="profile-list">
+                  <li>부산대학교 법학과 학사</li><li>부산대학교 법학전문대학원 법학전문석사</li>
+                </ul>
+              </section>
+              <section class="profile-section">
+                <h2>주요 경력</h2>
+                <ul class="profile-list">
+                  <li>부산지방법원 실무수습</li><li>법무법인(유한) 정인 실무수습</li>
+                  <li>전 법무법인 더킹로펌</li><li>부산지방노동위원회 공익위원</li>
+                  <li>부산광역시교육청 폭력·비행 근절 및 예방 법교육 변호사</li>
+                  <li>대법원 및 부산지방법원 서부지원 국선변호사</li><li>대한변호사협회 형사법 전문변호사</li>
+                </ul>
+              </section>
+            </div>
+          </article>
+          <section class="profile-related" aria-labelledby="related-moon-title">
+            <h2 id="related-moon-title">법무법인 율마루 변호사</h2>
+            <div class="profile-related-grid">
+              <a class="profile-related-card" href="#lawyer-im-jae-hyun"><img src="assets/lawyer-im-jae-hyun.webp" alt="" /><strong>임재현 변호사</strong><span>수사 초기·구속·영장 대응</span></a>
+              <a class="profile-related-card" href="#lawyer-park-sang-jun"><img src="assets/lawyer-park-sang-jun.webp" alt="" /><strong>박상준 변호사</strong><span>조사 대응·형사재판</span></a>
+              <a class="profile-related-card is-current" href="#lawyer-moon-ji-young"><img src="assets/lawyer-moon-ji-young.webp" alt="" /><strong>문지영 변호사</strong><span>피해자·피의자 형사 절차</span></a>
+              <a class="profile-related-card" href="#lawyer-lee-ju-won"><img src="assets/lawyer-lee-ju-won.webp" alt="" /><strong>이주원 변호사</strong><span>쟁점·증거 분석과 대응</span></a>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="lawyer-lee-ju-won" class="page-section lawyer-detail-page" aria-labelledby="lawyer-lee-title">
+        <div class="lawyer-detail-shell">
+          <a class="lawyer-detail-back" href="#home">← 홈으로</a>
+          <article class="profile-hero">
+            <div class="profile-photo">
+              <img src="assets/lawyer-lee-ju-won.webp" alt="이주원 변호사" />
+              <div class="profile-photo-copy">
+                <small>Lee Ju Won</small>
+                <h1 id="lawyer-lee-title">이주원 <span>변호사</span></h1>
+              </div>
+            </div>
+            <div class="profile-content">
+              <p class="profile-intro">사건의 쟁점과 증거를 빠르게 파악해 필요한 대응을 준비합니다.</p>
+              <p class="profile-description">수사 기록과 사실관계를 꼼꼼히 확인하고, 의뢰인이 이해하기 쉬운 방식으로 현재 절차와 향후 대응 방향을 설명합니다.</p>
+              <section class="profile-section">
+                <h2>형사 사건 대응</h2>
+                <div class="profile-practice-grid">
+                  <span>수사기록 및 증거 검토</span><span>경찰·검찰 조사 대응</span>
+                  <span>교통·재산범죄 대응</span><span>형사재판 서면 및 변론</span>
+                </div>
+              </section>
+              <section class="profile-section">
+                <h2>학력</h2>
+                <ul class="profile-list">
+                  <li>동아대학교 석당인재학부 공공정책학 학사</li>
+                  <li>동아대학교 법학전문대학원 법학전문석사</li>
+                </ul>
+              </section>
+              <section class="profile-section">
+                <h2>주요 경력</h2>
+                <ul class="profile-list">
+                  <li>사법연수원 주관 대전지방법원 실무수습</li>
+                  <li>동아대학교 법학전문대학원 우수졸업자(제14회)</li>
+                  <li>법무법인 율마루 변호사</li>
+                </ul>
+              </section>
+            </div>
+          </article>
+          <section class="profile-related" aria-labelledby="related-lee-title">
+            <h2 id="related-lee-title">법무법인 율마루 변호사</h2>
+            <div class="profile-related-grid">
+              <a class="profile-related-card" href="#lawyer-im-jae-hyun"><img src="assets/lawyer-im-jae-hyun.webp" alt="" /><strong>임재현 변호사</strong><span>수사 초기·구속·영장 대응</span></a>
+              <a class="profile-related-card" href="#lawyer-park-sang-jun"><img src="assets/lawyer-park-sang-jun.webp" alt="" /><strong>박상준 변호사</strong><span>조사 대응·형사재판</span></a>
+              <a class="profile-related-card" href="#lawyer-moon-ji-young"><img src="assets/lawyer-moon-ji-young.webp" alt="" /><strong>문지영 변호사</strong><span>피해자·피의자 형사 절차</span></a>
+              <a class="profile-related-card is-current" href="#lawyer-lee-ju-won"><img src="assets/lawyer-lee-ju-won.webp" alt="" /><strong>이주원 변호사</strong><span>쟁점·증거 분석과 대응</span></a>
+            </div>
+          </section>
+        </div>
+      </section>
     </main>
 
     <footer class="site-footer">
@@ -717,9 +1027,6 @@
         </div>
 
         <div class="footer-quick-column">
-          <div class="footer-direct-phone" aria-label="대표 전화번호">
-            <a href="tel:18006419"><strong>송무</strong><span>1800-6419</span></a>
-          </div>
           <details class="footer-site-links">
             <summary class="footer-site-links-title">
               <strong>사이트 바로가기</strong>

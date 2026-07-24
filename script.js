@@ -53,7 +53,7 @@ const boardPosts = {
 
 const state = {
   questions: JSON.parse(localStorage.getItem("legendQuestions") || "[]"),
-  activeBoard: "notice",
+  activeBoard: "all",
 };
 
 const menuToggle = document.querySelector(".menu-toggle");
@@ -72,6 +72,7 @@ const heroLeadStatus = document.querySelector("#heroLeadStatus");
 const heroLeadPanel = document.querySelector("#heroLeadPanel");
 const heroLeadClose = document.querySelector("#heroLeadClose");
 const leadConsultFab = document.querySelector("#leadConsultFab");
+const leadPhoneFab = document.querySelector(".lead-phone-fab");
 const contactFormStatus = document.querySelector("#contactFormStatus");
 const remoteLayer = document.querySelector(".home-inquiry-layer");
 const remoteHideButton = document.querySelector("#remoteHideButton");
@@ -79,6 +80,139 @@ const remoteFab = document.querySelector("#remoteFab");
 const pages = Array.from(document.querySelectorAll(".page-section"));
 const pageLinks = Array.from(document.querySelectorAll('a[href^="#"]'));
 const BLOG_POST_BATCH_SIZE = 24;
+const OFFICE_LOCATIONS = {
+  seocho: {
+    name: "서울 서초점",
+    address: "서울 서초구 서초중앙로 156, 2층 (블루원빌딩)",
+    query: "서울 서초구 서초중앙로 156",
+  },
+  myeongji: {
+    name: "부산 명지점",
+    address: "부산 강서구 명지국제2로 80, 2층 53-55호 (명지동, e편한세상명지)",
+    query: "부산 강서구 명지국제2로 80",
+  },
+  centum: {
+    name: "부산 센텀점",
+    address: "부산 해운대구 센텀중앙로 97, A동 3004호 (재송동, 센텀스카이비즈)",
+    query: "부산 해운대구 센텀중앙로 97",
+  },
+  seomyeon: {
+    name: "부산 서면점",
+    address: "부산 부산진구 중앙대로 754, 8층 (부전동, 주간인빌딩)",
+    query: "부산 부산진구 중앙대로 754",
+  },
+  changwon: {
+    name: "경남 창원점",
+    address: "경남 창원시 성산구 창이대로689번길 4-16, 6층 (사파동, 법조빌딩)",
+    query: "경남 창원시 성산구 창이대로689번길 4-16",
+  },
+};
+const CRIMINAL_CASE_POSTS = {
+  "detention-cancel": {
+    category: "구속 대응",
+    date: "형사 사건 사례 · 최근",
+    title: "구속취소 사건",
+    image: "assets/criminal-detention-response.webp",
+    alt: "한국 경찰 유치장으로 이동하는 구속 피의자의 뒷모습",
+    lead: "신병 확보 필요성과 사건의 현재 진행 상황을 다시 검토해 구속 필요성을 다툰 사례입니다.",
+    sections: [
+      ["사건 개요", "수사 초기 단계에서 구속 상태가 계속 필요한지, 수사에 협조할 환경이 갖춰졌는지를 중심으로 상황을 정리했습니다."],
+      ["확인한 내용", "주거와 직업의 안정성, 조사 출석 가능성, 증거 인멸 및 도주 우려에 관한 자료를 차분히 확인했습니다."],
+      ["대응 포인트", "구속 이후에도 사실관계와 절차 진행을 지속적으로 점검해 신병 관련 판단을 다시 요청할 수 있습니다."],
+    ],
+  },
+  "quasi-rape-dismissal": {
+    category: "성범죄",
+    date: "형사 사건 사례 · 최근",
+    title: "준강간 공소기각 사건",
+    image: "assets/criminal-quasi-rape-dismissal.webp",
+    alt: "한국 오피스텔 내부의 사건 정황을 표현한 현장 이미지",
+    lead: "사건 기록과 절차 진행 경위를 면밀히 살펴 공소 제기와 관련된 쟁점을 검토한 사례입니다.",
+    sections: [
+      ["사건 개요", "당사자 진술과 당시 정황이 엇갈리는 상황에서 수사·재판 기록을 시간 순서대로 정리했습니다."],
+      ["확인한 내용", "고소 경위, 증거 제출 시점, 공소 유지에 필요한 절차적 요건을 함께 검토했습니다."],
+      ["대응 포인트", "성범죄 사건은 진술과 객관 자료의 연결 관계가 중요하므로 초기부터 일관된 사실관계 정리가 필요합니다."],
+    ],
+  },
+  "drunk-driving-probation": {
+    category: "교통범죄",
+    date: "형사 사건 사례 · 2일 전",
+    title: "음주운전 집행유예 사건",
+    image: "assets/criminal-traffic-collision.webp",
+    alt: "한국 도심 교차로에서 충돌해 파손된 차량 두 대",
+    lead: "사고 경위와 피해 회복 과정, 재발 방지 노력을 종합적으로 정리한 음주운전 사건 사례입니다.",
+    sections: [
+      ["사건 개요", "음주 상태 운전 중 사고가 발생해 피해 상황과 운전 경위에 대한 확인이 필요했던 사건입니다."],
+      ["확인한 내용", "혈중알코올농도, 사고 당시 영상과 현장 자료, 피해 회복을 위한 조치 및 재발 방지 계획을 검토했습니다."],
+      ["대응 포인트", "음주운전 사건은 수치만이 아니라 사고 결과, 피해 회복, 과거 전력 등 여러 사정을 함께 살펴야 합니다."],
+    ],
+  },
+  "voice-phishing-no-charge": {
+    category: "보이스피싱",
+    date: "형사 사건 사례 · 3일 전",
+    title: "보이스피싱 무혐의 사건",
+    image: "assets/criminal-voice-phishing.webp",
+    alt: "전화하는 보이스피싱범의 입과 은행 현금인출 장면",
+    lead: "금융거래에 관여하게 된 경위와 인식 여부를 중심으로 사실관계를 검토한 사례입니다.",
+    sections: [
+      ["사건 개요", "계좌 사용 또는 현금 인출 과정에 연루됐다는 이유로 조사를 받게 된 상황을 다뤘습니다."],
+      ["확인한 내용", "지시를 받게 된 경위, 대화 기록, 거래 흐름, 실제 이익의 귀속 여부를 시간 순서로 확인했습니다."],
+      ["대응 포인트", "보이스피싱 사건은 본인이 어떤 내용을 알고 있었는지가 핵심이므로 자료 보존과 진술 준비가 중요합니다."],
+    ],
+  },
+  "sexual-crime-non-transfer": {
+    category: "성범죄",
+    date: "형사 사건 사례 · 최근",
+    title: "성범죄 불송치 사건",
+    image: "assets/criminal-sex-crime-non-referral.webp",
+    alt: "한국 오피스텔 복도의 CCTV 시점 사건 정황 이미지",
+    lead: "객관적인 동선 자료와 진술 내용을 비교해 사실관계를 점검한 성범죄 사건 사례입니다.",
+    sections: [
+      ["사건 개요", "당사자 사이의 만남 이후 제기된 주장에 대해 당시 상황을 구체적으로 확인해야 했습니다."],
+      ["확인한 내용", "CCTV, 출입 기록, 메시지, 통화 내역 등 객관 자료와 각 진술 사이의 일치 여부를 살폈습니다."],
+      ["대응 포인트", "성범죄 사건은 기억이 흐려지기 전에 동선과 대화 내용을 정리하고 관련 자료를 보존하는 것이 중요합니다."],
+    ],
+  },
+  "fraud-acquittal": {
+    category: "재산범죄",
+    date: "형사 사건 사례 · 4일 전",
+    title: "사기 혐의 무죄 사건",
+    image: "assets/criminal-fraud-acquittal.webp",
+    alt: "한국 소규모 사업장에서 계약서와 송금 내역을 확인하는 거래 현장",
+    lead: "계약 체결 당시의 설명과 이행 과정, 거래 자료를 중심으로 검토한 사기 혐의 사건 사례입니다.",
+    sections: [
+      ["사건 개요", "금전 거래 이후 약속이 이행되지 않아 사기 혐의가 제기된 상황에서 계약 전후 과정을 정리했습니다."],
+      ["확인한 내용", "계약서, 메시지, 송금 내역, 실제 이행 시도와 자금 사용 경위를 함께 확인했습니다."],
+      ["대응 포인트", "사기 사건은 처음부터 갚을 의사나 이행 의사가 없었는지가 쟁점이 되는 경우가 많습니다."],
+    ],
+  },
+  "assault-deferred-prosecution": {
+    category: "폭력범죄",
+    date: "형사 사건 사례 · 5일 전",
+    title: "폭행·상해 기소유예 사건",
+    image: "assets/criminal-assault-deferred.webp",
+    alt: "한국 식당가 골목에 남은 폭행 사건 이후의 현장 정황",
+    lead: "우발적으로 발생한 다툼의 경위와 피해 회복을 중심으로 검토한 폭행·상해 사건 사례입니다.",
+    sections: [
+      ["사건 개요", "식당가 인근에서 발생한 다툼 이후 폭행 또는 상해 혐의로 조사를 받게 된 상황입니다."],
+      ["확인한 내용", "사건의 발단, 쌍방의 행동, 영상 자료, 피해 정도와 회복을 위한 조치를 확인했습니다."],
+      ["대응 포인트", "폭행 사건은 감정적인 진술보다 당시 상황을 보여주는 객관 자료와 피해 회복 노력이 중요합니다."],
+    ],
+  },
+  "drug-probation": {
+    category: "마약범죄",
+    date: "형사 사건 사례 · 6일 전",
+    title: "마약 투약 집행유예 사건",
+    image: "assets/criminal-drug-probation.webp",
+    alt: "한국 원룸에서 마약 관련 증거물을 수거하는 현장",
+    lead: "투약 경위와 재범 위험성, 치료 및 재활 계획을 종합적으로 검토한 마약 사건 사례입니다.",
+    sections: [
+      ["사건 개요", "수사 과정에서 투약 사실이 문제 된 상황에서 사용 경위와 현재 상태를 함께 살펴봤습니다."],
+      ["확인한 내용", "투약 횟수와 기간, 관련 검사 자료, 치료·상담 참여 여부, 재발 방지를 위한 생활 계획을 확인했습니다."],
+      ["대응 포인트", "마약 사건은 초기 진술부터 치료와 재활 계획까지 일관된 대응 방향을 세우는 것이 필요합니다."],
+    ],
+  },
+};
 let visibleBlogPostCount = BLOG_POST_BATCH_SIZE;
 
 function escapeHtml(value) {
@@ -103,7 +237,7 @@ function buildLeadPayload(form, source) {
     id: randomId,
     source,
     name: String(formData.get("name") || "").trim(),
-    phone: String(formData.get("phone") || "").trim(),
+    phone: getPhoneDigits(formData.get("phone")),
     caseType: String(formData.get("caseType") || "").trim(),
     debt: String(formData.get("debt") || "").trim(),
     message: String(formData.get("message") || "").trim(),
@@ -146,11 +280,33 @@ function getPhoneDigits(value) {
 function formatPhoneNumber(value) {
   const digits = getPhoneDigits(value);
 
-  if (digits.length < 3) return digits;
-  if (digits.length === 3) return `${digits}-`;
-  if (digits.length < 7) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
-  if (digits.length === 7) return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-`;
+  if (digits.length <= 3) return digits;
+  if (digits.length <= 7) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
   return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`;
+}
+
+function getPhoneCaretPosition(formattedValue, digitCount) {
+  if (digitCount <= 0) return 0;
+
+  let seenDigits = 0;
+  for (let index = 0; index < formattedValue.length; index += 1) {
+    if (/\d/.test(formattedValue[index])) {
+      seenDigits += 1;
+    }
+    if (seenDigits >= digitCount) {
+      return index + 1;
+    }
+  }
+
+  return formattedValue.length;
+}
+
+function updatePhoneDisplay(input, digitCaretCount = null) {
+  input.value = formatPhoneNumber(input.value);
+
+  if (digitCaretCount === null || document.activeElement !== input) return;
+  const caretPosition = getPhoneCaretPosition(input.value, digitCaretCount);
+  input.setSelectionRange(caretPosition, caretPosition);
 }
 
 function isValidPhoneNumber(value) {
@@ -158,8 +314,9 @@ function isValidPhoneNumber(value) {
 }
 
 function setPhoneValidity(input, showError = false) {
+  const hasDigits = getPhoneDigits(input.value).length > 0;
   const isValid = isValidPhoneNumber(input.value);
-  const shouldShowError = showError && !isValid;
+  const shouldShowError = showError && hasDigits && !isValid;
 
   input.classList.toggle("is-phone-invalid", shouldShowError);
   input.setAttribute("aria-invalid", shouldShowError ? "true" : "false");
@@ -170,16 +327,137 @@ function setPhoneValidity(input, showError = false) {
 
 function initPhoneInputs() {
   document.querySelectorAll("[data-phone-input]").forEach((input) => {
-    input.value = formatPhoneNumber(input.value);
+    updatePhoneDisplay(input);
+
+    input.addEventListener("keydown", (event) => {
+      if (event.key !== "Backspace" && event.key !== "Delete") return;
+
+      const selectionStart = input.selectionStart;
+      const selectionEnd = input.selectionEnd;
+      if (
+        selectionStart === null ||
+        selectionEnd === null ||
+        selectionStart !== selectionEnd
+      ) {
+        return;
+      }
+
+      const separatorIndex = event.key === "Backspace" ? selectionStart - 1 : selectionStart;
+      if (input.value[separatorIndex] !== "-") return;
+
+      event.preventDefault();
+
+      const digits = getPhoneDigits(input.value);
+      const digitsBeforeCaret = getPhoneDigits(input.value.slice(0, selectionStart)).length;
+      const removeIndex = event.key === "Backspace"
+        ? digitsBeforeCaret - 1
+        : digitsBeforeCaret;
+
+      if (removeIndex < 0 || removeIndex >= digits.length) return;
+
+      const nextDigits = `${digits.slice(0, removeIndex)}${digits.slice(removeIndex + 1)}`;
+      const nextDigitCaret = event.key === "Backspace"
+        ? Math.max(0, digitsBeforeCaret - 1)
+        : digitsBeforeCaret;
+
+      input.value = formatPhoneNumber(nextDigits);
+      const nextCaretPosition = getPhoneCaretPosition(input.value, nextDigitCaret);
+      input.setSelectionRange(nextCaretPosition, nextCaretPosition);
+      setPhoneValidity(input, false);
+    });
 
     input.addEventListener("input", () => {
-      input.value = formatPhoneNumber(input.value);
+      const selectionStart = input.selectionStart ?? input.value.length;
+      const digitsBeforeCaret = getPhoneDigits(input.value.slice(0, selectionStart)).length;
+      updatePhoneDisplay(input, digitsBeforeCaret);
       setPhoneValidity(input, false);
     });
 
     input.addEventListener("blur", () => {
       setPhoneValidity(input, true);
     });
+  });
+}
+
+function initDirectionsPage() {
+  const mapFrame = document.querySelector("#naverMapFrame");
+  const mapLink = document.querySelector("#naverMapLink");
+  const officeName = document.querySelector("#selectedOfficeName");
+  const officeAddress = document.querySelector("#selectedOfficeAddress");
+  const officeControls = Array.from(document.querySelectorAll("[data-office-branch]"));
+
+  if (!mapFrame || !mapLink || !officeName || !officeAddress || !officeControls.length) return;
+
+  const selectOffice = (officeKey) => {
+    const office = OFFICE_LOCATIONS[officeKey] || OFFICE_LOCATIONS.seocho;
+    const mapUrl = `https://map.naver.com/p/search/${encodeURIComponent(office.query)}`;
+
+    mapFrame.src = mapUrl;
+    mapFrame.title = `법무법인 율마루 ${office.name} 네이버지도`;
+    mapLink.href = mapUrl;
+    officeName.textContent = office.name;
+    officeAddress.textContent = office.address;
+
+    officeControls.forEach((control) => {
+      const isSelected = control.dataset.officeBranch === officeKey;
+      control.classList.toggle("is-active", isSelected);
+      if (control.matches("button")) {
+        control.setAttribute("aria-pressed", isSelected ? "true" : "false");
+      }
+    });
+  };
+
+  officeControls.forEach((control) => {
+    control.addEventListener("click", (event) => {
+      selectOffice(control.dataset.officeBranch);
+
+      if (control.matches("a")) {
+        event.preventDefault();
+        event.stopPropagation();
+        showPage("directions");
+      }
+    });
+  });
+
+  selectOffice("seocho");
+}
+
+function getCriminalCaseSlug(routeId) {
+  const prefix = "case-";
+  if (!String(routeId || "").startsWith(prefix)) return "";
+
+  const slug = routeId.slice(prefix.length);
+  return Object.prototype.hasOwnProperty.call(CRIMINAL_CASE_POSTS, slug) ? slug : "";
+}
+
+function renderCriminalCase(slug) {
+  const post = CRIMINAL_CASE_POSTS[slug] || CRIMINAL_CASE_POSTS["detention-cancel"];
+  const image = document.querySelector("#criminalCaseImage");
+  const category = document.querySelector("#criminalCaseCategory");
+  const date = document.querySelector("#criminalCaseDate");
+  const title = document.querySelector("#criminal-case-title");
+  const lead = document.querySelector("#criminalCaseLead");
+  const content = document.querySelector("#criminalCaseContent");
+
+  if (!image || !category || !date || !title || !lead || !content) return;
+
+  image.src = post.image;
+  image.alt = post.alt;
+  category.textContent = post.category;
+  date.textContent = post.date;
+  title.textContent = post.title;
+  lead.textContent = post.lead;
+  content.replaceChildren();
+
+  post.sections.forEach(([heading, body]) => {
+    const section = document.createElement("section");
+    const sectionTitle = document.createElement("h2");
+    const paragraph = document.createElement("p");
+
+    sectionTitle.textContent = heading;
+    paragraph.textContent = body;
+    section.append(sectionTitle, paragraph);
+    content.append(section);
   });
 }
 
@@ -270,9 +548,25 @@ function formatCompactDate(value) {
 }
 
 function showPage(id, shouldScroll = true) {
-  const targetId = pages.some((page) => page.id === id) ? id : "home";
+  const caseSlug = getCriminalCaseSlug(id);
+  const targetId = caseSlug
+    ? "criminal-case-detail"
+    : pages.some((page) => page.id === id)
+      ? id
+      : "home";
+  const targetHash = caseSlug ? `case-${caseSlug}` : targetId;
   const isHomeView = targetId === "home" && (id === "home" || !id);
+  const usesNavyPageLayer =
+    targetId === "directions" ||
+    targetId === "criminal-case-detail" ||
+    targetId.startsWith("lawyer-");
+
+  if (caseSlug) {
+    renderCriminalCase(caseSlug);
+  }
+
   document.body.classList.toggle("is-home-view", isHomeView);
+  document.body.classList.toggle("is-navy-page", usesNavyPageLayer);
   pages.forEach((page) => page.classList.toggle("active-page", page.id === targetId));
 
   pageLinks.forEach((link) => {
@@ -280,8 +574,8 @@ function showPage(id, shouldScroll = true) {
     link.classList.toggle("active-link", linkId === targetId);
   });
 
-  if (location.hash !== `#${targetId}`) {
-    history.pushState(null, "", `#${targetId}`);
+  if (location.hash !== `#${targetHash}`) {
+    history.pushState(null, "", `#${targetHash}`);
   }
 
   if (shouldScroll) {
@@ -420,7 +714,10 @@ function renderBlogPosts() {
 }
 
 function renderPosts() {
-  const posts = boardPosts[state.activeBoard];
+  const allBoardKeys = ["notice", "blog", "youtube", "free"];
+  const posts = state.activeBoard === "all"
+    ? allBoardKeys.flatMap((boardKey) => boardPosts[boardKey] || [])
+    : boardPosts[state.activeBoard] || [];
   postList.innerHTML = posts
     .map(
       (post) => `
@@ -472,7 +769,7 @@ document.addEventListener("click", (event) => {
   if (!link) return;
 
   const id = link.getAttribute("href").replace("#", "");
-  if (!pages.some((page) => page.id === id)) return;
+  if (!pages.some((page) => page.id === id) && !getCriminalCaseSlug(id)) return;
 
   event.preventDefault();
   showPage(id);
@@ -482,7 +779,7 @@ quickQuestionForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const formData = new FormData(quickQuestionForm);
   const question = String(formData.get("question") || "").trim();
-  const nickname = String(formData.get("nickname") || "").trim() || "익명";
+  const nickname = getPhoneDigits(formData.get("nickname")) || "익명";
   const secret = true;
   if (!question) return;
 
@@ -537,6 +834,8 @@ function openHeroLeadPanel() {
   heroLeadPanel.classList.add("is-open");
   heroLeadPanel.setAttribute("aria-hidden", "false");
   leadConsultFab.setAttribute("aria-expanded", "true");
+  leadPhoneFab?.setAttribute("aria-hidden", "true");
+  if (leadPhoneFab) leadPhoneFab.tabIndex = -1;
   window.setTimeout(() => {
     heroLeadForm?.elements.name?.focus({ preventScroll: true });
   }, 180);
@@ -547,6 +846,8 @@ function closeHeroLeadPanel() {
   heroLeadPanel.classList.remove("is-open");
   heroLeadPanel.setAttribute("aria-hidden", "true");
   leadConsultFab.setAttribute("aria-expanded", "false");
+  leadPhoneFab?.setAttribute("aria-hidden", "false");
+  if (leadPhoneFab) leadPhoneFab.tabIndex = 0;
   leadConsultFab.focus({ preventScroll: true });
 }
 
@@ -673,7 +974,7 @@ function renderFeaturedRecommendVideos() {
 
   const items = getVideoItems("long").slice(0, 12);
   if (!items.length) {
-    row.innerHTML = `<p class="video-empty">표시할 추천 동영상이 없습니다.</p>`;
+    row.innerHTML = `<p class="video-empty">표시할 동영상이 없습니다.</p>`;
     return;
   }
 
@@ -961,6 +1262,86 @@ function enableDragScroll(selector) {
     }, true);
   });
 }
+
+function enableCarouselDrag(carousel, track, slideCount, getActiveIndex, setActiveIndex, stopAuto, startAuto) {
+  if (!carousel || !track || slideCount < 2) return;
+
+  let isPointerDown = false;
+  let startX = 0;
+  let currentX = 0;
+  let moved = false;
+
+  const restoreTrack = () => {
+    track.style.transition = "";
+  };
+
+  carousel.addEventListener("pointerdown", (event) => {
+    if (event.button !== undefined && event.button !== 0) return;
+
+    isPointerDown = true;
+    moved = false;
+    startX = event.clientX;
+    currentX = event.clientX;
+    stopAuto();
+    carousel.setPointerCapture?.(event.pointerId);
+  });
+
+  carousel.addEventListener("pointermove", (event) => {
+    if (!isPointerDown) return;
+
+    currentX = event.clientX;
+    const distance = currentX - startX;
+    if (Math.abs(distance) > 5) moved = true;
+    if (!moved) return;
+
+    if (event.cancelable) event.preventDefault();
+    carousel.classList.add("is-dragging");
+    track.style.transition = "none";
+
+    const width = Math.max(carousel.clientWidth, 1);
+    const offset = (distance / width) * 100;
+    track.style.transform = `translateX(${-getActiveIndex() * 100 + offset}%)`;
+  });
+
+  ["pointerup", "pointercancel"].forEach((eventName) => {
+    carousel.addEventListener(eventName, (event) => {
+      if (!isPointerDown) return;
+
+      isPointerDown = false;
+      carousel.classList.remove("is-dragging");
+      if (carousel.hasPointerCapture?.(event.pointerId)) {
+        carousel.releasePointerCapture?.(event.pointerId);
+      }
+
+      const distance = currentX - startX;
+      restoreTrack();
+      if (eventName === "pointerup" && Math.abs(distance) > 42) {
+        const direction = distance < 0 ? 1 : -1;
+        setActiveIndex((getActiveIndex() + direction + slideCount) % slideCount);
+      } else {
+        setActiveIndex(getActiveIndex());
+      }
+      startAuto();
+    });
+  });
+
+  carousel.addEventListener("dragstart", (event) => event.preventDefault());
+  carousel.addEventListener("click", (event) => {
+    if (!moved) return;
+
+    // Preserve links and buttons inside a carousel: a short drag should never
+    // leave the next tap unable to open its selected destination.
+    if (event.target.closest("a, button")) {
+      moved = false;
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    moved = false;
+  }, true);
+}
+
 function initJobChipSliderControls() {
   document.querySelectorAll("[data-job-slider]").forEach((slider) => {
     const scroller = slider.querySelector(".job-chip-row");
@@ -1077,6 +1458,19 @@ function initChannelSideCarousel() {
     else start();
   });
 
+  enableCarouselDrag(
+    carousel,
+    track,
+    slides.length,
+    () => activeIndex,
+    (nextIndex) => {
+      activeIndex = nextIndex;
+      render();
+    },
+    stop,
+    start,
+  );
+
   render();
   start();
 }
@@ -1104,8 +1498,7 @@ function initChannelInfoCarousel() {
     dots.forEach((dot, index) => {
       const isActive = index === activeIndex;
       dot.classList.toggle("is-active", isActive);
-      dot.setAttribute("aria-selected", isActive ? "true" : "false");
-      dot.tabIndex = isActive ? 0 : -1;
+      dot.setAttribute("aria-pressed", isActive ? "true" : "false");
     });
   };
 
@@ -1123,30 +1516,14 @@ function initChannelInfoCarousel() {
     }, 5200);
   };
 
-  dots.forEach((dot, index) => {
-    dot.addEventListener("click", () => {
-      activeIndex = index;
-      render();
-      start();
-    });
-
-    dot.addEventListener("keydown", (event) => {
-      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
-      event.preventDefault();
-      const direction = event.key === "ArrowRight" ? 1 : -1;
-      activeIndex = (activeIndex + direction + slides.length) % slides.length;
-      render();
-      dots[activeIndex].focus();
-      start();
-    });
-  });
-
   const openInfoSlide = (index, hash, link) => {
       showPage(hash.replace("#", ""), false);
       activeIndex = index;
       render();
       start();
       window.history.replaceState(null, "", hash);
+      mainNav.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
       carousel.scrollIntoView({
         behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
         block: "center",
@@ -1154,17 +1531,32 @@ function initChannelInfoCarousel() {
       link.closest("details")?.removeAttribute("open");
   };
 
-  document.querySelectorAll("[data-open-lawyer-intro]").forEach((link) => {
+  document.querySelectorAll("[data-open-lawyer-page]").forEach((link) => {
     link.addEventListener("click", (event) => {
       event.preventDefault();
-      openInfoSlide(1, "#lawyer-intro", link);
+      showPage("lawyer-im-jae-hyun");
+      mainNav.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+      link.closest("details")?.removeAttribute("open");
     });
   });
 
-  document.querySelectorAll("[data-open-office-location]").forEach((link) => {
-    link.addEventListener("click", (event) => {
+  carousel.querySelectorAll(".channel-lawyer-card").forEach((card) => {
+    card.addEventListener("click", (event) => {
+      const targetId = card.getAttribute("href")?.replace("#", "");
+      if (!targetId) return;
+
       event.preventDefault();
-      openInfoSlide(2, "#office-location", link);
+      event.stopPropagation();
+      showPage(targetId);
+    });
+  });
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener("click", () => {
+      activeIndex = index;
+      render();
+      start();
     });
   });
 
@@ -1179,8 +1571,82 @@ function initChannelInfoCarousel() {
     else start();
   });
 
+  enableCarouselDrag(
+    carousel,
+    track,
+    slides.length,
+    () => activeIndex,
+    (nextIndex) => {
+      activeIndex = nextIndex;
+      render();
+    },
+    stop,
+    start,
+  );
+
   render();
   start();
+}
+
+function initCaseCardCarousel() {
+  const carousel = document.querySelector("[data-case-carousel]");
+  const firstPage = carousel?.querySelector("[data-case-grid]");
+  const prevButton = carousel?.querySelector("[data-case-prev]");
+  const nextButton = carousel?.querySelector("[data-case-next]");
+  if (!carousel || !firstPage || !prevButton || !nextButton) return;
+
+  const cards = Array.from(firstPage.children);
+  if (cards.length < 1) return;
+
+  const track = document.createElement("div");
+  track.className = "case-carousel-track";
+  firstPage.classList.add("case-carousel-page");
+
+  const nextPage = firstPage.cloneNode(false);
+  nextPage.removeAttribute("data-case-grid");
+  nextPage.classList.add("case-carousel-page");
+  cards.forEach((card) => nextPage.append(card.cloneNode(true)));
+
+  firstPage.replaceWith(track);
+  track.append(firstPage, nextPage);
+
+  const pages = [firstPage, nextPage];
+  let activeIndex = 0;
+  const render = () => {
+    track.style.transform = `translateX(-${activeIndex * 100}%)`;
+    pages.forEach((page, index) => {
+      const isActive = index === activeIndex;
+      page.setAttribute("aria-hidden", isActive ? "false" : "true");
+      page.querySelectorAll("a").forEach((link) => {
+        link.tabIndex = isActive ? 0 : -1;
+      });
+    });
+  };
+
+  nextButton.addEventListener("click", () => {
+    activeIndex = (activeIndex + 1) % pages.length;
+    render();
+  });
+
+  prevButton.addEventListener("click", () => {
+    activeIndex = (activeIndex - 1 + pages.length) % pages.length;
+    render();
+  });
+
+  enableCarouselDrag(
+    carousel,
+    track,
+    pages.length,
+    () => activeIndex,
+    (nextIndex) => {
+      activeIndex = nextIndex;
+      render();
+    },
+    () => {},
+    () => {},
+  );
+
+  render();
 }
 
 function initJobChips() {
@@ -1192,10 +1658,12 @@ function initJobChips() {
 renderVideos();
 hydrateYouTubeVideosFromApi();
 initPhoneInputs();
+initDirectionsPage();
 initJobChips();
 initJobChipSliderControls();
 initFeaturedRecommendControls();
 initChannelSideCarousel();
 initChannelInfoCarousel();
+initCaseCardCarousel();
 enableDragScroll(".job-chip-row");
 enableDragScroll(".featured-recommend-row");
