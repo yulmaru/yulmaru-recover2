@@ -6323,6 +6323,11 @@ input[data-phone-input].is-phone-invalid:focus {
   outline-offset: 2px;
 }
 
+.case-carousel-prev:disabled,
+.case-carousel-next:disabled {
+  display: none;
+}
+
 @media (max-width: 640px) {
   .home-content-feed .channel-post-card.is-large.channel-feature-card {
     min-height: clamp(230px, 64vw, 320px) !important;
@@ -6619,6 +6624,116 @@ body.is-navy-page .lawyer-detail-page,
 body.is-navy-page .directions-page,
 body.is-navy-page .criminal-case-detail {
   background: transparent !important;
+}
+
+/* Keep the criminal-news panel at its desktop-like two-column size on phones. */
+@media (max-width: 640px) {
+  .home-content-feed .personal-news-section {
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .home-content-feed .personal-news-section::-webkit-scrollbar {
+    display: none;
+  }
+
+  .home-content-feed .personal-news-panel {
+    width: 510px;
+    min-width: 510px;
+  }
+
+  .home-content-feed .personal-news-panel .personal-news-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+/* Compact mobile header while retaining the firm name below the service title. */
+@media (max-width: 720px) {
+  .site-header {
+    min-height: 54px;
+    padding: 6px 12px !important;
+    gap: 12px;
+  }
+
+  .site-header .brand {
+    min-width: 0;
+    gap: 8px;
+  }
+
+  .site-header .brand-mark {
+    width: 38px;
+    height: 38px;
+  }
+
+  .site-header .brand strong {
+    font-size: 14px;
+    line-height: 1.2;
+  }
+
+  .site-header .brand small {
+    display: block;
+    margin-top: 2px;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 9px;
+    line-height: 1.15;
+  }
+
+  .site-header .menu-toggle {
+    width: 36px;
+    height: 36px;
+    min-height: 36px;
+  }
+}
+
+/* Keep carousel controls quiet and consistent with the surrounding navy panels. */
+.case-carousel-prev,
+.case-carousel-next,
+.featured-recommend-nav,
+.home-content-feed .featured-recommend-nav {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 36px !important;
+  height: 36px !important;
+  border: 1px solid rgba(196, 211, 244, 0.28) !important;
+  border-radius: 9px !important;
+  background: rgba(27, 34, 52, 0.96) !important;
+  box-shadow: 0 6px 16px rgba(4, 9, 24, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  color: transparent !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+}
+
+.case-carousel-prev::before,
+.case-carousel-next::before {
+  content: "";
+  display: block;
+  width: 9px;
+  height: 9px;
+  border: solid rgba(240, 246, 255, 0.94);
+  border-width: 0 2px 2px 0;
+}
+
+.case-carousel-prev::before { transform: rotate(135deg); margin-left: 3px; }
+.case-carousel-next::before { transform: rotate(-45deg); margin-right: 3px; }
+
+.case-carousel-prev:hover,
+.case-carousel-next:hover,
+.featured-recommend-nav:hover,
+.home-content-feed .featured-recommend-nav:hover,
+.case-carousel-prev:focus-visible,
+.case-carousel-next:focus-visible,
+.featured-recommend-nav:focus-visible,
+.home-content-feed .featured-recommend-nav:focus-visible {
+  background: rgba(43, 54, 79, 0.98) !important;
+  box-shadow: 0 8px 18px rgba(4, 9, 24, 0.44), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+.case-carousel-prev:disabled,
+.case-carousel-next:disabled {
+  display: none !important;
 }
 
 /* Distribute footer information across the same width as the content layer above. */
@@ -8511,6 +8626,29 @@ body.is-home-view .site-header {
 
 .criminal-case-back:hover,
 .criminal-case-back:focus-visible {
+  border-color: rgba(117, 190, 255, 0.8);
+  background: #363636;
+  outline: none;
+}
+
+/* Shared back-to-home control for every single-document page. */
+.page-home-back {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+  background: #303030;
+  color: #ffffff;
+  padding: 0 13px;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.page-home-back:hover,
+.page-home-back:focus-visible {
   border-color: rgba(117, 190, 255, 0.8);
   background: #363636;
   outline: none;

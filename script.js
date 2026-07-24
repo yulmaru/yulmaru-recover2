@@ -1270,7 +1270,7 @@ function enableDragScroll(selector) {
   });
 }
 
-function enableCarouselDrag(carousel, track, slideCount, getActiveIndex, setActiveIndex, stopAuto, startAuto) {
+function enableCarouselDrag(carousel, track, slideCount, getActiveIndex, setActiveIndex, stopAuto, startAuto, wrap = true) {
   if (!carousel || !track || slideCount < 2) return;
 
   let isPointerDown = false;
@@ -1324,7 +1324,10 @@ function enableCarouselDrag(carousel, track, slideCount, getActiveIndex, setActi
       restoreTrack();
       if (eventName === "pointerup" && Math.abs(distance) > 42) {
         const direction = distance < 0 ? 1 : -1;
-        setActiveIndex((getActiveIndex() + direction + slideCount) % slideCount);
+        const requestedIndex = getActiveIndex() + direction;
+        setActiveIndex(wrap
+          ? (requestedIndex + slideCount) % slideCount
+          : Math.min(Math.max(requestedIndex, 0), slideCount - 1));
       } else {
         setActiveIndex(getActiveIndex());
       }
@@ -1559,6 +1562,18 @@ function initChannelInfoCarousel() {
     });
   });
 
+  // External channel rows must remain independent from the drag carousel.
+  // Opening them explicitly prevents the carousel's pointer handling from
+  // swallowing a normal tap on YouTube, Instagram, Threads, blog or Kakao.
+  carousel.querySelectorAll('.channel-info-slide a.channel-info-row[target="_blank"]').forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const destination = link.href;
+      if (destination) window.open(destination, "_blank", "noopener,noreferrer");
+    });
+  });
+
   dots.forEach((dot, index) => {
     dot.addEventListener("click", () => {
       activeIndex = index;
@@ -1619,8 +1634,21 @@ function initCaseCardCarousel() {
 
   const pages = [firstPage, nextPage];
   let activeIndex = 0;
+
+  // The carousel listens for drag gestures on its whole surface.  Keep the
+  // navigation buttons out of that pointer capture so a tap always works.
+  [prevButton, nextButton].forEach((button) => {
+    ["pointerdown", "pointermove", "pointerup", "pointercancel"].forEach((eventName) => {
+      button.addEventListener(eventName, (event) => event.stopPropagation());
+    });
+  });
+
   const render = () => {
     track.style.transform = `translateX(-${activeIndex * 100}%)`;
+    prevButton.disabled = activeIndex === 0;
+    nextButton.disabled = activeIndex === pages.length - 1;
+    prevButton.setAttribute("aria-disabled", String(prevButton.disabled));
+    nextButton.setAttribute("aria-disabled", String(nextButton.disabled));
     pages.forEach((page, index) => {
       const isActive = index === activeIndex;
       page.setAttribute("aria-hidden", isActive ? "false" : "true");
@@ -1631,12 +1659,12 @@ function initCaseCardCarousel() {
   };
 
   nextButton.addEventListener("click", () => {
-    activeIndex = (activeIndex + 1) % pages.length;
+    activeIndex = Math.min(activeIndex + 1, pages.length - 1);
     render();
   });
 
   prevButton.addEventListener("click", () => {
-    activeIndex = (activeIndex - 1 + pages.length) % pages.length;
+    activeIndex = Math.max(activeIndex - 1, 0);
     render();
   });
 
@@ -1651,6 +1679,7 @@ function initCaseCardCarousel() {
     },
     () => {},
     () => {},
+    false,
   );
 
   render();
