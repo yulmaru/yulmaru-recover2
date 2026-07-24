@@ -18,7 +18,7 @@ const CONFIG = {
 };
 
 const HEADERS = [
-  "접수시각",
+  "접수 시간",
   "이름",
   "연락처",
   "사건 유형",
@@ -39,9 +39,9 @@ function doPost(e) {
     const sheet = getLeadSheet_();
 
     sheet.appendRow([
-      payload.createdAt || new Date().toISOString(),
+      formatLeadDate_(payload.createdAt),
       payload.name || "",
-      payload.phone || "",
+      formatPhone_(payload.phone),
       payload.caseType || "",
       payload.message || "",
       payload.pageUrl || "",
@@ -81,6 +81,7 @@ function getLeadSheet_() {
     sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight("bold").setBackground("#dbeafe");
     sheet.autoResizeColumns(1, HEADERS.length);
   } else {
+    sheet.getRange(1, 1).setValue(HEADERS[0]);
     const currentHeaders = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
     const missingHeaders = HEADERS.filter((header) => !currentHeaders.includes(header));
     if (missingHeaders.length) {
@@ -89,8 +90,39 @@ function getLeadSheet_() {
       sheet.getRange(1, firstNewColumn, 1, missingHeaders.length).setFontWeight("bold").setBackground("#dbeafe");
       sheet.autoResizeColumns(firstNewColumn, missingHeaders.length);
     }
+    migrateExistingLeadTimes_(sheet);
   }
   return sheet;
+}
+
+function formatPhone_(value) {
+  const digits = String(value || "").replace(/\D/g, "").slice(0, 11);
+  if (digits.length === 11 && digits.startsWith("010")) {
+    return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`;
+  }
+  return digits;
+}
+
+function formatLeadDate_(value) {
+  const date = value ? new Date(value) : new Date();
+  if (Number.isNaN(date.getTime())) return String(value || "");
+
+  const timezone = "Asia/Seoul";
+  const day = Utilities.formatDate(date, timezone, "yyyy-MM-dd");
+  const hour24 = Number(Utilities.formatDate(date, timezone, "H"));
+  const minute = Utilities.formatDate(date, timezone, "mm");
+  const period = hour24 < 12 ? "오전" : "오후";
+  const hour12 = String(hour24 % 12 || 12).padStart(2, "0");
+  return `${day} ${period} ${hour12}:${minute}`;
+}
+
+function migrateExistingLeadTimes_(sheet) {
+  const rowCount = sheet.getLastRow() - 1;
+  if (rowCount < 1) return;
+  const range = sheet.getRange(2, 1, rowCount, 1);
+  const values = range.getValues();
+  const formatted = values.map(([value]) => [value ? formatLeadDate_(value) : ""]);
+  range.setValues(formatted);
 }
 
 function parsePayload_(e) {
