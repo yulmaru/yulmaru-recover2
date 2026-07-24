@@ -77,6 +77,13 @@ const contactFormStatus = document.querySelector("#contactFormStatus");
 const remoteLayer = document.querySelector(".home-inquiry-layer");
 const remoteHideButton = document.querySelector("#remoteHideButton");
 const remoteFab = document.querySelector("#remoteFab");
+
+// Keep the fixed consultation controls outside the home section so they stay
+// available on the lawyer, board, directions and case-detail views as well.
+[heroLeadPanel, leadConsultFab, leadPhoneFab].filter(Boolean).forEach((control) => {
+  document.body.append(control);
+});
+
 const pages = Array.from(document.querySelectorAll(".page-section"));
 const pageLinks = Array.from(document.querySelectorAll('a[href^="#"]'));
 const BLOG_POST_BATCH_SIZE = 24;

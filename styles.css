@@ -6565,6 +6565,36 @@ input[data-phone-input].is-phone-invalid:focus {
   }
 }
 
+/* Tablet layout: keep the information carousel beside the official-site card. */
+@media (min-width: 641px) and (max-width: 1120px) {
+  .home-content-feed .channel-board-panel {
+    grid-template-columns: minmax(260px, 0.88fr) minmax(300px, 1.12fr) !important;
+    align-items: stretch;
+  }
+
+  .home-content-feed .channel-topic-list {
+    grid-column: 1;
+    grid-row: 1;
+    min-height: 300px !important;
+    height: 300px;
+  }
+
+  .home-content-feed .channel-post-grid {
+    display: contents !important;
+  }
+
+  .home-content-feed .channel-side-carousel {
+    grid-column: 2 !important;
+    grid-row: 1;
+    height: 300px !important;
+  }
+
+  .home-content-feed .channel-post-card.is-large {
+    grid-column: 1 / -1 !important;
+    grid-row: 2;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .home-content-feed .channel-side-track,
   .home-content-feed .channel-side-dots span {
@@ -7110,6 +7140,31 @@ body.is-home-view .site-header {
   .home-content-feed .personal-news-head .job-chip svg {
     width: 28px !important;
     height: 28px !important;
+  }
+}
+
+/* On responsive screens, keep the interest chips as one draggable horizontal rail. */
+@media (max-width: 720px) {
+  .home-content-feed .job-chip-slider .job-chip-nav {
+    display: none !important;
+  }
+
+  .home-content-feed .personal-news-head .job-chip-row {
+    display: grid !important;
+    grid-template-columns: none !important;
+    grid-auto-flow: column !important;
+    grid-auto-columns: 76px !important;
+    width: 100% !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x proximity;
+    touch-action: none !important;
+    cursor: grab;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .home-content-feed .personal-news-head .job-chip {
+    scroll-snap-align: start;
   }
 }
 
@@ -8871,6 +8926,70 @@ body.is-home-view .site-header {
     min-width: 0;
     margin-top: 8px;
     transform: none;
+  }
+}
+
+/* Mobile navigation must use the site palette, not the legacy white panel. */
+@media (max-width: 1080px) {
+  .site-header .main-nav {
+    top: calc(100% + 6px);
+    right: 8px;
+    left: 8px;
+    max-height: calc(100vh - 78px);
+    overflow-y: auto;
+    border-color: rgba(170, 208, 255, 0.52);
+    border-radius: 12px;
+    background:
+      linear-gradient(135deg, rgba(22, 27, 59, 0.98), rgba(20, 49, 100, 0.98)),
+      #151b33;
+    box-shadow: 0 18px 38px rgba(3, 8, 30, 0.4);
+  }
+
+  .site-header .main-nav a,
+  .site-header .main-nav .nav-lawyer-menu > summary {
+    color: #ffffff !important;
+  }
+
+  .site-header .main-nav .nav-cta {
+    align-self: stretch;
+    text-align: center;
+  }
+}
+
+/* Keep the footer and its shortcut menu at a stable, readable mobile size. */
+@media (max-width: 720px) {
+  .site-footer {
+    gap: 18px !important;
+    padding: 26px 16px 22px !important;
+  }
+
+  .site-footer .footer-main {
+    gap: 18px;
+  }
+
+  .site-footer .footer-brand-logo {
+    width: 42px;
+    height: 42px;
+  }
+
+  .site-footer .footer-brand-block strong {
+    font-size: 18px;
+  }
+
+  .site-footer .footer-office,
+  .site-footer .footer-office span {
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .site-footer .footer-site-links {
+    width: 166px !important;
+    min-width: 166px;
+  }
+
+  .site-footer .footer-site-links-title {
+    min-height: 42px;
+    padding: 9px 13px;
   }
 }
 
