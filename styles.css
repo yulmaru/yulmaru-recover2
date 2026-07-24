@@ -6626,6 +6626,60 @@ body.is-navy-page .criminal-case-detail {
   background: transparent !important;
 }
 
+/* Final compact mobile consultation panel: controls only, no headline copy. */
+@media (max-width: 720px) {
+  .hero-lead-section.is-open {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 0 !important;
+    min-height: 44px;
+    padding: 6px 34px 6px 8px !important;
+  }
+
+  .hero-lead-section.is-open .hero-lead-copy {
+    display: none !important;
+  }
+
+  .hero-lead-section.is-open .hero-lead-form {
+    width: 100%;
+    grid-template-columns:
+      minmax(42px, 0.7fr)
+      minmax(66px, 1.05fr)
+      minmax(72px, 1.15fr)
+      72px;
+    gap: 4px;
+  }
+
+  .hero-lead-section.is-open .hero-lead-form input:not([type="checkbox"]),
+  .hero-lead-section.is-open .hero-lead-form select,
+  .hero-lead-section.is-open .hero-lead-form > button {
+    height: 32px;
+  }
+
+  .hero-lead-section.is-open .hero-lead-form > button {
+    width: 72px;
+    min-width: 72px;
+    padding-inline: 4px;
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero-lead-section.is-open .hero-lead-form {
+    grid-template-columns:
+      minmax(38px, 0.68fr)
+      minmax(58px, 1fr)
+      minmax(64px, 1.08fr)
+      60px;
+    gap: 3px;
+  }
+
+  .hero-lead-section.is-open .hero-lead-form > button {
+    width: 60px;
+    min-width: 60px;
+    font-size: 8px;
+  }
+}
+
 /* Keep the criminal-news panel at its desktop-like two-column size on phones. */
 @media (max-width: 640px) {
   .home-content-feed .personal-news-section {
@@ -6731,9 +6785,274 @@ body.is-navy-page .criminal-case-detail {
   box-shadow: 0 8px 18px rgba(4, 9, 24, 0.44), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
 }
 
+/* Board and directions use the lawyer-detail home button as their exact reference. */
+.page-home-back {
+  min-height: 34px;
+  margin-bottom: 12px;
+  border-color: rgba(158, 181, 255, 0.24);
+  border-radius: 999px;
+  background: rgba(16, 23, 43, 0.82);
+  color: #dbe7ff;
+  padding: 7px 13px;
+  font-weight: 850;
+}
+
+.page-home-back:hover,
+.page-home-back:focus-visible {
+  border-color: rgba(117, 185, 255, 0.62);
+  background: rgba(34, 48, 85, 0.94);
+}
+
+/* The standalone board screen has been removed from the landing flow. */
+#board {
+  display: none !important;
+}
+
+/* Keep the directions selector focused on branch names only. */
+.directions-branch {
+  grid-template-columns: 1fr;
+}
+
+.directions-branch small {
+  display: none;
+}
+
+/* Open the mobile hamburger menu as a compact vertical dropdown, not a full-width bar. */
+@media (max-width: 1080px) {
+  .site-header .main-nav {
+    right: 8px;
+    left: auto;
+    width: min(190px, calc(100vw - 24px));
+    min-width: 170px;
+    padding: 10px;
+    gap: 4px;
+  }
+
+  .site-header .main-nav > a,
+  .site-header .main-nav .nav-lawyer-menu > summary {
+    display: flex;
+    min-height: 36px;
+    align-items: center;
+    padding: 7px 9px;
+  }
+
+  .site-header .main-nav .nav-cta {
+    justify-content: center;
+    margin-top: 4px;
+  }
+}
+
+/* On desktop, keep the related-site control anchored to the far right of the footer. */
+@media (min-width: 1121px) {
+  .site-footer .footer-main {
+    position: relative;
+    padding-right: 190px;
+  }
+
+  .site-footer .footer-quick-column {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: auto;
+    grid-template-columns: auto;
+  }
+}
+
+/* Compact the fixed round contact controls without clipping their icon or label. */
+.lead-consult-fab,
+.lead-phone-fab {
+  gap: 3px;
+  width: 46px;
+  height: 46px;
+  font-size: 9px;
+}
+
+.lead-phone-fab {
+  bottom: calc(clamp(20px, 3vw, 34px) + 56px);
+}
+
+.lead-fab-icon-inquiry {
+  width: 17px;
+  height: 17px;
+}
+
+.lead-fab-icon-inquiry svg {
+  width: 16px;
+  height: 16px;
+}
+
+.lead-fab-icon-phone {
+  font-size: 17px;
+}
+
+.lead-fab-label {
+  max-width: calc(100% - 10px);
+  overflow: hidden;
+  font-size: 8px;
+  line-height: 1.1;
+  text-overflow: clip;
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .lead-consult-fab,
+  .lead-phone-fab {
+    width: 42px;
+    height: 42px;
+  }
+
+  .lead-phone-fab {
+    bottom: 66px;
+  }
+}
+
+/* On responsive screens, show only the compact form controls. */
+@media (max-width: 720px) {
+  .hero-lead-section.is-open {
+    grid-template-columns: minmax(0, 1fr);
+    padding-left: 8px;
+  }
+
+  .hero-lead-copy {
+    display: none;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero-lead-section.is-open {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Put the related-site control in the upper-right corner of the responsive footer. */
+@media (max-width: 720px) {
+  .site-footer .footer-main {
+    position: relative;
+  }
+
+  .site-footer .footer-quick-column {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 166px !important;
+    grid-template-columns: 1fr;
+  }
+
+  .site-footer .footer-site-links {
+    width: 166px !important;
+  }
+}
+
+/* Keep office addresses on one line while a desktop window is narrowed. */
+@media (min-width: 721px) and (max-width: 1120px) {
+  .site-footer .footer-main {
+    position: relative;
+    grid-template-columns: 142px minmax(0, 1fr);
+    column-gap: 24px;
+  }
+
+  .site-footer .footer-quick-column {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 126px;
+    grid-template-columns: 1fr;
+  }
+
+  .site-footer .footer-site-links {
+    width: 126px;
+    min-width: 126px;
+  }
+
+  .site-footer .footer-site-links-title {
+    min-height: 36px;
+    padding: 8px 10px;
+  }
+
+  .site-footer .footer-site-links-title strong {
+    font-size: 11px;
+  }
+
+  .site-footer .footer-office {
+    grid-template-columns: 66px max-content;
+    gap: 7px;
+    font-size: 10px;
+    line-height: 1.35;
+  }
+
+  .site-footer .footer-office span {
+    overflow: visible;
+    font-size: 10px;
+    white-space: nowrap;
+    word-break: keep-all;
+  }
+}
+
+/* Desktop browsers can enter a narrow CSS viewport when zoomed. Keep the footer rows intact there too. */
+@media (min-width: 500px) and (max-width: 720px) {
+  .site-footer .footer-main {
+    position: relative;
+    grid-template-columns: 142px minmax(0, 1fr);
+    column-gap: 24px;
+  }
+
+  .site-footer .footer-quick-column {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 126px !important;
+    grid-template-columns: 1fr;
+  }
+
+  .site-footer .footer-site-links {
+    width: 126px !important;
+    min-width: 126px;
+  }
+
+  .site-footer .footer-site-links-title {
+    min-height: 36px;
+    padding: 8px 10px;
+  }
+
+  .site-footer .footer-site-links-title strong {
+    font-size: 11px;
+  }
+
+  .site-footer .footer-office {
+    grid-template-columns: 66px max-content;
+    gap: 7px;
+    font-size: 10px !important;
+    line-height: 1.35 !important;
+  }
+
+  .site-footer .footer-office span {
+    overflow: visible;
+    font-size: 10px !important;
+    line-height: 1.35 !important;
+    white-space: nowrap;
+    word-break: keep-all;
+  }
+}
+
 .case-carousel-prev:disabled,
 .case-carousel-next:disabled {
   display: none !important;
+}
+
+/* Interest-field carousel arrows use the same quiet panel tone. */
+.job-chip-nav,
+.home-content-feed .job-chip-nav {
+  border-color: rgba(196, 211, 244, 0.28) !important;
+  background: rgba(27, 34, 52, 0.96) !important;
+  box-shadow: 0 6px 16px rgba(4, 9, 24, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+.job-chip-nav:hover,
+.job-chip-nav:focus-visible,
+.home-content-feed .job-chip-nav:hover,
+.home-content-feed .job-chip-nav:focus-visible {
+  background: rgba(43, 54, 79, 0.98) !important;
+  box-shadow: 0 8px 18px rgba(4, 9, 24, 0.44), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
 }
 
 /* Distribute footer information across the same width as the content layer above. */
@@ -9253,4 +9572,50 @@ body.is-navy-page .lawyer-detail-page,
 body.is-navy-page .directions-page,
 body.is-navy-page .criminal-case-detail {
   background: transparent !important;
+}
+
+/* Mobile consultation panel: show fields only and keep the submit control compact. */
+@media (max-width: 720px) {
+  .hero-lead-section.is-open {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 0 !important;
+    min-height: 44px;
+    padding: 6px 34px 6px 8px !important;
+  }
+
+  .hero-lead-section.is-open .hero-lead-copy {
+    display: none !important;
+  }
+
+  .hero-lead-section.is-open .hero-lead-form {
+    width: 100%;
+    grid-template-columns: minmax(42px, 0.7fr) minmax(66px, 1.05fr) minmax(72px, 1.15fr) 72px;
+    gap: 4px;
+  }
+
+  .hero-lead-section.is-open .hero-lead-form input:not([type="checkbox"]),
+  .hero-lead-section.is-open .hero-lead-form select,
+  .hero-lead-section.is-open .hero-lead-form > button {
+    height: 32px;
+  }
+
+  .hero-lead-section.is-open .hero-lead-form > button {
+    width: 72px;
+    min-width: 72px;
+    padding-inline: 4px;
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero-lead-section.is-open .hero-lead-form {
+    grid-template-columns: minmax(38px, 0.68fr) minmax(58px, 1fr) minmax(64px, 1.08fr) 60px;
+    gap: 3px;
+  }
+
+  .hero-lead-section.is-open .hero-lead-form > button {
+    width: 60px;
+    min-width: 60px;
+    font-size: 8px;
+  }
 }

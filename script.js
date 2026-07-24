@@ -555,6 +555,8 @@ function formatCompactDate(value) {
 }
 
 function showPage(id, shouldScroll = true) {
+  // The board view has been removed; old saved links now return home.
+  if (id === "board") id = "home";
   const caseSlug = getCriminalCaseSlug(id);
   const targetId = caseSlug
     ? "criminal-case-detail"
