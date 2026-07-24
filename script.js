@@ -67,6 +67,12 @@ const blogPostFeed = document.querySelector("#blogPostFeed");
 const blogLoadMore = document.querySelector("#blogLoadMore");
 const blogPostCount = document.querySelector("#blogPostCount");
 const contactForm = document.querySelector("#contactForm");
+const heroLeadForm = document.querySelector("#heroLeadForm");
+const heroLeadStatus = document.querySelector("#heroLeadStatus");
+const heroLeadPanel = document.querySelector("#heroLeadPanel");
+const heroLeadClose = document.querySelector("#heroLeadClose");
+const leadConsultFab = document.querySelector("#leadConsultFab");
+const contactFormStatus = document.querySelector("#contactFormStatus");
 const remoteLayer = document.querySelector(".home-inquiry-layer");
 const remoteHideButton = document.querySelector("#remoteHideButton");
 const remoteFab = document.querySelector("#remoteFab");
@@ -87,6 +93,138 @@ function escapeHtml(value) {
 
 function saveQuestions() {
   localStorage.setItem("legendQuestions", JSON.stringify(state.questions));
+}
+
+function buildLeadPayload(form, source) {
+  const formData = new FormData(form);
+  const randomId = window.crypto?.randomUUID?.() || `lead-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+
+  return {
+    id: randomId,
+    source,
+    name: String(formData.get("name") || "").trim(),
+    phone: String(formData.get("phone") || "").trim(),
+    caseType: String(formData.get("caseType") || "").trim(),
+    debt: String(formData.get("debt") || "").trim(),
+    message: String(formData.get("message") || "").trim(),
+    consent: formData.get("privacy") !== null,
+    createdAt: new Date().toISOString(),
+    pageUrl: window.location.href,
+  };
+}
+
+async function submitLeadPayload(payload) {
+  const endpoint = String(window.LEAD_API_ENDPOINT || "").trim();
+
+  if (!endpoint) {
+    return "not-configured";
+  }
+
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Lead API responded with ${response.status}`);
+  }
+  return "remote";
+}
+
+function setLeadStatus(statusElement, message, type) {
+  if (!statusElement) return;
+  statusElement.textContent = message;
+  statusElement.classList.remove("is-success", "is-error");
+  statusElement.classList.add(type === "error" ? "is-error" : "is-success");
+}
+
+function getPhoneDigits(value) {
+  return String(value || "").replace(/\D/g, "").slice(0, 11);
+}
+
+function formatPhoneNumber(value) {
+  const digits = getPhoneDigits(value);
+
+  if (digits.length < 3) return digits;
+  if (digits.length === 3) return `${digits}-`;
+  if (digits.length < 7) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+  if (digits.length === 7) return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-`;
+  return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`;
+}
+
+function isValidPhoneNumber(value) {
+  return /^010\d{8}$/.test(getPhoneDigits(value));
+}
+
+function setPhoneValidity(input, showError = false) {
+  const isValid = isValidPhoneNumber(input.value);
+  const shouldShowError = showError && !isValid;
+
+  input.classList.toggle("is-phone-invalid", shouldShowError);
+  input.setAttribute("aria-invalid", shouldShowError ? "true" : "false");
+  input.setCustomValidity("");
+
+  return isValid;
+}
+
+function initPhoneInputs() {
+  document.querySelectorAll("[data-phone-input]").forEach((input) => {
+    input.value = formatPhoneNumber(input.value);
+
+    input.addEventListener("input", () => {
+      input.value = formatPhoneNumber(input.value);
+      setPhoneValidity(input, false);
+    });
+
+    input.addEventListener("blur", () => {
+      setPhoneValidity(input, true);
+    });
+  });
+}
+
+async function handleLeadFormSubmit(form, statusElement, source) {
+  const submitButton = form.querySelector('button[type="submit"]');
+  const originalLabel = submitButton?.textContent || "";
+  const payload = buildLeadPayload(form, source);
+  const phoneInput = form.elements.phone;
+
+  if (!payload.name || !payload.phone || !payload.consent) {
+    setLeadStatus(statusElement, "필수 정보를 확인해 주세요.", "error");
+    return;
+  }
+
+  if (!phoneInput || !setPhoneValidity(phoneInput, true)) {
+    setLeadStatus(statusElement, "연락처를 정확히 입력해 주세요.", "error");
+    phoneInput?.focus();
+    return;
+  }
+
+  if (submitButton) {
+    submitButton.disabled = true;
+    submitButton.textContent = "접수 중...";
+  }
+
+  try {
+    const result = await submitLeadPayload(payload);
+    if (result === "not-configured") {
+      setLeadStatus(statusElement, "DB 접수 주소 설정이 필요합니다. 전화 상담을 이용해 주세요.", "error");
+      return;
+    }
+    setLeadStatus(statusElement, "상담 신청이 접수되었습니다. 빠르게 연락드리겠습니다.", "success");
+    form.reset();
+    if (form === heroLeadForm && form.elements.privacy) {
+      form.elements.privacy.checked = true;
+    }
+  } catch (error) {
+    console.error("Unable to save lead.", error);
+    setLeadStatus(statusElement, "접수에 실패했습니다. 전화 상담을 이용해 주세요.", "error");
+  } finally {
+    if (submitButton) {
+      submitButton.disabled = false;
+      submitButton.textContent = originalLabel;
+    }
+  }
 }
 
 function makeTitle(text) {
@@ -133,6 +271,8 @@ function formatCompactDate(value) {
 
 function showPage(id, shouldScroll = true) {
   const targetId = pages.some((page) => page.id === id) ? id : "home";
+  const isHomeView = targetId === "home" && (id === "home" || !id);
+  document.body.classList.toggle("is-home-view", isHomeView);
   pages.forEach((page) => page.classList.toggle("active-page", page.id === targetId));
 
   pageLinks.forEach((link) => {
@@ -308,6 +448,25 @@ mainNav.addEventListener("click", (event) => {
   }
 });
 
+const navLawyerMenu = document.querySelector(".nav-lawyer-menu");
+let navLawyerCloseTimer = 0;
+
+if (navLawyerMenu) {
+  navLawyerMenu.addEventListener("mouseenter", () => {
+    if (!window.matchMedia("(hover: hover) and (min-width: 1081px)").matches) return;
+    window.clearTimeout(navLawyerCloseTimer);
+    navLawyerMenu.setAttribute("open", "");
+  });
+
+  navLawyerMenu.addEventListener("mouseleave", () => {
+    if (!window.matchMedia("(hover: hover) and (min-width: 1081px)").matches) return;
+    window.clearTimeout(navLawyerCloseTimer);
+    navLawyerCloseTimer = window.setTimeout(() => {
+      navLawyerMenu.removeAttribute("open");
+    }, 120);
+  });
+}
+
 document.addEventListener("click", (event) => {
   const link = event.target.closest('a[href^="#"]');
   if (!link) return;
@@ -359,10 +518,45 @@ document.querySelectorAll(".tab").forEach((tab) => {
   });
 });
 
-contactForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  alert("상담 신청 예시가 접수되었습니다. 실제 배포 시 관리자 페이지에 저장됩니다.");
-  contactForm.reset();
+if (heroLeadForm) {
+  heroLeadForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    handleLeadFormSubmit(heroLeadForm, heroLeadStatus, "hero");
+  });
+}
+
+if (contactForm) {
+  contactForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    handleLeadFormSubmit(contactForm, contactFormStatus, "contact");
+  });
+}
+
+function openHeroLeadPanel() {
+  if (!heroLeadPanel || !leadConsultFab) return;
+  heroLeadPanel.classList.add("is-open");
+  heroLeadPanel.setAttribute("aria-hidden", "false");
+  leadConsultFab.setAttribute("aria-expanded", "true");
+  window.setTimeout(() => {
+    heroLeadForm?.elements.name?.focus({ preventScroll: true });
+  }, 180);
+}
+
+function closeHeroLeadPanel() {
+  if (!heroLeadPanel || !leadConsultFab) return;
+  heroLeadPanel.classList.remove("is-open");
+  heroLeadPanel.setAttribute("aria-hidden", "true");
+  leadConsultFab.setAttribute("aria-expanded", "false");
+  leadConsultFab.focus({ preventScroll: true });
+}
+
+leadConsultFab?.addEventListener("click", openHeroLeadPanel);
+heroLeadClose?.addEventListener("click", closeHeroLeadPanel);
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && heroLeadPanel?.classList.contains("is-open")) {
+    closeHeroLeadPanel();
+  }
 });
 
 function openRemoteInquiry() {
@@ -390,39 +584,18 @@ if (remoteFab) {
 
 const youtubeVideos = {
   long: [
-    { title: "개인파산 요건 및 특징 4가지 | 개인회생과 비교, 모르고 신청하면 면책 못 받습니다", category: "bankruptcy", views: "153", published: "4시간 전", url: "https://www.youtube.com/watch?v=20riPnESScQ" },
-    { title: "개인회생 변제금 상승시키는 청산가치? | 청산가치 산입되는 6가지 경우", category: "personal", views: "205", published: "8일 전", url: "https://www.youtube.com/watch?v=6BeheKhvj8g" },
-    { title: "개인워크아웃 신청 전 반드시 보세요 | 개인회생과 비교한 진짜 차이 4가지", category: "personal", views: "1.2천", published: "2주 전", url: "https://www.youtube.com/watch?v=W783G_GkNZk" },
-    { title: "2026년 새출발기금 채무조정 제도 완전 정리 | 소상공인이라면 반드시 확인하세요", category: "personal", views: "877", published: "3주 전", url: "https://www.youtube.com/watch?v=7k2Fp9l-BzY" },
-    { title: "개인회생 신청 전 신복위 먼저 가야 한다? | 채무조정 전치주의 시행되면 생기는 일", category: "personal", views: "", published: "최근", url: "https://www.youtube.com/watch?v=fV26reFSuBI" },
-    { title: "개인회생 신청 전 이것 하면 청산가치 올라갑니다 | 월 변제금 높아지는 5가지 행위", category: "personal", views: "", published: "최근", url: "https://www.youtube.com/watch?v=weBF5DKQbHA" },
-    { title: "개인회생에서 부정적 영향을 주는 3가지 유형", category: "personal", views: "", published: "최근", url: "https://www.youtube.com/watch?v=KQ2F3Ca2_pM" },
-    { title: "법인회생 잘못 밟으면 중간에 폐지됩니다 신청부터 종결까지 12단계 완전 정복", category: "corporate", views: "1.6천", published: "2주 전", url: "https://www.youtube.com/watch?v=zQxxeckZUzY" },
-    { title: "개인회생 월 변제금 이것 모르면 폐지됩니다 | 신청부터 완료까지 단계별 주의사항", category: "personal", views: "", published: "최근", url: "https://www.youtube.com/watch?v=oOs1fblidN4" },
-    { title: "2026년 개인회생 비용 전격 공개 | 개인회생 신청 99,000원?", category: "personal", views: "", published: "최근", url: "https://www.youtube.com/watch?v=hOqu6UliiJY" },
-    { title: "개인회생 단점 4가지 | 신청 전 반드시 알아야 할 것들", category: "personal", views: "9.5천", published: "2개월 전", url: "https://www.youtube.com/watch?v=10EIMUOTxo4" },
-    { title: "개인회생 할 때 체납세금 5,000만 원 탕감 가능!", category: "personal", views: "", published: "최근", url: "https://www.youtube.com/watch?v=MFbX_CLfvHs" },
-    { title: "개인회생 변제계획 1년간 성실히 이행하면?! 신용 회복됩니다!", category: "personal", views: "", published: "최근", url: "https://www.youtube.com/watch?v=_JD3UKCNVWs" },
-    { title: "개인회생·개인파산 전, 이 7가지 하면 기각·면책불허가 된다고?!", category: "bankruptcy", views: "", published: "최근", url: "https://www.youtube.com/watch?v=yFz902TGvlQ" },
-    { title: "개인파산 해도 없어지지 않는 채무 8가지 | 면책 전 반드시 확인하세요", category: "bankruptcy", views: "5.7천", published: "3개월 전", url: "https://www.youtube.com/watch?v=fU1zDYoeWTw" },
-    { title: "개인회생 신청 전 반드시 확인해야 할 5가지 | 모르고 신청하면 손해입니다", category: "personal", views: "901", published: "1개월 전", url: "https://www.youtube.com/watch?v=NHT3-yf9ips" },
-    { title: "개인회생 하면, 연대보증인도 빚 갚아야 하나요?", category: "personal", views: "", published: "최근", url: "https://www.youtube.com/watch?v=_ZPTnApC3_4" },
-    { title: "2026년 추가 생계비 인정 기준 변경 총정리ㅣ개인회생 신청 전 꼭 확인하세요!", category: "personal", views: "", published: "최근", url: "https://www.youtube.com/watch?v=OnBIvi1ZeI0" },
-    { title: "2026년부터 변경된 추가생계비 기준(주거비 편)", category: "personal", views: "", published: "최근", url: "https://www.youtube.com/watch?v=7SDLxEjBu1A" },
-    { title: "법인파산 절차 어떻게 진행될까?ㅣ부산회생법원 기준 9단계 총정리", category: "corporate", views: "2.3천", published: "3개월 전", url: "https://www.youtube.com/watch?v=vNz969x9ag4" },
-    { title: "개인회생하면 집 뺏길까? 변호사가 알려드립니다!", category: "personal", views: "", published: "최근", url: "https://www.youtube.com/watch?v=6hZgTdwdTzU" },
-    { title: "통장 압류 막는 법? 2026년 확 바뀌는 회생 뉴스 3가지", category: "personal", views: "", published: "최근", url: "https://www.youtube.com/watch?v=SU3iZxKAebk" },
-    { title: "[총정리] 신속채무조정 vs 워크아웃 vs 개인회생, 나에게 딱 맞는 제도는?", category: "personal", views: "506", published: "5개월 전", url: "https://www.youtube.com/watch?v=Z79HHb5DLrU" },
-    { title: "개인회생 중 월급이 압류됐다면? (2026년 개정판)", category: "personal", views: "189", published: "6개월 전", url: "https://www.youtube.com/watch?v=8mdAtFL66r0" },
-  ],  shorts: [
-    { title: "개인회생 변제금 상승 이유", category: "personal", views: "474", published: "최근", url: "https://www.youtube.com/shorts/EhEhwJDPALU" },
-    { title: "가족 몰래 개인회생 가능한가요?", category: "personal", views: "497", published: "최근", url: "https://www.youtube.com/shorts/dIAHQJ0rMQc" },
-    { title: "주식·코인 투자 손실도 산정되나요?", category: "personal", views: "1.5천", published: "최근", url: "https://www.youtube.com/shorts/SY7Kh8kxCYQ" },
-    { title: "개인회생 배우자 재산, 청산가치에 들어갈까?", category: "personal", views: "311", published: "최근", url: "https://www.youtube.com/shorts/6DskwJIO-n0" },
-    { title: "개인워크아웃 신청 전 확인", category: "personal", views: "263", published: "최근", url: "https://www.youtube.com/shorts/MK20JcZQzKA" },
-    { title: "법인회생 절차 핵심만 정리", category: "corporate", views: "302", published: "최근", url: "https://www.youtube.com/shorts/XmKNcXo1lgw" },
-    { title: "개인파산 전 알아야 할 면책 포인트", category: "bankruptcy", views: "481", published: "최근", url: "https://www.youtube.com/shorts/P9WVKVER1wM" },
-  ],};
+    { title: "성범죄 피해, 직접증거가 없어도 고소 가능할까? 피해자 진술이 중요한 이유", category: "criminal", tags: ["sexual-crime"], views: "67", published: "7일 전", url: "https://www.youtube.com/watch?v=qQmR530dOAA" },
+    { title: "경찰조사 받을 때 반드시 알아야 할 주의사항 8가지", category: "criminal", tags: ["traffic-crime", "sexual-crime", "violent-crime", "property-crime", "voice-phishing", "drug-crime", "cyber-crime", "defamation", "obstruction", "military-crime"], views: "127", published: "2주 전", url: "https://www.youtube.com/watch?v=EwxjUq4FtXo" },
+    { title: "댓글 하나가 형사처벌로? SNS 글 올리기 전 반드시 알아야 할 명예훼손 기준 4가지", category: "criminal", tags: ["cyber-crime", "defamation"], views: "132", published: "2개월 전", url: "https://www.youtube.com/watch?v=yfssYteuPtI" },
+    { title: "대구 캐리어 시신 유기 사건ㅣ사위가 장모를 죽였는데 존속살해? 일반 살인과 형량이 다른 이유", category: "criminal", tags: ["violent-crime"], views: "392", published: "2개월 전", url: "https://www.youtube.com/watch?v=VFuLAZRODkA" },
+    { title: "커피 세 잔에 550만 원? 빽다방 알바생 횡령 고소 사건의 충격적인 진실 | 횡령죄 vs 공갈죄 법적 분석", category: "criminal", tags: ["property-crime"], views: "756", published: "3개월 전", url: "https://www.youtube.com/watch?v=Vk5LR8W_eIg" },
+    { title: "사기 고소했는데 불송치? 이유 있습니다 사기죄 성립 요건과 고소 전 꼭 알아야 할 것들", category: "criminal", tags: ["property-crime"], views: "248", published: "3개월 전", url: "https://www.youtube.com/watch?v=m9qkd7RkUrc" },
+    { title: "음주운전 \"벌금으로 끝나겠지\" 하다가 실형 사는 이유 3가지", category: "criminal", tags: ["traffic-crime"], views: "50", published: "4개월 전", url: "https://www.youtube.com/watch?v=T66GBM-5QQQ" },
+    { title: "보이스피싱 경찰 조사 받기 전 반드시 알아야 할 것", category: "criminal", tags: ["voice-phishing", "property-crime"], views: "61", published: "4개월 전", url: "https://www.youtube.com/watch?v=K1boh2DpAkM" },
+    { title: "성범죄 억울하게 연루되었다면 무조건 봐야 하는 영상ㅣ무죄가 나오는 3가지 경우", category: "criminal", tags: ["sexual-crime"], views: "120", published: "4개월 전", url: "https://www.youtube.com/watch?v=OetJPTkJPl0" },
+  ],
+  shorts: [],
+};
 
 const videoState = {
   selectedFilters: [],
@@ -459,7 +632,9 @@ function getVideoItems(type) {
 
   return items.filter((item) => {
     const tags = getVideoTags(item);
-    return selected.some((filter) => tags.includes(filter.key) || item.category === filter.category);
+    return selected.some((filter) => {
+      return tags.includes(filter.key) || (filter.category !== "criminal" && item.category === filter.category);
+    });
   });
 }
 
@@ -469,44 +644,22 @@ function getVideoTags(item) {
   const title = item.title || "";
   const tags = new Set();
 
-  if (/급여|월급|직장|소득/.test(title)) tags.add("salary");
-  if (/자영업|사업자|사업장|매출/.test(title)) tags.add("self-employed");
-  if (/프리랜서/.test(title)) tags.add("freelancer");
-  if (/최근대출|대출|새출발/.test(title)) tags.add("recent-loan");
-  if (/세금|조세|생계비/.test(title)) tags.add("tax");
-  if (/압류|추심|독촉|연체|계좌/.test(title)) tags.add("collection");
-  if (/주식|코인|도박|사행/.test(title)) tags.add("investment");
-  if (/부동산|집|재산/.test(title)) tags.add("real-estate");
-  if (/자동차|차량/.test(title)) tags.add("car");
-  if (/배우자|가족|부양/.test(title)) tags.add("family");
-  if (/무직|소득 없/.test(title)) tags.add("unemployed");
-  if (/고령|노령/.test(title)) tags.add("senior");
-  if (/질병|장애|병원/.test(title)) tags.add("illness");
-  if (/기초생활|수급자/.test(title)) tags.add("basic-aid");
-  if (/면책불허|면책|파산|관재/.test(title)) tags.add("discharge-denial");
-  if (/사기|손해배상/.test(title)) tags.add("fraud-debt");
-  if (/처분|청산가치|재산/.test(title)) tags.add("asset-transfer");
-  if (/개인사업자|사업자/.test(title)) tags.add("sole-proprietor");
-  if (/전문직|의사|약사|변호사/.test(title)) tags.add("professional");
-  if (/고소득/.test(title)) tags.add("high-income");
-  if (/부동산.*과다|과다채무/.test(title)) tags.add("real-estate-heavy");
-  if (/병원|의원/.test(title)) tags.add("clinic");
-  if (/약국|학원|음식점/.test(title)) tags.add("academy-restaurant");
-  if (/보증/.test(title)) tags.add("guarantee");
-  if (/법인|기업|폐업|회생절차/.test(title)) tags.add("business-failure");
+  if (/교통|음주운전|뺑소니|무면허|보복운전|교통사고/.test(title)) tags.add("traffic-crime");
+  if (/성범죄|성폭력|강간|추행|몰카|불법촬영/.test(title)) tags.add("sexual-crime");
+  if (/폭행|상해|살인|협박|스토킹|시신/.test(title)) tags.add("violent-crime");
+  if (/사기|횡령|배임|절도|공갈|재산|금전/.test(title)) tags.add("property-crime");
+  if (/보이스피싱|전화금융사기/.test(title)) tags.add("voice-phishing");
+  if (/마약|대마|필로폰|향정/.test(title)) tags.add("drug-crime");
+  if (/사이버|해킹|SNS|온라인|디지털/.test(title)) tags.add("cyber-crime");
+  if (/명예훼손|모욕|댓글/.test(title)) tags.add("defamation");
+  if (/공무집행방해|경찰관.*폭행/.test(title)) tags.add("obstruction");
+  if (/군형사|군인|군사법원|군무원/.test(title)) tags.add("military-crime");
 
-  if (!tags.size) {
-    if (item.category === "corporate") tags.add("business-failure");
-    if (item.category === "bankruptcy") tags.add("discharge-denial");
-    if (item.category === "personal") tags.add("salary");
-  }
   return Array.from(tags);
 }
 function getCategoryLabel(category) {
   return {
-    personal: "01 개인회생",
-    bankruptcy: "02 개인파산",
-    corporate: "03 법인회생·법인파산",
+    criminal: "형사사건",
   }[category] || "상황별";
 }
 
@@ -535,11 +688,11 @@ function renderFeaturedRecommendVideos() {
       const thumbnailImage = thumbnail
         ? `<img src="${escapeHtml(thumbnail)}" alt="${escapeHtml(item.title)} 썸네일" loading="lazy"${fallbackAttr}>`
         : "";
-      const sourceText = `회생의 전설 · ${item.published}`;
+      const sourceText = `형사의 전설 · ${item.published}`;
       const viewText = item.views ? `조회 ${item.views}` : "";
 
       return `
-        <a class="featured-recommend-card" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" data-category="${escapeHtml(item.category)}">
+        <a class="featured-recommend-card" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" data-category="${escapeHtml(item.category)}" aria-label="${escapeHtml(item.title)} 유튜브 영상 보기">
           <div class="featured-recommend-thumb">${thumbnailImage}<span>▶</span></div>
           <div class="featured-recommend-copy">
             <span class="featured-recommend-source">${escapeHtml(sourceText)}</span>
@@ -561,7 +714,7 @@ async function hydrateYouTubeVideosFromApi() {
   const apiKey = window.YOUTUBE_API_KEY;
   if (!apiKey) return;
   try {
-    const channelResponse = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forHandle=legend_of_revival&key=${apiKey}`);
+    const channelResponse = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forHandle=yulmaru_g&key=${apiKey}`);
     const channelData = await channelResponse.json();
     const uploads = channelData.items?.[0]?.contentDetails?.relatedPlaylists?.uploads;
     if (!uploads) return;
@@ -616,9 +769,7 @@ function parseYouTubeDuration(value) {
 }
 
 function inferVideoCategory(title) {
-  if (/법인|기업|사업자|폐업/.test(title)) return "corporate";
-  if (/파산|면책|관재/.test(title)) return "bankruptcy";
-  return "personal";
+  return "criminal";
 }
 function normalizeSocialProfiles() {
   const grid = document.querySelector(".social-profile-grid");
@@ -647,7 +798,7 @@ function normalizeSocialProfiles() {
     {
       match: "lawtalk.co.kr",
       title: "로톡",
-      handle: "임재현 변호사",
+      handle: "법무법인 율마루",
       action: "상담",
     },
     {
@@ -768,10 +919,11 @@ function enableDragScroll(selector) {
       const totalWalk = event.clientX - startX;
       const elapsed = Math.max(now - lastTime, 16);
 
-      if (Math.abs(totalWalk) > 5) {
+      if (!moved && Math.abs(totalWalk) > 5) {
         moved = true;
-        event.preventDefault();
       }
+
+      if (moved && event.cancelable) event.preventDefault();
 
       scroller.scrollLeft -= deltaX;
       velocity = (deltaX / elapsed) * 16;
@@ -779,12 +931,14 @@ function enableDragScroll(selector) {
       lastTime = now;
     });
 
-    ["pointerup", "pointercancel", "pointerleave"].forEach((eventName) => {
+    ["pointerup", "pointercancel"].forEach((eventName) => {
       scroller.addEventListener(eventName, (event) => {
         if (!isDown) return;
         isDown = false;
         scroller.classList.remove("is-dragging");
-        scroller.releasePointerCapture?.(event.pointerId);
+        if (scroller.hasPointerCapture?.(event.pointerId)) {
+          scroller.releasePointerCapture?.(event.pointerId);
+        }
 
         if (eventName === "pointerup" && isSituationScroller && !moved) {
           const chip = startTarget?.closest?.(".video-filter-chip");
@@ -794,6 +948,10 @@ function enableDragScroll(selector) {
 
         if (moved) glide();
       });
+    });
+
+    scroller.addEventListener("dragstart", (event) => {
+      event.preventDefault();
     });
 
     scroller.addEventListener("click", (event) => {
@@ -806,27 +964,33 @@ function enableDragScroll(selector) {
 function initJobChipSliderControls() {
   document.querySelectorAll("[data-job-slider]").forEach((slider) => {
     const scroller = slider.querySelector(".job-chip-row");
+    const prevButton = slider.querySelector("[data-job-prev]");
     const nextButton = slider.querySelector("[data-job-next]");
-    if (!scroller || !nextButton) return;
+    if (!scroller || !prevButton || !nextButton) return;
 
     const update = () => {
       const maxScroll = scroller.scrollWidth - scroller.clientWidth;
       const canScroll = maxScroll > 4;
+      const atStart = scroller.scrollLeft <= 3;
       const atEnd = scroller.scrollLeft >= maxScroll - 3;
       slider.classList.toggle("is-scroll-locked", !canScroll);
+      slider.classList.toggle("is-at-start", canScroll && atStart);
       slider.classList.toggle("is-at-end", canScroll && atEnd);
+      prevButton.disabled = !canScroll || atStart;
       nextButton.disabled = !canScroll || atEnd;
     };
 
-    nextButton.addEventListener("click", () => {
+    const move = (direction) => {
       const maxScroll = scroller.scrollWidth - scroller.clientWidth;
       const distance = Math.max(scroller.clientWidth * 0.82, 300);
       scroller.scrollTo({
-        left: Math.min(scroller.scrollLeft + distance, maxScroll),
+        left: Math.min(Math.max(scroller.scrollLeft + direction * distance, 0), maxScroll),
         behavior: "smooth"
       });
-    });
+    };
 
+    prevButton.addEventListener("click", () => move(-1));
+    nextButton.addEventListener("click", () => move(1));
     scroller.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
     requestAnimationFrame(update);
@@ -866,6 +1030,159 @@ function initFeaturedRecommendControls() {
   window.addEventListener("resize", update);
   requestAnimationFrame(update);
 }
+
+function initChannelSideCarousel() {
+  const carousel = document.querySelector("[data-channel-side-carousel]");
+  const track = carousel?.querySelector("[data-channel-side-track]");
+  const slides = Array.from(carousel?.querySelectorAll(".channel-side-slide") || []);
+  const dots = Array.from(carousel?.querySelectorAll(".channel-side-dots span") || []);
+  if (!carousel || !track || slides.length < 2) return;
+
+  let activeIndex = window.location.hash === "#lawyer-intro" ? 1 : 0;
+  let rotationTimer = 0;
+
+  const render = () => {
+    track.style.transform = `translateX(-${activeIndex * 100}%)`;
+    slides.forEach((slide, index) => {
+      const isActive = index === activeIndex;
+      slide.classList.toggle("is-active", isActive);
+      slide.setAttribute("aria-hidden", isActive ? "false" : "true");
+      slide.tabIndex = isActive ? 0 : -1;
+      dots[index]?.classList.toggle("is-active", isActive);
+    });
+  };
+
+  const stop = () => {
+    window.clearInterval(rotationTimer);
+    rotationTimer = 0;
+  };
+
+  const start = () => {
+    stop();
+    if (document.hidden) return;
+    rotationTimer = window.setInterval(() => {
+      activeIndex = (activeIndex + 1) % slides.length;
+      render();
+    }, 4200);
+  };
+
+  carousel.addEventListener("mouseenter", stop);
+  carousel.addEventListener("mouseleave", start);
+  carousel.addEventListener("focusin", stop);
+  carousel.addEventListener("focusout", (event) => {
+    if (!carousel.contains(event.relatedTarget)) start();
+  });
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) stop();
+    else start();
+  });
+
+  render();
+  start();
+}
+
+function initChannelInfoCarousel() {
+  const carousel = document.querySelector("[data-channel-info-carousel]");
+  const track = carousel?.querySelector("[data-channel-info-track]");
+  const slides = Array.from(carousel?.querySelectorAll("[data-channel-info-slide]") || []);
+  const dots = Array.from(carousel?.querySelectorAll("[data-channel-info-dot]") || []);
+  if (!carousel || !track || slides.length < 2) return;
+
+  let activeIndex = 0;
+  let rotationTimer = 0;
+
+  const render = () => {
+    track.style.transform = `translateX(-${activeIndex * 100}%)`;
+    slides.forEach((slide, index) => {
+      const isActive = index === activeIndex;
+      slide.classList.toggle("is-active", isActive);
+      slide.setAttribute("aria-hidden", isActive ? "false" : "true");
+      slide.querySelectorAll("a, button").forEach((control) => {
+        control.tabIndex = isActive ? 0 : -1;
+      });
+    });
+    dots.forEach((dot, index) => {
+      const isActive = index === activeIndex;
+      dot.classList.toggle("is-active", isActive);
+      dot.setAttribute("aria-selected", isActive ? "true" : "false");
+      dot.tabIndex = isActive ? 0 : -1;
+    });
+  };
+
+  const stop = () => {
+    window.clearInterval(rotationTimer);
+    rotationTimer = 0;
+  };
+
+  const start = () => {
+    stop();
+    if (document.hidden) return;
+    rotationTimer = window.setInterval(() => {
+      activeIndex = (activeIndex + 1) % slides.length;
+      render();
+    }, 5200);
+  };
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener("click", () => {
+      activeIndex = index;
+      render();
+      start();
+    });
+
+    dot.addEventListener("keydown", (event) => {
+      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+      event.preventDefault();
+      const direction = event.key === "ArrowRight" ? 1 : -1;
+      activeIndex = (activeIndex + direction + slides.length) % slides.length;
+      render();
+      dots[activeIndex].focus();
+      start();
+    });
+  });
+
+  const openInfoSlide = (index, hash, link) => {
+      showPage(hash.replace("#", ""), false);
+      activeIndex = index;
+      render();
+      start();
+      window.history.replaceState(null, "", hash);
+      carousel.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+        block: "center",
+      });
+      link.closest("details")?.removeAttribute("open");
+  };
+
+  document.querySelectorAll("[data-open-lawyer-intro]").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      openInfoSlide(1, "#lawyer-intro", link);
+    });
+  });
+
+  document.querySelectorAll("[data-open-office-location]").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      openInfoSlide(2, "#office-location", link);
+    });
+  });
+
+  carousel.addEventListener("mouseenter", stop);
+  carousel.addEventListener("mouseleave", start);
+  carousel.addEventListener("focusin", stop);
+  carousel.addEventListener("focusout", (event) => {
+    if (!carousel.contains(event.relatedTarget)) start();
+  });
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) stop();
+    else start();
+  });
+
+  render();
+  start();
+}
+
 function initJobChips() {
   document.querySelectorAll(".video-filter-chip").forEach((chip) => {
     chip.setAttribute("aria-pressed", "false");
@@ -874,8 +1191,11 @@ function initJobChips() {
 
 renderVideos();
 hydrateYouTubeVideosFromApi();
+initPhoneInputs();
 initJobChips();
 initJobChipSliderControls();
 initFeaturedRecommendControls();
+initChannelSideCarousel();
+initChannelInfoCarousel();
 enableDragScroll(".job-chip-row");
 enableDragScroll(".featured-recommend-row");

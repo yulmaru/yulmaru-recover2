@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>부산개인회생 | 부산 회생 익명 문의</title>
+    <title>부산형사전문변호사 | 부산 회생 익명 문의</title>
     <meta
       name="description"
       content="부산 개인회생, 개인파산 정보를 확인하고 로그인 없이 익명 문의를 남길 수 있는 회생의 전설입니다."
@@ -13,13 +13,13 @@
     <link rel="apple-touch-icon" href="assets/favicon.png" />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
+  <body class="is-home-view">
     <header class="site-header">
-      <a class="brand" href="#home" aria-label="부산개인회생 홈">
+      <a class="brand" href="#home" aria-label="형사전문변호사 홈">
         <span class="brand-mark"><img src="assets/yulmaru-logo.png" alt="율마루 로고" /></span>
         <span>
-          <strong>부산개인회생</strong>
-          <small>임재현 변호사</small>
+          <strong>형사전문변호사</strong>
+          <small>법무법인 율마루</small>
         </span>
       </a>
       <button class="menu-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false">
@@ -29,22 +29,96 @@
       </button>
       <nav class="main-nav" aria-label="주요 메뉴">
         <a href="#home">홈</a>
-        <a href="#personal">부산개인회생</a>
-        <a href="#bankruptcy">부산개인파산</a>
-        <a href="#busan">부산법인파산</a>
-        <a href="#cases">회생 사례</a>
+        <details class="nav-lawyer-menu">
+          <summary>형사전문변호사</summary>
+          <div class="nav-lawyer-dropdown">
+            <a href="lawyer-im-jae-hyun.html">임재현 변호사</a>
+            <a href="lawyer-park-sang-jun.html">박상준 변호사</a>
+            <a href="lawyer-moon-ji-young.html">문지영 변호사</a>
+            <a href="lawyer-lee-ju-won.html">이주원 변호사</a>
+          </div>
+        </details>
+        <a href="#bankruptcy">콘텐츠</a>
         <a href="#board">게시판</a>
-        <a class="nav-cta" href="#contact">상담 신청</a>
+        <a href="#office-location" data-open-office-location>오시는 길</a>
+        <a class="nav-cta" href="#contact">신청 하기</a>
       </nav>
     </header>
 
     <main>
       <section id="home" class="hero section page-section">
-        <section class="hero-slider hero-static" aria-label="부산개인회생 상단 이미지">
+        <section class="hero-slider hero-static" aria-label="부산형사전문변호사 상단 이미지">
           <div class="hero-slide active" aria-hidden="false">
-            <img src="assets/hero-face-sample.png" alt="임재현 변호사 부산개인회생 대표 이미지" />
+            <img src="assets/hero-law-team.webp" alt="법무법인 율마루 형사전문변호사 4인" />
+            <div class="hero-main-copy">
+              <span>형사전문변호사</span>
+              <h1>초기 대응<br />결과를 바꿉니다.</h1>
+            </div>
           </div>
         </section>
+        <section
+          class="hero-lead-section"
+          id="heroLeadPanel"
+          aria-labelledby="hero-lead-title"
+          aria-hidden="true"
+        >
+          <button class="hero-lead-close" id="heroLeadClose" type="button" aria-label="상담 신청 창 닫기">×</button>
+          <div class="hero-lead-copy">
+            <span>24시간 상담 접수</span>
+            <strong id="hero-lead-title">형사 사건 빠른 상담</strong>
+          </div>
+          <form class="hero-lead-form" id="heroLeadForm" novalidate>
+            <label>
+              <span>이름</span>
+              <input name="name" type="text" placeholder="성함" autocomplete="name" maxlength="30" required />
+            </label>
+            <label>
+              <span>연락처</span>
+              <input
+                name="phone"
+                type="tel"
+                inputmode="numeric"
+                placeholder="010-0000-0000"
+                autocomplete="tel"
+                maxlength="13"
+                pattern="010-[0-9]{4}-[0-9]{4}"
+                data-phone-input
+                required
+              />
+            </label>
+            <label>
+              <span>관심 분야</span>
+              <select name="caseType" required>
+                <option value="">사건 유형 선택</option>
+                <option>교통범죄</option>
+                <option>성범죄</option>
+                <option>폭력범죄</option>
+                <option>재산범죄</option>
+                <option>보이스피싱</option>
+                <option>마약범죄</option>
+                <option>사이버범죄</option>
+                <option>명예훼손범죄</option>
+                <option>공무집행방해</option>
+                <option>군형사</option>
+              </select>
+            </label>
+            <button type="submit">상담 신청</button>
+            <label class="hero-lead-privacy">
+              <input name="privacy" type="checkbox" required checked />
+              <span>개인정보 수집 및 이용에 동의합니다.</span>
+            </label>
+            <p class="hero-lead-status" id="heroLeadStatus" aria-live="polite"></p>
+          </form>
+        </section>
+        <button
+          class="lead-consult-fab"
+          id="leadConsultFab"
+          type="button"
+          aria-controls="heroLeadPanel"
+          aria-expanded="false"
+        >
+          <span>상담<br />신청</span>
+        </button>
         <div class="home-inquiry-layer collapsed">
           <section class="recent-inquiries" aria-labelledby="recent-title">
             <section class="chat-card embedded-chat" aria-labelledby="chat-title">
@@ -58,7 +132,7 @@
                 </div>
               </div>
               <div class="chat-log" id="chatLog" aria-live="polite"></div>
-              <form class="chat-form" id="quickQuestionForm">
+              <form class="chat-form" id="quickQuestionForm" novalidate>
                 <label for="quickQuestion">문의 내용</label>
                 <textarea
                   id="quickQuestion"
@@ -70,7 +144,16 @@
                 <div class="chat-fields">
                   <label>
                     연락처
-                    <input name="nickname" type="tel" placeholder="010-0000-0000" />
+                    <input
+                      name="nickname"
+                      type="tel"
+                      inputmode="numeric"
+                      placeholder="010-0000-0000"
+                      autocomplete="tel"
+                      maxlength="13"
+                      pattern="010-[0-9]{4}-[0-9]{4}"
+                      data-phone-input
+                    />
                   </label>
                 </div>
                 <button type="submit">문의글 등록하기</button>
@@ -84,328 +167,345 @@
         </div>
 
         <section class="home-content-feed" aria-labelledby="featured-recommend-title">
-          <section class="job-selector-section" aria-label="&#xC0C1;&#xD669;&#xBCC4; &#xC9C1;&#xC5C5;&#xAD70; &#xC120;&#xD0DD;">
-            <div class="job-chip-slider" data-job-slider>
-              <button class="job-chip-nav job-chip-prev" type="button" aria-label="상황별 선택 왼쪽으로 보기" data-job-prev>&lsaquo;</button>
-              <div class="job-chip-row" role="list" aria-label="&#xC9C1;&#xC5C5;&#xAD70; &#xBC0F; &#xC0C1;&#xD669; &#xC120;&#xD0DD; &#xBC84;&#xD2BC;">                <button class="job-chip video-filter-chip salary-chip" data-video-key="salary" data-video-category="personal" type="button" aria-pressed="false"><span aria-hidden="true">▤</span>&#xAE09;&#xC5EC;&#xC18C;&#xB4DD;&#xC790;</button>
-                <button class="job-chip video-filter-chip" data-video-key="self-employed" data-video-category="corporate" type="button" aria-pressed="false"><span aria-hidden="true">▥</span>&#xC790;&#xC601;&#xC5C5;&#xC790;</button>
-                <button class="job-chip video-filter-chip" data-video-key="freelancer" data-video-category="personal" type="button" aria-pressed="false"><span aria-hidden="true">✎</span>&#xD504;&#xB9AC;&#xB79C;&#xC11C;</button>
-                <button class="job-chip video-filter-chip" data-video-key="recent-loan" data-video-category="personal" type="button" aria-pressed="false"><span aria-hidden="true">▭</span>&#xCD5C;&#xADFC;&#xB300;&#xCD9C;</button>
-                <button class="job-chip video-filter-chip" data-video-key="tax" data-video-category="personal" type="button" aria-pressed="false"><span aria-hidden="true">≡</span>&#xC138;&#xAE08; &#xCCB4;&#xB0A9;</button>
-                <button class="job-chip video-filter-chip" data-video-key="collection" data-video-category="personal" type="button" aria-pressed="false"><span aria-hidden="true">☎</span>&#xC555;&#xB958;&middot;&#xCD94;&#xC2EC;</button>
-                <button class="job-chip video-filter-chip" data-video-key="investment" data-video-category="personal" type="button" aria-pressed="false"><span aria-hidden="true">⌁</span>&#xC8FC;&#xC2DD;&middot;&#xCF54;&#xC778;&middot;&#xB3C4;&#xBC15;</button>
-                <button class="job-chip video-filter-chip" data-video-key="real-estate" data-video-category="bankruptcy" type="button" aria-pressed="false"><span aria-hidden="true">⌂</span>&#xBD80;&#xB3D9;&#xC0B0;</button>
-                <button class="job-chip video-filter-chip" data-video-key="car" data-video-category="personal" type="button" aria-pressed="false"><span aria-hidden="true">▰</span>&#xC790;&#xB3D9;&#xCC28;</button>
-                <button class="job-chip video-filter-chip" data-video-key="family" data-video-category="personal" type="button" aria-pressed="false"><span aria-hidden="true">◇</span>&#xBC30;&#xC6B0;&#xC790;&middot;&#xAC00;&#xC871;</button>
-                <button class="job-chip video-filter-chip" data-video-key="unemployed" data-video-category="bankruptcy" type="button" aria-pressed="false"><span aria-hidden="true">○</span>&#xBB34;&#xC9C1;&#xC790;</button>
-                <button class="job-chip video-filter-chip" data-video-key="senior" data-video-category="bankruptcy" type="button" aria-pressed="false"><span aria-hidden="true">◎</span>&#xACE0;&#xB839;&#xC790;</button>
-                <button class="job-chip video-filter-chip" data-video-key="illness" data-video-category="bankruptcy" type="button" aria-pressed="false"><span aria-hidden="true">+</span>&#xC9C8;&#xBCD1;&middot;&#xC7A5;&#xC560;</button>
-                <button class="job-chip video-filter-chip" data-video-key="basic-aid" data-video-category="bankruptcy" type="button" aria-pressed="false"><span aria-hidden="true">✓</span>&#xAE30;&#xCD08;&#xC0DD;&#xD65C;<br />&#xC218;&#xAE09;&#xC790;</button>
-                <button class="job-chip video-filter-chip" data-video-key="no-income-business" data-video-category="corporate" type="button" aria-pressed="false"><span aria-hidden="true">◌</span>&#xC18C;&#xB4DD; &#xC5C6;&#xB294; &#xC790;&#xC601;&#xC5C5;&#xC790;</button>
-                <button class="job-chip video-filter-chip" data-video-key="discharge-denial" data-video-category="bankruptcy" type="button" aria-pressed="false"><span aria-hidden="true">⊘</span>&#xBA74;&#xCC45;&#xBD88;&#xD5C8;&#xAC00;</button>
-                <button class="job-chip video-filter-chip" data-video-key="fraud-debt" data-video-category="bankruptcy" type="button" aria-pressed="false"><span aria-hidden="true">△</span>&#xC0AC;&#xAE30;&#xCC44;&#xBB34;&middot;&#xC190;&#xD574;&#xBC30;&#xC0C1;</button>
-                <button class="job-chip video-filter-chip" data-video-key="asset-transfer" data-video-category="personal" type="button" aria-pressed="false"><span aria-hidden="true">□</span>&#xC7AC;&#xC0B0; &#xCC98;&#xBD84;</button>
-                <button class="job-chip video-filter-chip" data-video-key="sole-proprietor" data-video-category="corporate" type="button" aria-pressed="false"><span aria-hidden="true">▦</span>&#xAC1C;&#xC778;&#xC0AC;&#xC5C5;&#xC790;</button>
-                <button class="job-chip video-filter-chip" data-video-key="professional" data-video-category="corporate" type="button" aria-pressed="false"><span aria-hidden="true">◒</span>&#xC804;&#xBB38;&#xC9C1;</button>
-                <button class="job-chip video-filter-chip" data-video-key="high-income" data-video-category="personal" type="button" aria-pressed="false"><span aria-hidden="true">◆</span>&#xACE0;&#xC18C;&#xB4DD;&#xC790;</button>
-                <button class="job-chip video-filter-chip" data-video-key="real-estate-heavy" data-video-category="bankruptcy" type="button" aria-pressed="false"><span aria-hidden="true">⌂</span>&#xBD80;&#xB3D9;&#xC0B0; &#xACFC;&#xB2E4;&#xCC44;&#xBB34;</button>
-                <button class="job-chip video-filter-chip" data-video-key="clinic" data-video-category="corporate" type="button" aria-pressed="false"><span aria-hidden="true">✚</span>&#xBCD1;&#xC6D0;&middot;&#xC758;&#xC6D0; &#xC6B4;&#xC601;&#xC790;</button>
-                <button class="job-chip video-filter-chip" data-video-key="academy-restaurant" data-video-category="corporate" type="button" aria-pressed="false"><span aria-hidden="true">◍</span>&#xC57D;&#xAD6D;&middot;&#xD559;&#xC6D0;&middot;&#xC74C;&#xC2DD;&#xC810; &#xC6B4;&#xC601;&#xC790;</button>
-                <button class="job-chip video-filter-chip" data-video-key="guarantee" data-video-category="personal" type="button" aria-pressed="false"><span aria-hidden="true">◇</span>&#xBCF4;&#xC99D;&#xCC44;&#xBB34;</button>
-                <button class="job-chip video-filter-chip" data-video-key="business-failure" data-video-category="corporate" type="button" aria-pressed="false"><span aria-hidden="true">×</span>&#xC0AC;&#xC5C5; &#xC2E4;&#xD328;</button>
-              </div>
-              <button class="job-chip-nav job-chip-next" type="button" aria-label="&#xC0C1;&#xD669;&#xBCC4; &#xC120;&#xD0DD; &#xC624;&#xB978;&#xCABD;&#xC73C;&#xB85C; &#xBCF4;&#xAE30;" data-job-next>&rsaquo;</button>
-            </div>
-          </section>
-
-          <section class="channel-board-section feed-section" aria-labelledby="channel-board-title">
+          <section class="channel-board-section feed-section" aria-label="법무법인 율마루 주요 안내">
             <div class="channel-board-panel">
-              <aside class="channel-topic-list" aria-label="운영 채널 바로가기">
-                <div class="channel-topic-head">
-                  <span>운영 채널</span>
-                  <h2 id="channel-board-title">도산 전문변호사 콘텐츠</h2>
-                  <p>회생·파산 정보를 채널별로 확인하세요.</p>
+              <aside class="channel-topic-list channel-info-carousel" data-channel-info-carousel aria-label="운영 채널, 변호사 소개 및 오시는 길">
+                <div class="channel-info-track" data-channel-info-track>
+                  <section id="operating-channels" class="channel-info-slide is-active" data-channel-info-slide role="tabpanel" aria-hidden="false" aria-label="1페이지 운영 채널">
+                    <header class="channel-info-heading">
+                      <span aria-hidden="true">✦</span>
+                      <strong>운영 채널</strong>
+                    </header>
+                    <div class="channel-info-list">
+                      <a class="channel-info-row" href="https://www.youtube.com/@yulmaru_g/videos" target="_blank" rel="noopener noreferrer">
+                        <span class="channel-info-row-icon"><img src="assets/channel-youtube.webp" alt=""></span>
+                        <strong>유튜브</strong>
+                        <span class="channel-info-row-action" aria-hidden="true">+</span>
+                      </a>
+                      <a class="channel-info-row" href="https://www.instagram.com/yulmaru_g" target="_blank" rel="noopener noreferrer">
+                        <span class="channel-info-row-icon"><img src="assets/channel-instagram.webp" alt=""></span>
+                        <strong>인스타그램</strong>
+                        <span class="channel-info-row-action" aria-hidden="true">+</span>
+                      </a>
+                      <a class="channel-info-row" href="https://www.threads.com/@yulmaru911?hl=ko" target="_blank" rel="noopener noreferrer">
+                        <span class="channel-info-row-icon"><img src="assets/channel-threads.webp" alt=""></span>
+                        <strong>스레드</strong>
+                        <span class="channel-info-row-action" aria-hidden="true">+</span>
+                      </a>
+                      <a class="channel-info-row" href="https://blog.naver.com/yulmaru119" target="_blank" rel="noopener noreferrer">
+                        <span class="channel-info-row-icon"><img src="assets/channel-naver-blog.webp" alt=""></span>
+                        <strong>네이버 블로그</strong>
+                        <span class="channel-info-row-action" aria-hidden="true">+</span>
+                      </a>
+                      <a class="channel-info-row" href="https://pf.kakao.com/_xoxgqxan" target="_blank" rel="noopener noreferrer">
+                        <span class="channel-info-row-icon"><img src="assets/channel-kakao.webp" alt=""></span>
+                        <strong>카카오톡</strong>
+                        <span class="channel-info-row-action" aria-hidden="true">+</span>
+                      </a>
+                    </div>
+                  </section>
+
+                  <section id="lawyer-intro" class="channel-info-slide" data-channel-info-slide role="tabpanel" aria-hidden="true" aria-label="2페이지 변호사 소개">
+                    <header class="channel-info-heading">
+                      <span aria-hidden="true">✦</span>
+                      <strong>변호사 소개</strong>
+                    </header>
+                    <div class="channel-lawyer-grid">
+                      <a class="channel-lawyer-card" href="lawyer-im-jae-hyun.html" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/lawyer-im-jae-hyun.webp" alt="임재현 변호사">
+                        <span>
+                          <strong>임재현 변호사</strong>
+                          <small>수사 초기 대응과 구속·영장 사건을 함께합니다.</small>
+                        </span>
+                        <b aria-hidden="true">+</b>
+                      </a>
+                      <a class="channel-lawyer-card" href="lawyer-park-sang-jun.html" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/lawyer-park-sang-jun.webp" alt="박상준 변호사">
+                        <span>
+                          <strong>박상준 변호사</strong>
+                          <small>경찰 조사부터 형사재판까지 전략적으로 대응합니다.</small>
+                        </span>
+                        <b aria-hidden="true">+</b>
+                      </a>
+                      <a class="channel-lawyer-card" href="lawyer-moon-ji-young.html" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/lawyer-moon-ji-young.webp" alt="문지영 변호사">
+                        <span>
+                          <strong>문지영 변호사</strong>
+                          <small>피해자와 피의자의 형사 절차를 세심하게 살핍니다.</small>
+                        </span>
+                        <b aria-hidden="true">+</b>
+                      </a>
+                      <a class="channel-lawyer-card" href="lawyer-lee-ju-won.html" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/lawyer-lee-ju-won.webp" alt="이주원 변호사">
+                        <span>
+                          <strong>이주원 변호사</strong>
+                          <small>사건의 쟁점과 증거를 빠르게 정리해 대응합니다.</small>
+                        </span>
+                        <b aria-hidden="true">+</b>
+                      </a>
+                    </div>
+                  </section>
+
+                  <section class="channel-info-slide" id="office-location" data-channel-info-slide role="tabpanel" aria-hidden="true" aria-label="3페이지 오시는 길">
+                    <header class="channel-info-heading">
+                      <span aria-hidden="true">✦</span>
+                      <strong>오시는 길</strong>
+                    </header>
+                    <div class="channel-info-list channel-location-list">
+                      <div class="channel-info-row"><strong>서울 서초점</strong><span>서초중앙로 156</span></div>
+                      <div class="channel-info-row"><strong>부산 명지점</strong><span>명지국제2로 80</span></div>
+                      <div class="channel-info-row"><strong>부산 센텀점</strong><span>센텀중앙로 97</span></div>
+                      <div class="channel-info-row"><strong>부산 서면점</strong><span>중앙대로 754</span></div>
+                      <div class="channel-info-row"><strong>경남 창원점</strong><span>창이대로689번길 4-16</span></div>
+                    </div>
+                  </section>
                 </div>
-                <div class="channel-float-stage" aria-label="운영 채널 링크">
-                  <a class="channel-float-button channel-float-youtube" href="https://www.youtube.com/@legend_of_revival/videos" target="_blank" rel="noopener noreferrer" aria-label="유튜브 바로가기"><img src="assets/channel-youtube.png" alt=""></a>
-                  <a class="channel-float-button channel-float-instagram" href="https://www.instagram.com/yulmaru119/" target="_blank" rel="noopener noreferrer" aria-label="인스타그램 바로가기"><img src="assets/channel-instagram.png" alt=""></a>
-                  <a class="channel-float-button channel-float-threads" href="https://www.threads.com/@k__law_firm?hl=ko" target="_blank" rel="noopener noreferrer" aria-label="Threads 바로가기"><img src="assets/channel-threads.png" alt=""></a>
-                  <a class="channel-float-button channel-float-blog" href="https://blog.naver.com/yulma_821" target="_blank" rel="noopener noreferrer" aria-label="네이버 블로그 바로가기"><img src="assets/channel-naver-blog.png" alt=""></a>
-                  <a class="channel-float-button channel-float-kakao" href="https://pf.kakao.com/_xoxgqxan" target="_blank" rel="noopener noreferrer" aria-label="카카오톡 상담 바로가기"><img src="assets/channel-kakao.png" alt=""></a>
+
+                <div class="channel-info-pagination" role="tablist" aria-label="안내 페이지 선택">
+                  <button class="is-active" type="button" role="tab" data-channel-info-dot aria-label="운영 채널 페이지" aria-controls="operating-channels" aria-selected="true"></button>
+                  <button type="button" role="tab" data-channel-info-dot aria-label="변호사 소개 페이지" aria-controls="lawyer-intro" aria-selected="false"></button>
+                  <button type="button" role="tab" data-channel-info-dot aria-label="오시는 길 페이지" aria-controls="office-location" aria-selected="false"></button>
                 </div>
               </aside>
 
-              <div class="channel-post-grid" aria-label="부산개인회생 주요 콘텐츠">
-                <a class="channel-post-card is-large" href="https://www.youtube.com/@legend_of_revival/videos" target="_blank" rel="noopener noreferrer" aria-label="개인회생 신청 전, 먼저 확인해야 할 5가지 영상 보기">
-                  <div class="channel-post-media media-lawyer"><span>부산개인회생</span></div>
-                  <div class="channel-post-body">
-                    <small>회생 정보 · 요건 정리</small>
-                    <h3>개인회생 신청 전, 먼저 확인해야 할 5가지</h3>
-                    <p>소득과 재산, 최근 대출, 압류 여부를 기준으로 상담 전 필요한 내용을 정리합니다.</p>
-                    <div class="channel-post-actions"><span>영상 모음</span><span>댓글 상담</span></div>
+              <div class="channel-post-grid" aria-label="법무법인 율마루 주요 콘텐츠">
+                <a class="channel-post-card is-large channel-feature-card" href="https://www.youtube.com/@yulmaru_g/videos" target="_blank" rel="noopener noreferrer" aria-label="형사의 전설 공식 영상 바로가기">
+                  <img class="channel-feature-image" src="assets/detention-cancel-card.webp" alt="구속취소 사건 안내 이미지" />
+                  <div class="channel-feature-overlay">
+                    <small>형사의 전설 · 형사전문변호사</small>
+                    <h3>경찰 조사 전, 대응 전략부터 점검하세요</h3>
                   </div>
                 </a>
-                <a class="channel-post-card" href="#bankruptcy">
-                  <div class="channel-post-media tone-bankruptcy"><span>개인파산</span></div>
-                  <div class="channel-post-body">
-                    <small>파산 정보 · 요건 검토</small>
-                    <h3>기초생활 수급자라면 파산 검토가 필요한 경우</h3>
-                    <div class="channel-post-actions"><span>조회</span><span>문의</span></div>
+                <div class="channel-side-carousel" data-channel-side-carousel aria-label="율마루 공식 사이트 및 도산 전문">
+                  <div class="channel-side-track" data-channel-side-track>
+                    <a class="channel-post-card channel-side-slide is-active" href="https://yulmaru.co.kr/" target="_blank" rel="noopener noreferrer" aria-label="법무법인 율마루 공식 홈페이지 바로가기">
+                      <div class="channel-post-media tone-bankruptcy channel-post-media-logo">
+                        <img src="assets/yulmaru-logo.png" alt="법무법인 율마루 로고" />
+                        <span>공식 사이트</span>
+                      </div>
+                      <div class="channel-post-body">
+                        <small>법무법인 율마루 · 공식 홈페이지</small>
+                        <h3>서울·부산·창원, 어디서든 당신 곁의 변호사</h3>
+                        <div class="channel-post-actions"><span>공식 홈페이지</span><span>바로가기 ↗</span></div>
+                      </div>
+                    </a>
+                    <a class="channel-post-card channel-side-slide" href="https://yulmaru-recover.co.kr/" target="_blank" rel="noopener noreferrer" aria-label="법무법인 율마루 도산 전문 홈페이지 바로가기">
+                      <div class="channel-post-media tone-business channel-post-media-image">
+                        <img src="assets/hero-face-sample.webp" alt="법무법인 율마루 변호사" />
+                        <span>도산 전문</span>
+                      </div>
+                      <div class="channel-post-body">
+                        <small>개인회생 전문 홈페이지</small>
+                        <h3>회생·파산 상담과 정보를 한곳에서 확인하세요</h3>
+                        <div class="channel-post-actions"><span>회생 홈페이지</span><span>바로가기 ↗</span></div>
+                      </div>
+                    </a>
                   </div>
-                </a>
-                <a class="channel-post-card" href="#busan">
-                  <div class="channel-post-media tone-business"><span>자영업자</span></div>
-                  <div class="channel-post-body">
-                    <small>운영 채무 · 정리</small>
-                    <h3>사업자 채무와 세금 체납을 함께 보는 방법</h3>
-                    <div class="channel-post-actions"><span>조회</span><span>문의</span></div>
+                  <div class="channel-side-dots" aria-hidden="true">
+                    <span class="is-active"></span>
+                    <span></span>
                   </div>
-                </a>
+                </div>
               </div>
             </div>
           </section>
 
-          <section class="featured-recommend-section feed-section" aria-labelledby="featured-recommend-title">
-            <div class="featured-recommend-panel">
-              <div class="featured-recommend-head">
-                <div>
-                  <span class="featured-recommend-icon">▷</span>
-                  <h2 id="featured-recommend-title">추천 동영상</h2>
-                </div>
-                <a href="https://www.youtube.com/@legend_of_revival/videos" target="_blank" rel="noopener noreferrer">전체 보기</a>
-              </div>
-              <button class="featured-recommend-nav featured-recommend-prev" type="button" aria-label="추천 동영상 왼쪽으로 보기" data-featured-prev>‹</button>
-              <div class="featured-recommend-row" aria-label="추천 동영상 목록" data-featured-video-row></div>
-              <button class="featured-recommend-nav featured-recommend-next" type="button" aria-label="추천 동영상 오른쪽으로 보기" data-featured-next>›</button>
-            </div>
-          </section>
           <section class="personal-news-section feed-section" aria-labelledby="personal-news-title">
             <div class="personal-news-panel">
               <div class="personal-news-head">
                 <div>
-                  <span>회생·파산 핵심 브리핑</span>
-                  <h2 id="personal-news-title">개인회생 소식</h2>
+                  <span>핵심 브리핑</span>
+                  <h2 id="personal-news-title">형사 사건 소식</h2>
+                  <span class="personal-news-interest-label">
+                    관심 분야 선택
+                    <span class="personal-news-interest-arrow" aria-hidden="true">&gt;</span>
+                  </span>
                 </div>
-                <a href="https://blog.naver.com/yulma_821" target="_blank" rel="noopener noreferrer">소식 더 보기</a>
+                <section class="job-selector-section" aria-label="형사사건 관심 분야 선택">
+                  <div class="job-chip-slider" data-job-slider>
+                    <button class="job-chip-nav job-chip-prev" type="button" aria-label="형사사건 유형 왼쪽으로 보기" data-job-prev>&lsaquo;</button>
+                    <div class="job-chip-row" role="list" aria-label="형사사건 관심 분야 선택 버튼">
+                      <button class="job-chip video-filter-chip" data-video-key="traffic-crime" data-video-category="criminal" type="button" aria-pressed="false">
+                        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M5 14l1.4-5.1A2 2 0 0 1 8.3 7h7.4a2 2 0 0 1 1.9 1.9L19 14"/><path d="M4 14h16v4H4zM6 18v2m12-2v2M7 15.8h.01m10 0h.01"/></svg>
+                        교통범죄
+                      </button>
+                      <button class="job-chip video-filter-chip" data-video-key="sexual-crime" data-video-category="criminal" type="button" aria-pressed="false">
+                        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.8-3 8.1-7 10-4-1.9-7-5.2-7-10V6l7-3z"/><circle cx="12" cy="10" r="2"/><path d="M8.7 16c.8-1.8 2-2.7 3.3-2.7s2.5.9 3.3 2.7"/></svg>
+                        성범죄
+                      </button>
+                      <button class="job-chip video-filter-chip" data-video-key="violent-crime" data-video-category="criminal" type="button" aria-pressed="false">
+                        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.8-3 8.1-7 10-4-1.9-7-5.2-7-10V6l7-3z"/><path d="M13.5 7.5l-3 4h3l-3 5"/></svg>
+                        폭력범죄
+                      </button>
+                      <button class="job-chip video-filter-chip" data-video-key="property-crime" data-video-category="criminal" type="button" aria-pressed="false">
+                        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M4 7.5h14a2 2 0 0 1 2 2v8.5H6a2 2 0 0 1-2-2V7.5z"/><path d="M4 8l12-3v2.5M15 11h5v4h-5a2 2 0 0 1 0-4z"/></svg>
+                        재산범죄
+                      </button>
+                      <button class="job-chip video-filter-chip" data-video-key="voice-phishing" data-video-category="criminal" type="button" aria-pressed="false">
+                        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M7.2 4.5l2.2 3.8-2 1.8a15 15 0 0 0 6.5 6.5l1.8-2 3.8 2.2-.7 3.1a2 2 0 0 1-2 1.6C9 20.7 3.3 15 2.5 7.2a2 2 0 0 1 1.6-2l3.1-.7z"/><path d="M16.5 4v4m0 3h.01"/></svg>
+                        보이스피싱
+                      </button>
+                      <button class="job-chip video-filter-chip" data-video-key="drug-crime" data-video-category="criminal" type="button" aria-pressed="false">
+                        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="8" rx="4" transform="rotate(-45 12 12)"/><path d="M8.5 15.5l7-7"/></svg>
+                        마약범죄
+                      </button>
+                      <button class="job-chip video-filter-chip" data-video-key="cyber-crime" data-video-category="criminal" type="button" aria-pressed="false">
+                        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4M8 9l-2 2 2 2m8-4l2 2-2 2m-2-5l-4 6"/></svg>
+                        사이버범죄
+                      </button>
+                      <button class="job-chip video-filter-chip" data-video-key="defamation" data-video-category="criminal" type="button" aria-pressed="false">
+                        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M4 5h16v12H9l-5 4V5z"/><path d="M12 8v4m0 2.5h.01"/></svg>
+                        명예훼손범죄
+                      </button>
+                      <button class="job-chip video-filter-chip" data-video-key="obstruction" data-video-category="criminal" type="button" aria-pressed="false">
+                        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M8 3h8l5 5v8l-5 5H8l-5-5V8l5-5z"/><path d="M7.5 12h9"/></svg>
+                        공무집행방해
+                      </button>
+                      <button class="job-chip video-filter-chip" data-video-key="military-crime" data-video-category="criminal" type="button" aria-pressed="false">
+                        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.8-3 8.1-7 10-4-1.9-7-5.2-7-10V6l7-3z"/><path d="M12 7.3l1.2 2.4 2.7.4-2 1.9.5 2.7-2.4-1.3-2.4 1.3.5-2.7-2-1.9 2.7-.4L12 7.3z"/></svg>
+                        군형사
+                      </button>
+                    </div>
+                    <button class="job-chip-nav job-chip-next" type="button" aria-label="형사사건 유형 오른쪽으로 보기" data-job-next>&rsaquo;</button>
+                  </div>
+                </section>
               </div>
               <div class="personal-news-grid">
                 <article class="personal-news-card tone-news-1">
-                  <a href="#personal">
-                    <div class="personal-news-thumb"><span>신청 전 점검</span></div>
+                  <a href="criminal-case.html?case=detention-cancel" target="_blank" rel="noopener noreferrer">
+                    <div class="personal-news-thumb"><span>구속 대응</span></div>
                     <div class="personal-news-body">
-                      <p class="personal-news-meta"><span>회생의 전설</span><span>최근</span></p>
-                      <h3>개인회생 신청 전에 먼저 정리해야 할 소득과 채무 기준</h3>
-                      <div class="personal-news-actions"><span>조회 128</span><span>댓글 4</span></div>
+                      <p class="personal-news-meta"><span>형사 사건 사례</span><span>최근</span></p>
+                      <h3>구속취소 사건</h3>
+                      <div class="personal-news-actions"><span>사건 보기</span><span>새 창 ↗</span></div>
                     </div>
                   </a>
                 </article>
                 <article class="personal-news-card tone-news-2">
-                  <a href="#personal">
-                    <div class="personal-news-thumb"><span>월 변제금</span></div>
+                  <a href="criminal-case.html?case=quasi-rape-dismissal" target="_blank" rel="noopener noreferrer">
+                    <div class="personal-news-thumb"><span>성범죄</span></div>
                     <div class="personal-news-body">
-                      <p class="personal-news-meta"><span>부산회생정보</span><span>1일 전</span></p>
-                      <h3>월 변제금이 부담될 때 확인해야 하는 산정 요소</h3>
-                      <div class="personal-news-actions"><span>조회 94</span><span>댓글 2</span></div>
+                      <p class="personal-news-meta"><span>형사 사건 사례</span><span>최근</span></p>
+                      <h3>준강간 공소기각 사건</h3>
+                      <div class="personal-news-actions"><span>사건 보기</span><span>새 창 ↗</span></div>
                     </div>
                   </a>
                 </article>
                 <article class="personal-news-card tone-news-3">
-                  <a href="#bankruptcy">
-                    <div class="personal-news-thumb"><span>파산 검토</span></div>
+                  <a href="criminal-case.html?case=drunk-driving-probation" target="_blank" rel="noopener noreferrer">
+                    <div class="personal-news-thumb"><span>교통범죄</span></div>
                     <div class="personal-news-body">
-                      <p class="personal-news-meta"><span>파산 정보</span><span>2일 전</span></p>
-                      <h3>기초생활 수급자라면 개인파산 검토가 필요한 경우</h3>
-                      <div class="personal-news-actions"><span>조회 151</span><span>댓글 6</span></div>
+                      <p class="personal-news-meta"><span>형사 사건 사례</span><span>2일 전</span></p>
+                      <h3>음주운전 집행유예 사건</h3>
+                      <div class="personal-news-actions"><span>사건 보기</span><span>새 창 ↗</span></div>
                     </div>
                   </a>
                 </article>
                 <article class="personal-news-card tone-news-4">
-                  <a href="#busan">
-                    <div class="personal-news-thumb"><span>부산 법원</span></div>
+                  <a href="criminal-case.html?case=voice-phishing-no-charge" target="_blank" rel="noopener noreferrer">
+                    <div class="personal-news-thumb"><span>보이스피싱</span></div>
                     <div class="personal-news-body">
-                      <p class="personal-news-meta"><span>부산개인회생</span><span>3일 전</span></p>
-                      <h3>부산에서 개인회생을 준비할 때 자주 묻는 진행 순서</h3>
-                      <div class="personal-news-actions"><span>조회 203</span><span>댓글 5</span></div>
+                      <p class="personal-news-meta"><span>형사 사건 사례</span><span>3일 전</span></p>
+                      <h3>보이스피싱 무혐의 사건</h3>
+                      <div class="personal-news-actions"><span>사건 보기</span><span>새 창 ↗</span></div>
                     </div>
                   </a>
                 </article>
                 <article class="personal-news-card tone-news-5">
-                  <a href="#personal">
-                    <div class="personal-news-thumb"><span>압류·추심</span></div>
+                  <a href="criminal-case.html?case=sexual-crime-non-transfer" target="_blank" rel="noopener noreferrer">
+                    <div class="personal-news-thumb"><span>성범죄</span></div>
                     <div class="personal-news-body">
-                      <p class="personal-news-meta"><span>회생 대응</span><span>최근</span></p>
-                      <h3>독촉 전화와 압류 예고가 계속될 때 먼저 확인할 내용</h3>
-                      <div class="personal-news-actions"><span>조회 176</span><span>댓글 3</span></div>
+                      <p class="personal-news-meta"><span>형사 사건 사례</span><span>최근</span></p>
+                      <h3>성범죄 불송치 사건</h3>
+                      <div class="personal-news-actions"><span>사건 보기</span><span>새 창 ↗</span></div>
                     </div>
                   </a>
                 </article>
                 <article class="personal-news-card tone-news-6">
-                  <a href="#personal">
-                    <div class="personal-news-thumb"><span>최근 대출</span></div>
+                  <a href="criminal-case.html?case=fraud-acquittal" target="_blank" rel="noopener noreferrer">
+                    <div class="personal-news-thumb"><span>재산범죄</span></div>
                     <div class="personal-news-body">
-                      <p class="personal-news-meta"><span>요건 정리</span><span>4일 전</span></p>
-                      <h3>최근 대출이 있어도 개인회생을 검토할 수 있는지 보는 기준</h3>
-                      <div class="personal-news-actions"><span>조회 119</span><span>댓글 1</span></div>
+                      <p class="personal-news-meta"><span>형사 사건 사례</span><span>4일 전</span></p>
+                      <h3>사기 혐의 무죄 사건</h3>
+                      <div class="personal-news-actions"><span>사건 보기</span><span>새 창 ↗</span></div>
                     </div>
                   </a>
                 </article>
                 <article class="personal-news-card tone-news-7">
-                  <a href="#personal">
-                    <div class="personal-news-thumb"><span>세금 체납</span></div>
+                  <a href="criminal-case.html?case=assault-deferred-prosecution" target="_blank" rel="noopener noreferrer">
+                    <div class="personal-news-thumb"><span>폭력범죄</span></div>
                     <div class="personal-news-body">
-                      <p class="personal-news-meta"><span>채무 정리</span><span>5일 전</span></p>
-                      <h3>세금 체납과 카드 채무를 함께 정리할 때 유의할 점</h3>
-                      <div class="personal-news-actions"><span>조회 88</span><span>댓글 2</span></div>
+                      <p class="personal-news-meta"><span>형사 사건 사례</span><span>5일 전</span></p>
+                      <h3>폭행·상해 기소유예 사건</h3>
+                      <div class="personal-news-actions"><span>사건 보기</span><span>새 창 ↗</span></div>
                     </div>
                   </a>
                 </article>
                 <article class="personal-news-card tone-news-8">
-                  <a href="#personal">
-                    <div class="personal-news-thumb"><span>청산가치</span></div>
+                  <a href="criminal-case.html?case=drug-probation" target="_blank" rel="noopener noreferrer">
+                    <div class="personal-news-thumb"><span>마약범죄</span></div>
                     <div class="personal-news-body">
-                      <p class="personal-news-meta"><span>재산 검토</span><span>6일 전</span></p>
-                      <h3>청산가치가 변제계획에 반영되는 방식 쉽게 보기</h3>
-                      <div class="personal-news-actions"><span>조회 132</span><span>댓글 4</span></div>
-                    </div>
-                  </a>
-                </article>
-                <article class="personal-news-card tone-news-9">
-                  <a href="#personal">
-                    <div class="personal-news-thumb"><span>배우자 재산</span></div>
-                    <div class="personal-news-body">
-                      <p class="personal-news-meta"><span>가족 재산</span><span>1주 전</span></p>
-                      <h3>배우자 명의 재산이 있을 때 상담 전에 정리할 자료</h3>
-                      <div class="personal-news-actions"><span>조회 167</span><span>댓글 7</span></div>
-                    </div>
-                  </a>
-                </article>
-                <article class="personal-news-card tone-news-10">
-                  <a href="#personal">
-                    <div class="personal-news-thumb"><span>자영업자</span></div>
-                    <div class="personal-news-body">
-                      <p class="personal-news-meta"><span>사업 채무</span><span>1주 전</span></p>
-                      <h3>자영업자가 개인회생을 준비할 때 매출 자료가 중요한 이유</h3>
-                      <div class="personal-news-actions"><span>조회 142</span><span>댓글 3</span></div>
-                    </div>
-                  </a>
-                </article>
-                <article class="personal-news-card tone-news-11">
-                  <a href="#personal">
-                    <div class="personal-news-thumb"><span>부양가족</span></div>
-                    <div class="personal-news-body">
-                      <p class="personal-news-meta"><span>생계비 정보</span><span>1주 전</span></p>
-                      <h3>부양가족 인정 여부가 월 변제금에 영향을 주는 경우</h3>
-                      <div class="personal-news-actions"><span>조회 201</span><span>댓글 5</span></div>
-                    </div>
-                  </a>
-                </article>
-                <article class="personal-news-card tone-news-12">
-                  <a href="#personal">
-                    <div class="personal-news-thumb"><span>무직자</span></div>
-                    <div class="personal-news-body">
-                      <p class="personal-news-meta"><span>소득 확인</span><span>1주 전</span></p>
-                      <h3>소득이 불안정할 때 개인회생 가능성을 판단하는 방법</h3>
-                      <div class="personal-news-actions"><span>조회 73</span><span>댓글 1</span></div>
-                    </div>
-                  </a>
-                </article>
-                <article class="personal-news-card tone-news-13">
-                  <a href="#personal">
-                    <div class="personal-news-thumb"><span>주식·코인</span></div>
-                    <div class="personal-news-body">
-                      <p class="personal-news-meta"><span>투자 손실</span><span>2주 전</span></p>
-                      <h3>주식과 코인 손실이 있는 사건에서 설명 자료가 필요한 이유</h3>
-                      <div class="personal-news-actions"><span>조회 188</span><span>댓글 8</span></div>
-                    </div>
-                  </a>
-                </article>
-                <article class="personal-news-card tone-news-14">
-                  <a href="#personal">
-                    <div class="personal-news-thumb"><span>자동차</span></div>
-                    <div class="personal-news-body">
-                      <p class="personal-news-meta"><span>재산 처분</span><span>2주 전</span></p>
-                      <h3>차량을 보유한 상태에서 개인회생을 준비할 때 확인할 점</h3>
-                      <div class="personal-news-actions"><span>조회 115</span><span>댓글 2</span></div>
-                    </div>
-                  </a>
-                </article>
-                <article class="personal-news-card tone-news-15">
-                  <a href="#personal">
-                    <div class="personal-news-thumb"><span>보증채무</span></div>
-                    <div class="personal-news-body">
-                      <p class="personal-news-meta"><span>채권 정리</span><span>2주 전</span></p>
-                      <h3>보증채무가 포함된 개인회생 상담에서 자주 묻는 질문</h3>
-                      <div class="personal-news-actions"><span>조회 96</span><span>댓글 2</span></div>
-                    </div>
-                  </a>
-                </article>
-                <article class="personal-news-card tone-news-16">
-                  <a href="#personal">
-                    <div class="personal-news-thumb"><span>사업 실패</span></div>
-                    <div class="personal-news-body">
-                      <p class="personal-news-meta"><span>재기 상담</span><span>3주 전</span></p>
-                      <h3>사업 실패 후 개인회생과 개인파산을 나누어 보는 기준</h3>
-                      <div class="personal-news-actions"><span>조회 164</span><span>댓글 4</span></div>
-                    </div>
-                  </a>
-                </article>
-                <article class="personal-news-card tone-news-17">
-                  <a href="#personal">
-                    <div class="personal-news-thumb"><span>면책 결정</span></div>
-                    <div class="personal-news-body">
-                      <p class="personal-news-meta"><span>절차 안내</span><span>3주 전</span></p>
-                      <h3>변제계획 인가 후 면책까지 놓치기 쉬운 체크포인트</h3>
-                      <div class="personal-news-actions"><span>조회 221</span><span>댓글 6</span></div>
-                    </div>
-                  </a>
-                </article>
-                <article class="personal-news-card tone-news-18">
-                  <a href="#corporate">
-                    <div class="personal-news-thumb"><span>법인파산</span></div>
-                    <div class="personal-news-body">
-                      <p class="personal-news-meta"><span>법인 절차</span><span>3주 전</span></p>
-                      <h3>법인 채무가 개인 보증으로 이어졌을 때 같이 보는 순서</h3>
-                      <div class="personal-news-actions"><span>조회 134</span><span>댓글 3</span></div>
-                    </div>
-                  </a>
-                </article>
-                <article class="personal-news-card tone-news-19">
-                  <a href="#personal">
-                    <div class="personal-news-thumb"><span>상담 자료</span></div>
-                    <div class="personal-news-body">
-                      <p class="personal-news-meta"><span>상담 준비</span><span>1개월 전</span></p>
-                      <h3>처음 상담할 때 준비하면 좋은 기본 자료 목록</h3>
-                      <div class="personal-news-actions"><span>조회 247</span><span>댓글 9</span></div>
-                    </div>
-                  </a>
-                </article>
-                <article class="personal-news-card tone-news-20">
-                  <a href="#contact">
-                    <div class="personal-news-thumb"><span>익명 문의</span></div>
-                    <div class="personal-news-body">
-                      <p class="personal-news-meta"><span>문의 안내</span><span>1개월 전</span></p>
-                      <h3>이름 공개 없이 상황을 남기고 답변을 확인하는 방법</h3>
-                      <div class="personal-news-actions"><span>조회 312</span><span>댓글 11</span></div>
+                      <p class="personal-news-meta"><span>형사 사건 사례</span><span>6일 전</span></p>
+                      <h3>마약 투약 집행유예 사건</h3>
+                      <div class="personal-news-actions"><span>사건 보기</span><span>새 창 ↗</span></div>
                     </div>
                   </a>
                 </article>
               </div>
+              <section class="featured-recommend-section feed-section news-video-row" aria-labelledby="featured-recommend-title">
+                <div class="featured-recommend-panel">
+                  <div class="featured-recommend-head">
+                    <div>
+                      <span class="featured-recommend-icon">▷</span>
+                      <h2 id="featured-recommend-title">추천 동영상</h2>
+                    </div>
+                    <a href="https://www.youtube.com/@yulmaru_g/videos" target="_blank" rel="noopener noreferrer">전체 보기</a>
+                  </div>
+                  <button class="featured-recommend-nav featured-recommend-prev" type="button" aria-label="추천 동영상 왼쪽으로 보기" data-featured-prev>‹</button>
+                  <div class="featured-recommend-row" aria-label="추천 동영상 목록" data-featured-video-row></div>
+                  <button class="featured-recommend-nav featured-recommend-next" type="button" aria-label="추천 동영상 오른쪽으로 보기" data-featured-next>›</button>
+                </div>
+              </section>
             </div>
           </section>
 
-          <section class="feed-section blog-post-section" aria-labelledby="blog-post-title">
-            <div class="feed-heading">
-              <h2 id="blog-post-title">부산개인회생 포스팅</h2>
-              <a href="https://blog.naver.com/yulma_821" target="_blank" rel="noopener noreferrer">게시판 바로가기</a>
-            </div>
-            <div id="blogPostFeed" class="blog-post-feed" aria-live="polite"></div>
-            <div class="blog-post-footer">
-              <button id="blogLoadMore" type="button">포스팅 더 보기</button>
-              <span id="blogPostCount"></span>
-            </div>
-          </section>
         </section>
       </section>
+
+      <section id="personal" class="section split-section page-section">
+        <div>
+          <p class="eyebrow">형사전문변호사</p>
+          <h2>수사 초기부터 재판까지 사건의 흐름에 맞춰 대응합니다.</h2>
+          <p>
+            형사사건은 첫 진술과 초기 증거 확보가 이후 절차에 큰 영향을 줍니다. 경찰·검찰 조사,
+            체포·구속, 고소·고발, 재판 등 현재 단계와 당사자의 입장을 정확히 파악해 대응 방향을
+            정리합니다.
+          </p>
+        </div>
+        <div class="feature-grid">
+          <article>
+            <span>초기 대응</span>
+            <h3>사실관계와 핵심 쟁점 정리</h3>
+            <p>사건 발생 경위와 확보 자료를 확인하고 진술 전 주의할 부분을 정리합니다.</p>
+          </article>
+          <article>
+            <span>수사 대응</span>
+            <h3>경찰·검찰 조사 준비</h3>
+            <p>예상 질문과 진술 방향을 점검하고 조사 과정에서 필요한 대응을 준비합니다.</p>
+          </article>
+          <article>
+            <span>긴급 대응</span>
+            <h3>체포·구속·압수수색 대응</h3>
+            <p>신속한 판단이 필요한 강제수사 단계에서 절차와 대응 자료를 확인합니다.</p>
+          </article>
+          <article>
+            <span>재판 대응</span>
+            <h3>공판 전략과 피해 회복 검토</h3>
+            <p>증거와 법적 쟁점을 검토하고 합의·양형·피해자 보호 등 필요한 절차를 살핍니다.</p>
+          </article>
+        </div>
+      </section>
+
       <section id="bankruptcy" class="section content-stack page-section">
         <p class="eyebrow">개인파산</p>
         <h2>변제 능력이 부족한 경우 검토하는 별도 절차</h2>
@@ -529,51 +629,69 @@
 
       <section id="contact" class="section contact-section page-section">
         <div>
-          <p class="eyebrow">상담 신청</p>
-          <h2>연락이 필요한 경우에만 상담 신청을 남겨주세요.</h2>
+          <p class="eyebrow">형사 사건 상담</p>
+          <h2>형사사건은 초기 대응이 중요합니다. 지금 상담을 신청해 주세요.</h2>
           <p>
-            익명 문의는 연락처 없이도 가능합니다. 다만 빠른 안내가 필요하거나, 압류와 독촉처럼
-            시급한 상황이라면 상담 신청에 연락처를 남겨주세요.
+            수사기관의 연락을 받았거나 고소·고발, 체포·구속, 피해 대응이 필요한 경우
+            사건 개요와 연락처를 남겨주세요. 내용을 확인한 뒤 신속하게 연락드리겠습니다.
           </p>
           <div class="detail-block">
-            <h3>상담 전에 정리하면 좋은 내용</h3>
+            <h3>형사 상담 전에 정리하면 좋은 내용</h3>
             <ul class="plain-list">
-              <li>총 채무 금액과 주요 채권자</li>
-              <li>월 소득과 직업 형태</li>
-              <li>연체 시작 시점과 압류 여부</li>
-              <li>부동산, 자동차, 보험 등 재산 여부</li>
-              <li>최근 1년 내 큰 대출이나 재산 처분 여부</li>
+              <li>사건 유형과 본인의 입장(피의자·피해자·고소인 등)</li>
+              <li>사건이 발생한 일시·장소와 구체적인 경위</li>
+              <li>경찰·검찰 조사 또는 재판의 현재 진행 단계</li>
+              <li>출석 요구·압수수색·체포 등 긴급 상황 여부</li>
+              <li>확보한 증거·진술·관련 서류와 원하는 상담 방향</li>
             </ul>
           </div>
         </div>
-        <form class="contact-form" id="contactForm">
+        <form class="contact-form" id="contactForm" novalidate>
           <label>
             이름 또는 닉네임
             <input name="name" type="text" placeholder="홍길동" required />
           </label>
           <label>
             연락처
-            <input name="phone" type="tel" placeholder="010-0000-0000" required />
+            <input
+              name="phone"
+              type="tel"
+              inputmode="numeric"
+              placeholder="010-0000-0000"
+              autocomplete="tel"
+              maxlength="13"
+              pattern="010-[0-9]{4}-[0-9]{4}"
+              data-phone-input
+              required
+            />
           </label>
           <label>
-            채무 금액
-            <select name="debt">
-              <option>선택 안 함</option>
-              <option>3천만 원 이하</option>
-              <option>3천만 원~7천만 원</option>
-              <option>7천만 원~1억 원</option>
-              <option>1억 원 이상</option>
+            사건 유형
+            <select name="caseType" required>
+              <option value="">사건 유형 선택</option>
+              <option>교통범죄</option>
+              <option>성범죄</option>
+              <option>폭력범죄</option>
+              <option>재산범죄</option>
+              <option>보이스피싱</option>
+              <option>마약범죄</option>
+              <option>사이버범죄</option>
+              <option>명예훼손범죄</option>
+              <option>공무집행방해</option>
+              <option>군형사</option>
+              <option>기타 형사사건</option>
             </select>
           </label>
           <label>
-            문의 내용
-            <textarea name="message" rows="4" placeholder="상황을 간단히 남겨주세요."></textarea>
+            사건 내용
+            <textarea name="message" rows="4" placeholder="사건 경위와 현재 수사·재판 단계, 가장 시급한 내용을 남겨주세요."></textarea>
           </label>
           <label class="checkbox-row">
             <input name="privacy" type="checkbox" required />
             개인정보 수집 및 이용에 동의합니다.
           </label>
-          <button type="submit">상담 신청 남기기</button>
+          <button type="submit">형사 사건 상담 신청</button>
+          <p class="form-submit-status" id="contactFormStatus" aria-live="polite"></p>
         </form>
       </section>
     </main>
@@ -581,8 +699,13 @@
     <footer class="site-footer">
       <div class="footer-main">
         <div class="footer-brand-block">
-          <strong>부산개인회생</strong>
-          <p>본 페이지의 정보는 일반 안내이며, 사건별 결과는 달라질 수 있습니다.</p>
+          <div class="footer-brand-heading">
+            <span class="footer-brand-logo"><img src="assets/yulmaru-logo.png" alt="율마루 로고" /></span>
+            <span class="footer-brand-copy">
+              <strong>형사전문변호사</strong>
+              <small>법무법인 율마루</small>
+            </span>
+          </div>
         </div>
 
         <div class="footer-office-grid" aria-label="법무법인 율마루 지점 안내">
@@ -593,13 +716,22 @@
           <div class="footer-office"><b>경남 창원점</b><span>경남 창원시 성산구 창이대로689번길 4-16, 6층 (사파동, 법조빌딩)</span></div>
         </div>
 
-        <div class="footer-contact-grid" aria-label="전화번호 및 팩스 안내">
-          <div><b>전화번호</b><strong>1800-6419(소송관련) / 1800-6719(회생파산)</strong></div>
-          <div><b>전화번호</b><span>051-201-9119</span><em>팩스: 051-201-9118</em></div>
-          <div><b>전화번호</b><span>051-715-8119</span><em>팩스: 051-715-8117</em></div>
-          <div><b>전화번호</b><span>051-711-5119</span><em>팩스: 051-711-5198</em></div>
-          <div><b>전화번호</b><span>055-715-3119</span><em>팩스: 055-715-6119</em></div>
+        <div class="footer-quick-column">
+          <div class="footer-direct-phone" aria-label="대표 전화번호">
+            <a href="tel:18006419"><strong>송무</strong><span>1800-6419</span></a>
+          </div>
+          <details class="footer-site-links">
+            <summary class="footer-site-links-title">
+              <strong>사이트 바로가기</strong>
+              <span aria-hidden="true"></span>
+            </summary>
+            <div class="footer-site-links-menu">
+              <a href="https://yulmaru.co.kr/" target="_blank" rel="noopener noreferrer">율마루 공식 홈페이지</a>
+              <a href="https://yulmaru-recover.co.kr/" target="_blank" rel="noopener noreferrer">회생파산 공식 홈페이지</a>
+            </div>
+          </details>
         </div>
+
       </div>
 
       <div class="footer-sub">
@@ -608,23 +740,18 @@
           <span>광고책임 변호사 임재현</span>
         </div>
         <div class="footer-business">
-          <span>사업자: 806-86-02787</span>
-          <span>이메일: law119@yulmaru.com</span>
+          <b>사업자</b>
+          <span>806-86-02787</span>
+          <b>이메일</b>
+          <span>law119@yulmaru.com</span>
         </div>
-        <div class="footer-hours">
-          <strong>영업시간</strong>
-          <b>상담시간</b>
-          <span>월~금 09:00~18:00</span>
-          <span>(야간 및 주말 상담 별도 문의)</span>
-          <b>점심시간</b>
-          <span>(서울점) 12:00~13:00</span>
-        </div>
-        <p class="footer-copy">Copyright © 2026 임재현 변호사 All rights reserved.</p>
+        <p class="footer-copy">Copyright © 2026 법무법인 율마루 All rights reserved.</p>
       </div>
     </footer>
 
     <script>
       window.YOUTUBE_API_KEY = "";
+      window.LEAD_API_ENDPOINT = "";
     </script>
     <script src="assets/naver-blog-posts.js"></script>
     <script src="script.js"></script>

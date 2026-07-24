@@ -1162,7 +1162,7 @@ window.NAVER_BLOG_POSTS = [
     "link": "https://blog.naver.com/yulmaru119/222758253896"
   },
   {
-    "title": "법률사무소 율마루 :: 임재현 변호사 파산관재인 임명",
+    "title": "법률사무소 율마루 :: 법무법인 율마루 파산관재인 임명",
     "category": "개인파산",
     "date": "2022. 5. 31.",
     "summary": "면책 가능성과 주의사항을 함께 확인해야 하는 개인파산 관련 글입니다.",
